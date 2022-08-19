@@ -1,0 +1,320 @@
+micro_number	band	ubox	unit	nest	year	uby	color	challenge	full_treatment	cap_doy	cap_num	age	sample_or_control	quant_reading
+M18N001	263113706	2_122	2	122	2018	2_122_2018	Dull	Stress	Dull_Stress	138	1	ASY	sample	3.1
+M18N002	272106733	2_68	2	68	2018	2_68_2018	Control	Stress	Control_Stress	140	1	SY	sample	11.3
+M18N003	272107739	2_109	2	109	2018	2_109_2018	Control	Predator	Control_Predator	140	1	ASY	sample	6.6
+M18N004	272108041	2_124	2	124	2018	2_124_2018	Dull	Control	Dull_Control	140	1	ASY	sample	8.0
+M18N005	272107016	2_105	2	105	2018	2_105_2018	Dull	Predator	Dull_Predator	141	1	ASY	sample	10.1
+M18N006	272106635	2_22	2	22	2018	2_22_2018	Control	Control	Control_Control	141	1	SY	sample	11.2
+M18N007	272107749	2_67	2	67	2018	2_67_2018	Dull	Stress	Dull_Stress	142	1	ASY	sample	2.5
+M18N008	272107801	2_51	2	51	2018	2_51_2018	Control	Predator	Control_Predator	142	1	SY	sample	11.3
+M18N009	272107802	1_32	1	32	2018	1_32_2018	Dull	Stress	Dull_Stress	142	1	SY	sample	0.8
+M18N010	272106906	2_49	2	49	2018	2_49_2018	Dull	Control	Dull_Control	143	1	SY	sample	0.9
+M18N011	272107806	2_38	2	38	2018	2_38_2018	Control	Control	Control_Control	143	1	SY	sample	1.3
+M18N012	272106904	2_80	2	80	2018	2_80_2018	Dull	Predator	Dull_Predator	143	1	SY	sample	12.4
+M18N013	272106907	2_86	2	86	2018	2_86_2018	Control	Predator	Control_Predator	143	1	ASY	sample	2.2
+M18N014	272107748	2_12	2	12	2018	2_12_2018	Control	Control	Control_Control	143	1	ASY	sample	6.2
+M18N015	88004754	2_21	2	21	2018	2_21_2018	Dull	Predator	Dull_Predator	143	1	ASY	sample	12.4
+M18N016	272107805	2_34	2	34	2018	2_34_2018	Dull	Control	Dull_Control	143	1	ASY	sample	11.1
+M18N017	272106901	2_6	2	6	2018	2_6_2018	Control	Stress	Control_Stress	143	1	SY	sample	10.2
+M18N018	272106905	2_14	2	14	2018	2_14_2018	Dull	Predator	Dull_Predator	143	1	SY	sample	10.7
+M18N019	272106902	2_8	2	8	2018	2_8_2018	Dull	Control	Dull_Control	143	1	SY	sample	14.3
+M18N020	272106903	2_112	2	112	2018	2_112_2018	Dull	Stress	Dull_Stress	143	1	SY	sample	1.4
+M18N021	272107803	2_96	2	96	2018	2_96_2018	Control	Control	Control_Control	143	1	SY	sample	2.1
+M18N022	232146953	1_81	1	81	2018	1_81_2018	Dull	Control	Dull_Control	143	1	ASY	sample	3.2
+M18N023	240134898	4_61	4	61	2018	4_61_2018	Control	Stress	Control_Stress	143	1	ASY	sample	4.3
+M18N024	272107219	4_62	4	62	2018	4_62_2018	Dull	Predator	Dull_Predator	144	1	ASY	sample	1.0
+M18N025	272107764	4_63	4	63	2018	4_63_2018	Control	Stress	Control_Stress	144	1	ASY	sample	13.3
+M18N026	272107298	4_72	4	72	2018	4_72_2018	Dull	Stress	Dull_Stress	144	1	ASY	sample	2.4
+M18N027	272107599	4_80	4	80	2018	4_80_2018	Control	Control	Control_Control	144	1	ASY	sample	10.6
+M18N028	272107808	1_69	1	69	2018	1_69_2018	Dull	Stress	Dull_Stress	144	1	SY	sample	10.5
+M18N030	262125490	1_77	1	77	2018	1_77_2018	Control	Stress	Control_Stress	144	1	ASY	sample	0.8
+M18N031	272107809	1_91	1	91	2018	1_91_2018	Control	Predator	Control_Predator	144	1	SY	sample	19.2
+M18N032	272107161	2_95	2	95	2018	2_95_2018	Dull	Control	Dull_Control	144	1	SY	sample	12.3
+M18N033	272107217	2_114	2	114	2018	2_114_2018	Dull	Predator	Dull_Predator	144	1	ASY	sample	5.8
+M18N034	272107804	2_32	2	32	2018	2_32_2018	Control	Predator	Control_Predator	144	1	ASY	sample	2.7
+M18N035	272106908	2_103	2	103	2018	2_103_2018	Control	Stress	Control_Stress	144	1	SY	sample	11.0
+M18N036	272107807	2_2	2	2	2018	2_2_2018	Control	Control	Control_Control	144	1	SY	sample	6.6
+M18N038	272106817	2_18	2	18	2018	2_18_2018	Control	Stress	Control_Stress	145	1	SY	sample	1.9
+M18N039	272106613	2_30	2	30	2018	2_30_2018	Control	Predator	Control_Predator	145	1	SY	sample	3.0
+M18N040	272107750	1_121	1	121	2018	1_121_2018	Dull	Predator	Dull_Predator	145	1	ASY	sample	16.0
+M18N041	272107297	2_27	2	27	2018	2_27_2018	Dull	Predator	Dull_Predator	146	1	SY	sample	6.8
+M18N042	272107112	2_121	2	121	2018	2_121_2018	Control	Predator	Control_Predator	146	1	SY	sample	1.5
+M18N043	272107153	1_17	1	17	2018	1_17_2018	Control	Predator	Control_Predator	146	1	SY	sample	2.1
+M18N044	272106711	1_85	1	85	2018	1_85_2018	Control	Control	Control_Control	146	1	ASY	sample	13.1
+M18N045	272107811	2_102	2	102	2018	2_102_2018	Control	Control	Control_Control	147	1	ASY	sample	3.4
+M18N046	272107810	2_45	2	45	2018	2_45_2018	Control	Predator	Control_Predator	147	1	SY	sample	11.0
+M18N047	272106819	1_62	1	62	2018	1_62_2018	Dull	Predator	Dull_Predator	147	1	ASY	sample	10.7
+M18N048	272107261	4_90	4	90	2018	4_90_2018	Control	Control	Control_Control	147	1	ASY	sample	14.5
+M18N049	272107258	4_101	4	101	2018	4_101_2018	Dull	Stress	Dull_Stress	147	1	SY	sample	2.9
+M18N050	272107787	2_9	2	9	2018	2_9_2018	Control	Predator	Control_Predator	148	1	SY	sample	14.7
+M18N051	272106913	2_117	2	117	2018	2_117_2018	Dull	Predator	Dull_Predator	148	1	ASY	sample	10.3
+M18N052	272106912	2_92	2	92	2018	2_92_2018	Control	Stress	Control_Stress	148	1	SY	sample	11.5
+M18N053	272107786	2_77	2	77	2018	2_77_2018	Control	Control	Control_Control	148	1	SY	sample	2.1
+M18N054	88004633	2_83	2	83	2018	2_83_2018				148	1	ASY	sample	2.2
+M18N055	272107794	1_12	1	12	2018	1_12_2018	Control	Control	Control_Control	149	1	SY	sample	12.9
+M18N056	272107699	1_75	1	75	2018	1_75_2018	Control	Stress	Control_Stress	149	1	SY	sample	12.6
+M18N057	272107790	1_104	1	104	2018	1_104_2018	Dull	Predator	Dull_Predator	149	1	SY	sample	13.2
+M18N058	272107813	4_16	4	16	2018	4_16_2018				149	1	ASY	sample	7.8
+M18N059	272107812	4_18	4	18	2018	4_18_2018	Control	Stress	Control_Stress	149	1	SY	sample	19.6
+M18N060	156181156	4_93	4	93	2018	4_93_2018	Dull	Control	Dull_Control	149	1	ASY	sample	2.2
+M18N061	272107779	4_71	4	71	2018	4_71_2018	Dull	Control	Dull_Control	149	1	ASY	sample	8.1
+M18N062	272106696	1_123	1	123	2018	1_123_2018	Control	Predator	Control_Predator	151	1	SY	sample	8.2
+M18N063	263113706	2_122	2	122	2018	2_122_2018	Dull	Stress	Dull_Stress	151	3	ASY	sample	7.6
+M18N065	272106822	2_71	2	71	2018	2_71_2018	Control	Stress	Control_Stress	151	1	SY	sample	9.5
+M18N066	272106728	2_54	2	54	2018	2_54_2018	Control	Control	Control_Control	151	1	SY	sample	7.4
+M18N067	272107698	2_42	2	42	2018	2_42_2018	Dull	Stress	Dull_Stress	151	1	SY	sample	9.4
+M18N068	272106823	2_64	2	64	2018	2_64_2018	Dull	Stress	Dull_Stress	152	1	SY	sample	4.9
+M18N069	272106795	2_37	2	37	2018	2_37_2018	Dull	Stress	Dull_Stress	153	1	SY	sample	2.4
+M18N071	272108041	2_124	2	124	2018	2_124_2018	Dull	Control	Dull_Control	154	3	ASY	sample	4.0
+M18N072	272106635	2_22	2	22	2018	2_22_2018	Control	Control	Control_Control	155	3	SY	sample	14.1
+M18N073	272107749	2_67	2	67	2018	2_67_2018	Dull	Stress	Dull_Stress	155	3	ASY	sample	9.2
+M18N075	272106733	2_68	2	68	2018	2_68_2018	Control	Stress	Control_Stress	155	3	SY	sample	3.4
+M18N076	272107739	2_109	2	109	2018	2_109_2018	Control	Predator	Control_Predator	155	3	ASY	sample	4.8
+M18N079	272107814	1_48	1	48	2018	1_48_2018	Control	Stress	Control_Stress	156	1	SY	sample	12.9
+M18N081	272106901	2_6	2	6	2018	2_6_2018	Control	Stress	Control_Stress	156	3	SY	sample	1.9
+M18N083	272107016	2_105	2	105	2018	2_105_2018	Dull	Predator	Dull_Predator	156	3	ASY	sample	5.8
+M18N084	240134898	4_61	4	61	2018	4_61_2018	Control	Stress	Control_Stress	156	3	ASY	sample	5.2
+M18N086	272107764	4_63	4	63	2018	4_63_2018	Control	Stress	Control_Stress	156	3	ASY	sample	10.1
+M18N087	272107161	2_95	2	95	2018	2_95_2018	Dull	Control	Dull_Control	157	3	SY	sample	1.2
+M18N090	272107599	4_80	4	80	2018	4_80_2018	Control	Control	Control_Control	157	3	ASY	sample	1.3
+M18N091	272107298	4_72	4	72	2018	4_72_2018	Dull	Stress	Dull_Stress	157	3	ASY	sample	2.2
+M18N093	232146953	1_81	1	81	2018	1_81_2018	Dull	Control	Dull_Control	158	3	ASY	sample	1.5
+M18N095	272107802	1_32	1	32	2018	1_32_2018	Dull	Stress	Dull_Stress	158	3	SY	sample	5.5
+M18N096	272107809	1_91	1	91	2018	1_91_2018	Control	Predator	Control_Predator	158	3	SY	sample	2.2
+M18N098	272107219	4_62	4	62	2018	4_62_2018	Dull	Predator	Dull_Predator	158	3	ASY	sample	10.1
+M18N099	272107801	2_51	2	51	2018	2_51_2018	Control	Predator	Control_Predator	158	3	SY	sample	13.0
+M18N100	272106902	2_8	2	8	2018	2_8_2018	Dull	Control	Dull_Control	158	3	SY	sample	1.5
+M18N101	272106908	2_103	2	103	2018	2_103_2018	Control	Stress	Control_Stress	159	3	SY	sample	11.5
+M18N102	272107217	2_114	2	114	2018	2_114_2018	Dull	Predator	Dull_Predator	159	3	ASY	sample	8.5
+M18N103	272106905	2_14	2	14	2018	2_14_2018	Dull	Predator	Dull_Predator	159	3	SY	sample	10.8
+M18N104	272106904	2_80	2	80	2018	2_80_2018	Dull	Predator	Dull_Predator	159	3	SY	sample	5.6
+M18N106	272107805	2_34	2	34	2018	2_34_2018	Dull	Control	Dull_Control	159	3	ASY	sample	13.4
+M18N108	272106817	2_18	2	18	2018	2_18_2018	Control	Stress	Control_Stress	159	3	SY	sample	6.0
+M18N110	272107748	2_12	2	12	2018	2_12_2018	Control	Control	Control_Control	159	3	ASY	sample	1.2
+M18N113	272106903	2_112	2	112	2018	2_112_2018	Dull	Stress	Dull_Stress	159	3	SY	sample	7.2
+M18N116	272107806	2_38	2	38	2018	2_38_2018	Control	Control	Control_Control	159	3	SY	sample	12.8
+M18N118	272107807	2_2	2	2	2018	2_2_2018	Control	Control	Control_Control	159	3	ASY	sample	10.7
+M18N120	88004754	2_21	2	21	2018	2_21_2018	Dull	Predator	Dull_Predator	159	3	ASY	sample	16.5
+M18N122	272107750	1_121	1	121	2018	1_121_2018	Dull	Predator	Dull_Predator	159	3	ASY	sample	15.9
+M18N123	272107153	1_17	1	17	2018	1_17_2018	Control	Predator	Control_Predator	160	3	SY	sample	12.9
+M18N129	272106907	2_86	2	86	2018	2_86_2018	Control	Predator	Control_Predator	160	3	ASY	sample	8.1
+M18N131	272107811	2_102	2	102	2018	2_102_2018	Control	Control	Control_Control	160	3	ASY	sample	9.4
+M18N134	272107297	2_27	2	27	2018	2_27_2018	Dull	Predator	Dull_Predator	161	3	SY	sample	11.0
+M18N135	272106613	2_30	2	30	2018	2_30_2018	Control	Predator	Control_Predator	161	3	SY	sample	9.1
+M18N136	272107112	2_121	2	121	2018	2_121_2018	Control	Predator	Control_Predator	161	3	SY	sample	8.9
+M18N138	272106711	1_85	1	85	2018	1_85_2018	Control	Control	Control_Control	161	3	ASY	sample	8.2
+M18N140	272107258	4_101	4	101	2018	4_101_2018	Dull	Stress	Dull_Stress	161	3	SY	sample	4.0
+M18N142	272107261	4_90	4	90	2018	4_90_2018	Control	Control	Control_Control	161	3	ASY	sample	10.7
+M18N145	272107786	2_77	2	77	2018	2_77_2018	Control	Control	Control_Control	162	3	SY	sample	10.7
+M18N146	272107812	4_18	4	18	2018	4_18_2018	Control	Stress	Control_Stress	162	3	SY	sample	9.6
+M18N148	272106913	2_117	2	117	2018	2_117_2018	Dull	Predator	Dull_Predator	163	3	ASY	sample	1.1
+M18N149	272107699	1_75	1	75	2018	1_75_2018	Control	Stress	Control_Stress	163	3	SY	sample	0.9
+M18N151	156181156	4_93	4	93	2018	4_93_2018	Dull	Control	Dull_Control	163	3	ASY	sample	21.0
+M18N155	272107794	1_12	1	12	2018	1_12_2018	Control	Control	Control_Control	164	3	SY	sample	13.1
+M18N157	272107596	2_82	2	82	2018	2_82_2018	Dull	Control	Dull_Control	164	1	SY	sample	15.7
+M18N168	272106823	2_64	2	64	2018	2_64_2018	Dull	Stress	Dull_Stress	165	3	SY	sample	12.0
+M18N169	272107698	2_42	2	42	2018	2_42_2018	Dull	Stress	Dull_Stress	165	3	SY	sample	4.6
+M18N170	272107779	4_71	4	71	2018	4_71_2018	Dull	Control	Dull_Control	165	3	ASY	sample	16.0
+M18N187	272106728	2_54	2	54	2018	2_54_2018	Control	Control	Control_Control	166	3	SY	sample	7.0
+M18N235	272106696	1_123	1	123	2018	1_123_2018	Control	Predator	Control_Predator	167	3	SY	sample	0.9
+M18N281	272106795	2_37	2	37	2018	2_37_2018	Dull	Stress	Dull_Stress	170	3	SY	sample	6.6
+M18N288	272107814	1_48	1	48	2018	1_48_2018	Control	Stress	Control_Stress	171	3	SY	sample	14.6
+M18N332	272107596	2_82	2	82	2018	2_82_2018	Dull	Control	Dull_Control	179	3	SY	sample	6.4
+M19N001	272107739	2_111	2	111	2019	2_111_2019	Control	Dull	Control_Dull	136	1	ASY	sample	5.3
+M19N002	272107786	2_103	2	103	2019	2_103_2019	Control	Control	Control_Control	140	1	ASY	sample	13.6
+M19N003	272107805	2_35	2	35	2019	2_35_2019	Predator	Dull	Predator_Dull	140	1	ASY	sample	2.3
+M19N004	278172145	2_36	2	36	2019	2_36_2019	Predator	Dull	Predator_Dull	141	1	ASY	sample	12.1
+M19N005	278172146	2_44	2	44	2019	2_44_2019	Control	Control	Control_Control	141	1	SY	sample	1.6
+M19N009	272107739	2_111	2	111	2019	2_111_2019	Control	Dull	Control_Dull	142	2	ASY	sample	26.7
+M19N010	88004570	2_121	2	121	2019	2_121_2019	Control	Dull	Control_Dull	142	1	ASY	sample	8.9
+M19N011	278172148	2_93	2	93	2019	2_93_2019	Predator	Dull	Predator_Dull	143	1	SY	sample	3.6
+M19N012	281128401	2_87	2	87	2019	2_87_2019	Predator	Control	Predator_Control	143	1	SY	sample	7.5
+M19N013	272106822	2_68	2	68	2019	2_68_2019	Control	Dull	Control_Dull	143	1	ASY	sample	2.4
+M19N014	278172147	2_101	2	101	2019	2_101_2019	Predator	Dull	Predator_Dull	143	1	ASY	sample	3.7
+M19N015	281128402	2_20	2	20	2019	2_20_2019	Control	Control	Control_Control	144	1	SY	sample	13.5
+M19N016	272107748	2_39	2	39	2019	2_39_2019	Control	Control	Control_Control	144	1	ASY	sample	5.6
+M19N017	278172150	2_80	2	80	2019	2_80_2019	Control	Dull	Control_Dull	144	1	SY	sample	5.8
+M19N018	278172149	2_109	2	109	2019	2_109_2019	Control	Dull	Control_Dull	144	1	SY	sample	15.1
+M19N019	272107284	2_19	2	19	2019	2_19_2019	Predator	Control	Predator_Control	144	1	SY	sample	8.2
+M19N022	272107805	2_35	2	35	2019	2_35_2019	Predator	Dull	Predator_Dull	145	2	ASY	sample	14.0
+M19N023	272106913	2_120	2	120	2019	2_120_2019	Control	Control	Control_Control	145	1	ASY	sample	3.8
+M19N025	272107217	2_116	2	116	2019	2_116_2019	Control	Control	Control_Control	146	1	ASY	sample	7.7
+M19N028	278172145	2_36	2	36	2019	2_36_2019	Predator	Dull	Predator_Dull	146	2	ASY	sample	11.7
+M19N029	272107786	2_103	2	103	2019	2_103_2019	Control	Control	Control_Control	146	2	ASY	sample	2.6
+M19N033	281128403	2_94	2	94	2019	2_94_2019	Predator	Control	Predator_Control	147	1	SY	sample	14.7
+M19N034	88004570	2_121	2	121	2019	2_121_2019	Control	Dull	Control_Dull	147	2	ASY	sample	30.2
+M19N039	272107698	2_122	2	122	2019	2_122_2019	Predator	Control	Predator_Control	148	1	ASY	sample	13.8
+M19N041	278171869	2_8	2	8	2019	2_8_2019	Predator	Dull	Predator_Dull	148	1	SY	sample	16.4
+M19N042	88004754	2_29	2	29	2019	2_29_2019	Predator	Dull	Predator_Dull	148	1	ASY	sample	14.8
+M19N043	278171870	2_12	2	12	2019	2_12_2019	Predator	Dull	Predator_Dull	148	1	SY	sample	18.2
+M19N044	278172147	2_101	2	101	2019	2_101_2019	Predator	Dull	Predator_Dull	148	2	ASY	sample	13.0
+M19N045	272106822	2_68	2	68	2019	2_68_2019	Control	Dull	Control_Dull	148	2	ASY	sample	22.1
+M19N048	281128701	1_105	1	105	2019	1_105_2019	Predator	Dull	Predator_Dull	148	1	SY	sample	3.8
+M19N049	278172224	1_47	1	47	2019	1_47_2019	Control	Control	Control_Control	148	1	SY	sample	6.9
+M19N052	272107809	1_81	1	81	2019	1_81_2019	Control	Control	Control_Control	149	1	ASY	sample	23.2
+M19N053	212110294	1_90	1	90	2019	1_90_2019	Predator	Control	Predator_Control	149	1	ASY	sample	2.8
+M19N054	278172154	2_75	2	75	2019	2_75_2019	Control	Dull	Control_Dull	149	1	SY	sample	2.2
+M19N055	278171871	2_1	2	1	2019	2_1_2019	Control	Dull	Control_Dull	149	1	SY	sample	17.8
+M19N056	278172151	2_32	2	32	2019	2_32_2019	Control	Dull	Control_Dull	149	1	SY	sample	7.6
+M19N057	278172152	2_41	2	41	2019	2_41_2019	Control	Control	Control_Control	149	1	SY	sample	13.6
+M19N058	278172153	2_127	2	127	2019	2_127_2019	Predator	Control	Predator_Control	149	1	SY	sample	15.4
+M19N059	272107748	2_39	2	39	2019	2_39_2019	Control	Control	Control_Control	149	2	ASY	sample	14.0
+M19N060	278172149	2_109	2	109	2019	2_109_2019	Control	Dull	Control_Dull	149	2	SY	sample	18.3
+M19N061	278172150	2_80	2	80	2019	2_80_2019	Control	Dull	Control_Dull	149	2	SY	sample	21.6
+M19N062	272107284	2_19	2	19	2019	2_19_2019	Predator	Control	Predator_Control	149	2	SY	sample	5.4
+M19N063	281128402	2_20	2	20	2019	2_20_2019	Control	Control	Control_Control	149	2	SY	sample	26.9
+M19N070	278171875	2_117	2	117	2019	2_117_2019	Predator	Dull	Predator_Dull	150	1	SY	sample	16.0
+M19N071	278171873	2_82	2	82	2019	2_82_2019	Control	Control	Control_Control	150	1	SY	sample	13.2
+M19N072	278171896	2_78	2	78	2019	2_78_2019	Control	Control	Control_Control	150	1	SY	sample	9.1
+M19N073	278171872	2_3	2	3	2019	2_3_2019	Control	Dull	Control_Dull	150	1	SY	sample	4.0
+M19N074	272106817	2_22	2	22	2019	2_22_2019	Control	Control	Control_Control	150	1	ASY	sample	0.3
+M19N075	278172155	2_15	2	15	2019	2_15_2019	Predator	Control	Predator_Control	150	1	SY	sample	14.7
+M19N076	272106913	2_120	2	120	2019	2_120_2019	Control	Control	Control_Control	150	2	ASY	sample	7.1
+M19N084	272107217	2_116	2	116	2019	2_116_2019	Control	Control	Control_Control	151	2	ASY	sample	10.2
+M19N085	272107739	2_111	2	111	2019	2_111_2019	Control	Dull	Control_Dull	151	3	ASY	sample	3.9
+M19N087	278172157	2_6	2	6	2019	2_6_2019	Predator	Control	Predator_Control	151	1	SY	sample	6.4
+M19N088	272107855	2_62	2	62	2019	2_62_2019	Control	Control	Control_Control	151	1	SY	sample	2.3
+M19N089	278172156	2_70	2	70	2019	2_70_2019	Predator	Control	Predator_Control	151	1	SY	sample	6.4
+M19N094	278172158	2_105	2	105	2019	2_105_2019	Predator	Dull	Predator_Dull	152	1	SY	sample	9.6
+M19N095	281128702	1_65	1	65	2019	1_65_2019	Predator	Control	Predator_Control	152	1	SY	sample	5.4
+M19N096	278172231	1_34	1	34	2019	1_34_2019	Control	Control	Control_Control	152	1	SY	sample	7.1
+M19N097	281128403	2_94	2	94	2019	2_94_2019	Predator	Control	Predator_Control	152	2	SY	sample	12.4
+M19N104	281128704	1_58	1	58	2019	1_58_2019	Predator	Control	Predator_Control	153	1	SY	sample	1.9
+M19N105	281128701	1_105	1	105	2019	1_105_2019	Predator	Dull	Predator_Dull	153	2	SY	sample	1.9
+M19N106	278172224	1_47	1	47	2019	1_47_2019	Control	Control	Control_Control	153	2	SY	sample	2.4
+M19N108	278171870	2_12	2	12	2019	2_12_2019	Predator	Dull	Predator_Dull	153	2	SY	sample	2.1
+M19N109	278171877	2_9	2	9	2019	2_9_2019	Predator	Dull	Predator_Dull	153	1	SY	sample	6.2
+M19N110	278172159	2_25	2	25	2019	2_25_2019	Control	Dull	Control_Dull	153	1	ASY	sample	2.5
+M19N111	272106728	2_54	2	54	2019	2_54_2019	Predator	Control	Predator_Control	153	1	ASY	sample	2.0
+M19N112	156181153	2_57	2	57	2019	2_57_2019	Predator	Control	Predator_Control	153	1	SY	sample	3.4
+M19N113	278171876	2_107	2	107	2019	2_107_2019	Control	Dull	Control_Dull	153	1	SY	sample	1.4
+M19N117	278172232	1_134	1	134	2019	1_134_2019	Predator	Dull	Predator_Dull	154	1	SY	sample	2.2
+M19N118	278172233	1_86	1	86	2019	1_86_2019	Control	Control	Control_Control	154	1	SY	sample	2.4
+M19N119	278172160	2_64	2	64	2019	2_64_2019	Predator	Dull	Predator_Dull	154	1	ASY	sample	3.9
+M19N120	272107361	2_31	2	31	2019	2_31_2019	Control	Dull	Control_Dull	154	1	SY	sample	2.9
+M19N121	272107698	2_122	2	122	2019	2_122_2019	Predator	Control	Predator_Control	154	2	ASY	sample	6.8
+M19N122	278172153	2_127	2	127	2019	2_127_2019	Predator	Control	Predator_Control	154	2		sample	2.4
+M19N123	278171871	2_1	2	1	2019	2_1_2019	Control	Dull	Control_Dull	154	2	SY	sample	4.7
+M19N124	278172151	2_32	2	32	2019	2_32_2019	Control	Dull	Control_Dull	154	2	SY	sample	2.2
+M19N125	278172152	2_41	2	41	2019	2_41_2019	Control	Control	Control_Control	154	2	SY	sample	4.7
+M19N126	88004754	2_29	2	29	2019	2_29_2019	Predator	Dull	Predator_Dull	154	2	ASY	sample	2.4
+M19N127	278172154	2_75	2	75	2019	2_75_2019	Control	Dull	Control_Dull	154	2	SY	sample	3.9
+M19N128	212110294	1_90	1	90	2019	1_90_2019	Predator	Control	Predator_Control	154	2	ASY	sample	2.0
+M19N129	272107809	1_81	1	81	2019	1_81_2019	Control	Control	Control_Control	154	2	ASY	sample	2.5
+M19N133	272107786	2_103	2	103	2019	2_103_2019	Control	Control	Control_Control	155	3	ASY	sample	16.4
+M19N135	272107805	2_35	2	35	2019	2_35_2019	Predator	Dull	Predator_Dull	155	3	ASY	sample	2.0
+M19N137	281128603	2_72	2	72	2019	2_72_2019	Predator	Control	Predator_Control	155	1	SY	sample	2.1
+M19N138	281128601	2_99	2	99	2019	2_99_2019	Control	Control	Control_Control	155	1	SY	sample	7.5
+M19N139	281128602	2_85	2	85	2019	2_85_2019	Control	Dull	Control_Dull	155	1	ASY	sample	12.0
+M19N140	278171872	2_3	2	3	2019	2_3_2019	Control	Dull	Control_Dull	155	2	SY	sample	12.6
+M19N141	278172155	2_15	2	15	2019	2_15_2019	Predator	Control	Predator_Control	155	2	SY	sample	24.2
+M19N142	272106817	2_22	2	22	2019	2_22_2019	Control	Control	Control_Control	155	2	ASY	sample	8.0
+M19N143	278171896	2_78	2	78	2019	2_78_2019	Control	Control	Control_Control	155	2	SY	sample	8.7
+M19N144	278171873	2_82	2	82	2019	2_82_2019	Control	Control	Control_Control	155	2	SY	sample	8.1
+M19N145	278171875	2_117	2	117	2019	2_117_2019	Predator	Dull	Predator_Dull	155	2	SY	sample	11.0
+M19N148	278172162	2_34	2	34	2019	2_34_2019	Control	Dull	Control_Dull	156	1	SY	sample	8.2
+M19N150	278172157	2_6	2	6	2019	2_6_2019	Predator	Control	Predator_Control	156	2	SY	sample	14.4
+M19N151	272107855	2_62	2	62	2019	2_62_2019	Control	Control	Control_Control	156	2	SY	sample	2.0
+M19N154	88004570	2_121	2	121	2019	2_121_2019	Control	Dull	Control_Dull	157	3	ASY	sample	15.2
+M19N155	272107161	2_124	2	124	2019	2_124_2019	Control	Control	Control_Control	157	1	ASY	sample	16.2
+M19N156	278172158	2_105	2	105	2019	2_105_2019	Predator	Dull	Predator_Dull	157	2	SY	sample	17.9
+M19N157	272106822	2_68	2	68	2019	2_68_2019	Control	Dull	Control_Dull	157	3	ASY	sample	21.6
+M19N158	278172235	1_83	1	83	2019	1_83_2019	Control	Dull	Control_Dull	157	1	SY	sample	15.6
+M19N159	281128702	1_65	1	65	2019	1_65_2019	Predator	Control	Predator_Control	157	2	SY	sample	14.3
+M19N161	278172150	2_80	2	80	2019	2_80_2019	Control	Dull	Control_Dull	158	3	SY	sample	15.8
+M19N163	278172149	2_109	2	109	2019	2_109_2019	Control	Dull	Control_Dull	158	3	SY	sample	14.0
+M19N165	281128402	2_20	2	20	2019	2_20_2019	Control	Control	Control_Control	158	3	SY	sample	14.9
+M19N166	272106913	2_120	2	120	2019	2_120_2019	Control	Control	Control_Control	158	3	ASY	sample	14.2
+M19N168	272107748	2_39	2	39	2019	2_39_2019	Control	Control	Control_Control	158	3	ASY	sample	13.8
+M19N170	278172147	2_101	2	101	2019	2_101_2019	Predator	Dull	Predator_Dull	158	3	ASY	sample	13.8
+M19N172	278172163	2_14	2	14	2019	2_14_2019	Predator	Dull	Predator_Dull	158	1	ASY	sample	2.2
+M19N173	278171876	2_107	2	107	2019	2_107_2019	Control	Dull	Control_Dull	158	2	SY	sample	21.7
+M19N174	272106728	2_54	2	54	2019	2_54_2019	Predator	Control	Predator_Control	158	2	ASY	sample	12.4
+M19N175	278171877	2_9	2	9	2019	2_9_2019	Predator	Dull	Predator_Dull	158	2	SY	sample	17.0
+M19N176	281128704	1_58	1	58	2019	1_58_2019	Predator	Control	Predator_Control	158	2	SY	sample	4.3
+M19N179	272107217	2_116	2	116	2019	2_116_2019	Control	Control	Control_Control	159	3	ASY	sample	9.9
+M19N180	156181153	2_57	2	57	2019	2_57_2019	Predator	Control	Predator_Control	159	2	SY	sample	24.8
+M19N181	278172160	2_64	2	64	2019	2_64_2019	Predator	Dull	Predator_Dull	159	2	ASY	sample	17.4
+M19N182	272107361	2_31	2	31	2019	2_31_2019	Control	Dull	Control_Dull	159	2	SY	sample	22.0
+M19N183	281128602	2_85	2	85	2019	2_85_2019	Control	Dull	Control_Dull	159	2	ASY	sample	17.5
+M19N185	278172232	1_134	1	134	2019	1_134_2019	Predator	Dull	Predator_Dull	159	2	SY	sample	21.0
+M19N186	278172233	1_86	1	86	2019	1_86_2019	Control	Control	Control_Control	159	2	SY	sample	31.9
+M19N188	281128701	1_105	1	105	2019	1_105_2019	Predator	Dull	Predator_Dull	160	3	SY	sample	16.8
+M19N189	281128604	2_114	2	114	2019	2_114_2019	Control	Dull	Control_Dull	160	1	SY	sample	15.5
+M19N190	278172146	2_45	2	45	2019	2_45_2019	Predator	Dull	Predator_Dull	160	1	SY	sample	22.1
+M19N191	281128403	2_94	2	94	2019	2_94_2019	Predator	Control	Predator_Control	160	3	SY	sample	19.6
+M19N193	281128603	2_72	2	72	2019	2_72_2019	Predator	Control	Predator_Control	160	2	SY	sample	28.9
+M19N194	281128601	2_99	2	99	2019	2_99_2019	Control	Control	Control_Control	160	2	SY	sample	21.0
+M19N203	278171870	2_12	2	12	2019	2_12_2019	Predator	Dull	Predator_Dull	161	3	SY	sample	16.6
+M19N205	278172153	2_127	2	127	2019	2_127_2019	Predator	Control	Predator_Control	161	3	SY	sample	5.6
+M19N206	278172224	1_47	1	47	2019	1_47_2019	Control	Control	Control_Control	161	3	SY	sample	20.1
+M19N209	278172162	2_34	2	34	2019	2_34_2019	Control	Dull	Control_Dull	161	2	SY	sample	24.3
+M19N210	272107809	1_81	1	81	2019	1_81_2019	Control	Control	Control_Control	161	3	ASY	sample	19.3
+M19N212	212110294	1_90	1	90	2019	1_90_2019	Predator	Control	Predator_Control	162	3	ASY	sample	18.0
+M19N213	278172235	1_83	1	83	2019	1_83_2019	Control	Dull	Control_Dull	162	2	SY	sample	0.1
+M19N214	272107698	2_122	2	122	2019	2_122_2019	Predator	Control	Predator_Control	162	3	ASY	sample	26.1
+M19N215	278172154	2_75	2	75	2019	2_75_2019	Control	Dull	Control_Dull	162	3	SY	sample	5.2
+M19N216	278171871	2_1	2	1	2019	2_1_2019	Control	Dull	Control_Dull	162	3	ASY	sample	18.6
+M19N217	278172152	2_41	2	41	2019	2_41_2019	Control	Control	Control_Control	162	3	SY	sample	22.9
+M19N218	278172151	2_32	2	32	2019	2_32_2019	Control	Dull	Control_Dull	162	3	ASY	sample	11.3
+M19N220	278171873	2_82	2	82	2019	2_82_2019	Control	Control	Control_Control	162	3	SY	sample	19.7
+M19N222	272107161	2_124	2	124	2019	2_124_2019	Control	Control	Control_Control	162	2	ASY	sample	23.9
+M19N223	278171875	2_117	2	117	2019	2_117_2019	Predator	Dull	Predator_Dull	163	3	SY	sample	6.5
+M19N225	278172163	2_14	2	14	2019	2_14_2019	Predator	Dull	Predator_Dull	163	2	ASY	sample	14.5
+M19N226	278171872	2_3	2	3	2019	2_3_2019	Control	Dull	Control_Dull	163	3	SY	sample	13.1
+M19N228	88004754	2_29	2	29	2019	2_29_2019	Predator	Dull	Predator_Dull	163	3	ASY	sample	9.7
+M19N229	278172155	2_15	2	15	2019	2_15_2019	Predator	Control	Predator_Control	164	3	SY	sample	6.9
+M19N238	272107855	2_62	2	62	2019	2_62_2019	Control	Control	Control_Control	165	3	SY	sample	7.2
+M19N240	281128604	2_114	2	114	2019	2_114_2019	Control	Dull	Control_Dull	166	2	SY	sample	22.4
+M19N241	156181153	2_57	2	57	2019	2_57_2019	Predator	Control	Predator_Control	166	3	SY	sample	17.1
+M19N243	278172158	2_105	2	105	2019	2_105_2019	Predator	Dull	Predator_Dull	166	3	SY	sample	8.6
+M19N272	278172160	2_64	2	64	2019	2_64_2019	Predator	Dull	Predator_Dull	168	3	ASY	sample	11.3
+M19N274	278171896	2_78	2	78	2019	2_78_2019	Control	Control	Control_Control	168	3	ASY	sample	24.7
+M19N275	281128601	2_99	2	99	2019	2_99_2019	Control	Control	Control_Control	168	3	SY	sample	23.3
+M19N277	272106728	2_54	2	54	2019	2_54_2019	Predator	Control	Predator_Control	168	3	SY	sample	9.7
+M19N279	281128602	2_85	2	85	2019	2_85_2019	Control	Dull	Control_Dull	168	3	ASY	sample	16.2
+M19N281	278171877	2_9	2	9	2019	2_9_2019	Predator	Dull	Predator_Dull	168	3	SY	sample	14.0
+M19N283	272107361	2_31	2	31	2019	2_31_2019	Control	Dull	Control_Dull	168	3	SY	sample	27.7
+M19N286	281128704	1_58	1	58	2019	1_58_2019	Predator	Control	Predator_Control	168	3	SY	sample	12.0
+M19N294	278172233	1_86	1	86	2019	1_86_2019	Control	Control	Control_Control	169	3	SY	sample	19.3
+M19N298	278172162	2_34	2	34	2019	2_34_2019	Control	Dull	Control_Dull	170	3	SY	sample	10.0
+M19N300	281128603	2_72	2	72	2019	2_72_2019	Predator	Control	Predator_Control	170	3	SY	sample	3.4
+M19N317	278172235	1_83	1	83	2019	1_83_2019	Control	Dull	Control_Dull	172	3	SY	sample	8.5
+M19N320	278172163	2_14	2	14	2019	2_14_2019	Predator	Dull	Predator_Dull	172	3	ASY	sample	14.8
+M18NB1													neg_control	1.0
+M18NB10													neg_control	0.9
+M18NB11													neg_control	1.3
+M18NB12													neg_control	0.9
+M18NB13													neg_control	1.6
+M18NB14													neg_control	0.8
+M18NB15													neg_control	0.7
+M18NB16													neg_control	0.8
+M18NB17													neg_control	1.3
+M18NB18													neg_control	1.0
+M18NB19													neg_control	1.4
+M18NB2													neg_control	1.1
+M18NB20													neg_control	1.1
+M18NB3													neg_control	0.8
+M18NB4													neg_control	1.1
+M18NB5													neg_control	0.9
+M18NB6													neg_control	0.9
+M18NB7													neg_control	0.9
+M18NB8													neg_control	1.0
+M18NB9													neg_control	0.8
+M19NB01													neg_control	1.6
+M19NB02													neg_control	2.2
+M19NB03													neg_control	2.3
+M19NB04													neg_control	18.6
+M19NB05													neg_control	3.8
+M19NB06													neg_control	2.5
+M19NB07													neg_control	2.0
+M19NB08													neg_control	0.5
+M19NB09													neg_control	1.7
+M19NB10													neg_control	1.4
+M19NB11													neg_control	1.8
+M19NB12													neg_control	1.1
+M19NB13													neg_control	0.7
+M19NB14													neg_control	1.1
+M19NB15													neg_control	1.8
+M19NB16													neg_control	1.5
+M19NB17													neg_control	2.0
