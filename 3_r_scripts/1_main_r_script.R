@@ -4,7 +4,7 @@
 # Experiment 2: 2019, 2x2 factorial with first a color manipulation then a challenge.
 # 
 # Written by Conor Taff
-# Last updated 9/4/2020
+# Last updated 8/31/2022
 # Run under R Studio 1.1.463 on Mac OSX 10.11.6
 
 
@@ -43,9 +43,9 @@
   # rfid reads: total rfid reads at each box on each day (used to filter out malfunctioning rfid boards)
     d_tot_rfid <- read.delim(here::here("1_raw_data", "total_rfid_reads.txt"))
   
-  # ACTH validation experiment data
-    d_acth_fem <- read.delim(here::here("1_raw_data", "adult_acth_validation.txt"))
-    d_acth_nest <- read.delim(here::here("1_raw_data", "nestling_acth_validation.txt"))
+  # # ACTH validation experiment data  # Reported in Taff et al. 2022 Journal of Experimental Biology
+  #   d_acth_fem <- read.delim(here::here("1_raw_data", "adult_acth_validation.txt"))
+  #   d_acth_nest <- read.delim(here::here("1_raw_data", "nestling_acth_validation.txt"))
     
 ## Set colors for different treatment groups ----
     col_dull <- "slateblue"

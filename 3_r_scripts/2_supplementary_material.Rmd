@@ -24,18 +24,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## **Supplemental Methods**
-
-### *Determining Nest of Origin for Cross-Fostered Nestlings*
-
-Blood samples collected in the field were stored in Queen's lysis buffer [@seutin]. DNA was extracted from nestling and putative mother blood samples using Qiagen DNeasy Blood and Tissue kit spin columns following the manufacturer's protocol. For each sample, we amplified a set of 9 microsatellite markers that were previously developed for and validated in this population of tree swallows [@makarewich]. These nine loci were amplified in two multiplexed reactions that included 5 and 4 loci each, as described in Hallinger et al. [-@hallinger]. The full list of primer sequences, reaction volumes, and cycling conditions is given in Table S1.
-
-After reactions were complete, we added 1 $\mu$l of the PCR product to 11.9 $\mu$l of formamide and 0.1 $\mu$l of LIZ size standard (GeneScan$^T$$^M$ 500 LIZ$^T$$^M$) and submitted the samples to the Cornell Biotechnology Resources Center for fragment analysis. We re-ran any samples that failed to amplify and all 9 loci were scored for all nestlings and putative mothers in this study except for those noted below where a sample was not available. Peaks for each loci were called using the Microsatellite Plugin in Geneious version 11.0.4 with manual confirmation for each call. 
-
-Because conspecific brood parasitism is rare in tree swallows [@whittingham], we assumed that putative mothers for each nestling included only the 2-3 females associated with nest boxes that were involved in each cross-fostering group. Therefore, we compared the peak calls for each nestling to the set of 2-3 putative mothers and identified matches. We considered nestlings to match a putative mother if their alleles matched at a minimum of 8 out of 9 loci and did not match the other putative mothers at a minimum of 2 out of 9 loci. 
-
-Across the two years, 374 of 386 nestlings matched one female according to these criteria. In 371 of these cases, nestlings matched their putative mother at all 9 loci and in the three cases with one mismatch the putative mother was homozygous at the loci in question and the discrepancy could be explained by a null allele. For the remaining 12 nestlings, two had lost blood samples and were not sequenced, one had no blood sample from the probable mother because she abandoned before capture, one matched two putative mothers at all nine loci, and 8 did not match any putative mother. Those 8 samples that did not match came from two nests in which all nestlings had unclear maternal origin. Those assignments could be the result of sample processing mistakes (e.g., a mislabeled sample for extraction) or a real biological process (e.g., a new female taking over a clutch of eggs already laid). 
-
-In our analyses, we excluded nestlings with unknown maternal origin from analyses that specifically used cross fostering status as a predictor, but included them in analyses that were focused only on the average morphology of nestlings raised in a social nest or overall fledging success. In this study, nestlings were categorized as being raised in a 'home' nest if their genetic and social mother were the same or a 'crossed' nest if their genetic and social mother were different.
   
 ### *Plumage Measurement*
 
