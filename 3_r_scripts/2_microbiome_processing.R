@@ -130,7 +130,7 @@
 
 ## Save original to disk
   ## Save the original unmodified phyloseq objec to disk
-    saveRDS(ps, here("2_modified_data/tres18_19_original_ps.rds"))
+    #saveRDS(ps, here("2_modified_data/tres18_19_original_ps.rds"))
     ps <- readRDS(here("2_modified_data/tres18_19_original_ps.rds"))
 
 ## Remove non-bacteria ----

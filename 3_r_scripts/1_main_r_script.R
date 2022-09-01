@@ -123,8 +123,10 @@
                                   "Predator * Stage", "Dulled * Stage", "Dulled * Predator * Stage"),
                   dv.labels = "Post-treatment Mass")
         saveRDS(m_mass_19b_t, here::here("5_other_outputs/m_mass_19b_t.RDS"))
+        
 
 ## Female Mass Plots ----      
+        png(here::here("3_r_scripts/mass_figure.png"), width = 10, height = 5.7, units = "in", res = 300)
   # Figures showing adult mass at each timepoint by treatment split by year (experiment)
       # Pivot mass into long format with one row for each mass measurement
         long_mass <- d_fem %>%
@@ -173,7 +175,7 @@
      
       # Initiate plot for 2018   
             plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-                 main = "Dulling then Challenge", xlim = c(0.3, 3.7), ylim = c(15.5, 25),
+                 main = "Experiment One", xlim = c(0.3, 3.7), ylim = c(15.5, 25),
                  xlab = "Capture Number", ylab = "Female Mass (g)")
             axis(1, seq(0, 4, 1))
             axis(2, seq(5, 30, 1), las = 2)
@@ -193,15 +195,15 @@
             #       pch = c(21, 21, 21, 24, 22), pt.bg = c(col_sham, col_dull, rep("white", 3)), cex = 1.2, bty = "n")
            
           # Add labeling rectangles and text for when treatments happened 
-            rect(1.4, 15.7, 3.5, 16.2, col = alpha("chartreuse3", 0.3))
-            text(2.15, 15.95, "Dulling", pos = 4)
+            rect(1.4, 15.7, 3.5, 16.2, col = alpha("coral3", 0.2))
+            text(1.7, 15.95, "Signal Manipulation", pos = 4, cex = 0.9)
             
-            rect(2.2, 16.3, 3.5, 16.8, col = alpha("coral3", 0.2))
-            text(2.4, 16.55, "Challenge", pos = 4)
+            rect(2.2, 16.3, 3.5, 16.8, col = alpha("chartreuse3", 0.3))
+            text(2.4, 16.55, "Challenge", pos = 4, cex = 0.9)
         
         #Initiate Plot for 2018
             plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-                 main = "Challenge then Dulling", xlim = c(0.3, 3.7), ylim = c(15.5, 25),
+                 main = "Experiment Two", xlim = c(0.3, 3.7), ylim = c(15.5, 25),
                  xlab = "Capture Number", ylab = "Female Mass (g)")
             axis(1, seq(0, 4, 1))
             axis(2, seq(5, 30, 1), las = 2)
@@ -220,11 +222,13 @@
                    pch = c(21, 21, 21, 24, 22), pt.bg = c(col_sham, col_dull, rep("white", 3)), cex = 1, bty = "n")
           
           # Add labeling rectangles and text for when treatments happened   
-            rect(2.3, 15.7, 3.6, 16.2, col = alpha("chartreuse3", 0.3))
-            text(2.65, 15.95, "Dulling", pos = 4)
+            rect(2.3, 15.7, 3.6, 16.2, col = alpha("coral3", 0.2))
+            text(2.25, 15.95, "Signal Manipulation", pos = 4, cex = 0.9)
             
-            rect(1.4, 16.3, 2.5, 16.8, col = alpha("coral3", 0.2))
-            text(1.5, 16.55, "Challenge", pos = 4)
+            rect(1.4, 16.3, 2.5, 16.8, col = alpha("chartreuse3", 0.3))
+            text(1.5, 16.55, "Challenge", pos = 4, cex = 0.9)
+            
+    dev.off() # plot is saved to folder        
     
     
 ## Female Corticosterone Models ----
@@ -274,7 +278,7 @@
         saveRDS(m_19_cort_t, here::here("5_other_outputs/m_19_cort_t.RDS"))
  
 ## Female Corticosterone Plots ----
-        
+        # not included
     ## manipulate cort into long format for plotting
           long_cort <- d_fem %>%
             pivot_longer(cols = c("fbase1", "fstr1", "fdex1", "fbase2", "fbase3", "fstr3", "fdex3"), names_to = "cort_type", 
@@ -340,10 +344,10 @@
                  bg = as.character(sc2_18$p_col))
         
         # Add labels for when manipulations occurred  
-          rect(4.4, -15, 9.6, -10, col = alpha("chartreuse3", 0.3))
-          text(6.5, -12.5, "Dulling", pos = 4)
+          rect(4.4, -15, 9.6, -10, col = alpha("coral3", 0.2))
+          text(6.5, -12.5, "Signal Manipulation", pos = 4)
           
-          rect(6.4, -9, 9.6, -4, col = alpha("coral3", 0.2))
+          rect(6.4, -9, 9.6, -4, col = alpha("chartreuse3", 0.3))
           text(7.3, -6.5, "Challenge", pos = 4)
         
         # Add legend  
@@ -372,10 +376,10 @@
                  bg = as.character(sc2_19$p_col))
         
         # Add labeling rectangles and text  
-          rect(6.4, -15, 9.6, -10, col = alpha("chartreuse3", 0.3))
-          text(7, -12.5, "Dulling", pos = 4)
+          rect(6.4, -15, 9.6, -10, col = alpha("coral3", 0.2))
+          text(7, -12.5, "Signal Manipulation", pos = 4)
           
-          rect(4.4, -9, 6.6, -4, col = alpha("coral3", 0.2))
+          rect(4.4, -9, 6.6, -4, col = alpha("chartreuse3", 0.3))
           text(5, -6.5, "Challenge", pos = 4)
         
         # Add legend  
@@ -418,6 +422,58 @@
           
 ## Reproductive Success Plots ----
           
+      # alternate plot for manuscript
+          dfem2 <- d_fem[, c("soc_uby", "fband", "year", "color", "challenge", "full_treatment",
+                             "numfled")]
+          for(i in 1:nrow(dfem2)){
+            if(dfem2$year[i] == 2018){
+              dfem2$var1[i] <- dfem2$color[i]
+              dfem2$var2[i] <- dfem2$challenge[i]
+            }
+            if(dfem2$year[i] == 2019){
+              dfem2$var1[i] <- dfem2$challenge[i]
+              dfem2$var2[i] <- dfem2$color[i]
+            }
+          }
+          
+          dfem2$var1 <- gsub("Dull", "Dulled", dfem2$var1)
+          dfem2$var1 <- gsub("Control", "Sham", dfem2$var1)
+          dfem2$var2 <- gsub("Stress", "Handicap", dfem2$var2)
+          dfem2$fullt2 <- paste(dfem2$full_treatment, dfem2$year, sep = "_")
+          
+          dfem2$year <- gsub("2018", "Experiment One", dfem2$year)
+          dfem2$year <- gsub("2019", "Experiment Two", dfem2$year)
+          g <- ggplot(dfem2, mapping = aes(x = fullt2, y = numfled,
+                                      color = var1, shape = var2, fill = var1)) +
+            geom_boxplot(alpha = 0.25, outlier.shape = NA) +
+            facet_grid(~year, scales = 'free') +
+            scale_color_manual(values = c("orange", "slateblue")) +
+            scale_fill_manual(values = c("orange", "slateblue")) +
+            geom_jitter(width = 0.2, height = 0, alpha = 0.5) +
+            scale_shape_manual(values = c(21, 22, 24)) +
+            theme_bw() +
+            guides(fill = "none", color = "none", shape = "none") +
+            theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+                  axis.text = element_text(size = 12), axis.title = element_text(size = 14)) +
+            xlab("") + ylab("Number fledged") +
+            theme(axis.text.x = element_text(angle = 40, vjust = 1, hjust = 1)) +
+            scale_x_discrete(labels = c('Control_Control_2018' = 'Sham-Control',
+                                        'Control_Predator_2018' = "Sham-Predator",
+                                        'Control_Stress_2018' = 'Sham-Handicap',
+                                        'Dull_Control_2018' = 'Dulled-Control',
+                                        'Dull_Predator_2018' = 'Dulled-Predator',
+                                        'Dull_Stress_2018' = 'Dulled-Handicap',
+                                        'Control_Control_2019' = 'Control-Sham',
+                                        'Control_Dull_2019' = 'Control-Dulled',
+                                        'Predator_Control_2019' = 'Predator-Sham',
+                                        'Predator_Dull_2019' = 'Predator-Dulled'))
+          
+          gt <- ggplot_gtable(ggplot_build(g))
+          gt$widths[5] <- 1.5*gt$widths[5]
+          grid::grid.draw(gt)
+          
+          saveRDS(gt, here::here("5_other_outputs/rs_plot.rds"))
+          
       # Make all reproductive success measures into a long format data frame
         long_rs <- d_fem %>%
           pivot_longer(cols = c("clutch", "maxbrood", "numd6", "numband", "num_d15", "numfled"), names_to = "time_point", 
@@ -429,6 +485,10 @@
         rs_pos <- data.frame(time_point = c("clutch", "maxbrood", "numd6", "numband", "num_d15", "numfled"),
                                xpos = seq(1, 6, 1))
         long_rs <- plyr::join(long_rs, rs_pos, "time_point", "left", "first")
+        
+        lrsf <- subset(long_rs, long_rs$time_point == "numfled")
+        
+
         
      # Make a sumarized data frame that has means and errors for each group   
         sum_rs <- d_fem %>%
@@ -585,310 +645,7 @@
 
   # no plots made of glucose data at present  
     
-## Nestling Morphology Models ----
-  # Join nestlings to adult table to get treatment info
-      d_fem2 <- d_fem[, c("soc_uby", "color", "challenge")]
-      d_nestling2 <- plyr::join(d_nestling, d_fem2, "soc_uby", "left", "first")
-      d_nestling2 <- subset(d_nestling2, d_nestling2$raised_nest == "home" | 
-                              d_nestling2$raised_nest == "cross")
-      d_nestling2$raised_nest = relevel(d_nestling2$raised_nest, ref = "home")
-            
-  # Make separate dataframes for each year
-      d_nestling18 <- subset(d_nestling2, d_nestling2$year == "2018")
-      d_nestling19 <- subset(d_nestling2, d_nestling2$year == "2019")
-      
-  # Fit models for mass at day 12 & 15 plus headbill & wing at day 12 for 2018
-      m_d6_mass_18 <- lm(d6_av_mass ~ color*challenge, data = d_fem18)
-      m_d12_mass_18 <- lmer(d12_mass ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling18)
-      m_d15_mass_18 <- lmer(d15_mass ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling18)
-      m_d12_hb_18 <- lmer(d12_head ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling18)
-      m_d12_wing_18 <- lmer(d12_wing ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling18)
-  
-  # Make a table of the models
-      m18_nest_morph_t <- tab_model(m_d6_mass_18, m_d12_hb_18, m_d12_wing_18, m_d12_mass_18, m_d15_mass_18,
-                pred.labels = c("Intercept", "Signal Dulled", "Predator", "Flight Reduction",
-                                "Dulled * Predator", "Dulled * Flight", "Cross-Fostered"),
-                dv.labels = c("Average Mass Day 6", "Head + Bill Day 12", 
-                              "Wing Length Day 12", "Mass Day 12", "Mass Day 15"))
-  
-  # Save table
-      saveRDS(m18_nest_morph_t, here::here("5_other_outputs/m18_nest_morph_t.RDS"))
-      
-  # Fit models for mass at day 12 & 15 plus headbill & wing at day 12 for 2018
-      m_d6_mass_19 <- lm(d6_av_mass ~ color*challenge, data = d_fem19)
-      m_d12_mass_19 <- lmer(d12_mass ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling19)
-      m_d15_mass_19 <- lmer(d15_mass ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling19)
-      m_d12_hb_19 <- lmer(d12_head ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling19)
-      m_d12_wing_19 <- lmer(d12_wing ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling19)
-      
-  # Make a table of the models
-      m19_nest_morph_t <- tab_model(m_d6_mass_19, m_d12_hb_19, m_d12_wing_19, m_d12_mass_19, m_d15_mass_19,
-                                    pred.labels = c("Intercept", "Predator", "Signal Dulled", 
-                                                    "Predator * Dulled", "Cross-Fostered"),
-                                    dv.labels = c("Average Mass Day 6", "Head + Bill Day 12", 
-                                                  "Wing Length Day 12", "Mass Day 12", "Mass Day 15"))
-      
-  # Save table
-      saveRDS(m19_nest_morph_t, here::here("5_other_outputs/m19_nest_morph_t.RDS"))
-    
-## Nestling Morphology Plots ----
-    
-      # Make a long format object for the different time point nestling mass measures
-          long_nm <- d_fem %>%
-            pivot_longer(cols = c("d6_av_mass", "d12_av_mass", "d15_av_mass"), names_to = "time_point", 
-                         names_transform = list(
-                           time_point = ~ readr::parse_factor(.x, levels = c("d6_av_mass", "d12_av_mass", "d15_av_mass"),
-                                                              ordered = TRUE)),
-                         values_to = "mass", values_drop_na = TRUE)  
-          long_nm <- as.data.frame(long_nm)
-          nm_pos <- data.frame(time_point = c("d6_av_mass", "d12_av_mass", "d15_av_mass"),
-                               xpos = seq(1, 3, 1))
-          long_nm <- plyr::join(long_nm, nm_pos, "time_point", "left", "first")
-          
-       # Make a long format version that has mean and satndard errors for each group   
-          sum_nm <- d_fem %>%
-            pivot_longer(cols = c("d6_av_mass", "d12_av_mass", "d15_av_mass"), names_to = "time_point", 
-                         names_transform = list(
-                           time_point = ~ readr::parse_factor(.x, levels = c("d6_av_mass", "d12_av_mass", "d15_av_mass"),
-                                                              ordered = TRUE)),
-                         values_to = "mass", values_drop_na = TRUE) %>% 
-            group_by(as.factor(year), full_treatment, time_point) %>%
-            summarise(n = n(), mu = mean(mass, na.rm = TRUE), se = sd(mass, na.rm = TRUE) / sqrt(n()))
-          sum_nm <- as.data.frame(sum_nm)
-          sum_nm <- plyr::join(sum_nm, nm_pos, "time_point", "left", "first")
-          colnames(sum_nm)[2] <- "year"
-       
-      # Create some plotting parameters and join to the objects above   
-          for_plot <- data.frame(full_treatment = unique(sum_nm$full_treatment),
-                                 p_shape = c(21, 24, 22, 21, 24, 22, 21, 24, 24),
-                                 p_col = c(rep(col_sham, 3), rep(col_dull, 3), col_dull, col_sham, col_dull),
-                                 p_dodge = c(-.25, -.15, -.05, .05, .15, .25, .0833, -.0833, .25))
-          
-          sum_nm <- plyr::join(sum_nm, for_plot, "full_treatment")
-          long_nm <- plyr::join(long_nm, for_plot, "full_treatment")
-      
-      # Split into separate objects for each year    
-          nm2_18 <- subset(long_nm, long_nm$year == "2018")
-          nm2_19 <- subset(long_nm, long_nm$year == "2019")
-          
-          snm2_18 <- subset(sum_nm, sum_nm$year == "2018")
-          snm2_19 <- subset(sum_nm, sum_nm$year == "2019")
-     
-      # Make a long format table like above but for headbill and wing     
-          long_hbw <- d_fem %>%
-            pivot_longer(cols = c("d12_av_hb", "d12_av_wing"), names_to = "measure", 
-                         names_transform = list(
-                           measure = ~ readr::parse_factor(.x, levels = c("d12_av_hb", "d12_av_wing"),
-                                                              ordered = TRUE)),
-                         values_to = "length", values_drop_na = TRUE)  
-          long_hbw <- as.data.frame(long_hbw)
-          hbw_pos <- data.frame(measure = c("d12_av_hb", "d12_av_wing"),
-                               xpos = seq(1, 2, 1))
-          long_hbw <- plyr::join(long_hbw, hbw_pos, "measure", "left", "first")
-          
-       # Make hte long format headbill and wing mean and standard error by each group   
-          sum_hbw <- d_fem %>%
-            pivot_longer(cols = c("d12_av_hb", "d12_av_wing"), names_to = "measure", 
-                         names_transform = list(
-                           measure = ~ readr::parse_factor(.x, levels = c("d12_av_hb", "d12_av_wing"),
-                                                              ordered = TRUE)),
-                         values_to = "length", values_drop_na = TRUE) %>% 
-            group_by(as.factor(year), full_treatment, measure) %>%
-            summarise(n = n(), mu = mean(length, na.rm = TRUE), se = sd(length, na.rm = TRUE) / sqrt(n()))
-          sum_hbw <- as.data.frame(sum_hbw)
-          sum_hbw <- plyr::join(sum_hbw, hbw_pos, "measure", "left", "first")
-          colnames(sum_hbw)[2] <- "year"
-      
-      # Plotting parameters for headbill and wing    
-          for_plot <- data.frame(full_treatment = unique(sum_hbw$full_treatment),
-                                 p_shape = c(21, 24, 22, 21, 24, 22, 21, 24, 24),
-                                 p_col = c(rep(col_sham, 3), rep(col_dull, 3), col_dull, col_sham, col_dull),
-                                 p_dodge = c(-.25, -.15, -.05, .05, .15, .25, .0833, -.0833, .25))
-          
-          sum_hbw <- plyr::join(sum_hbw, for_plot, "full_treatment")
-          long_hbw <- plyr::join(long_hbw, for_plot, "full_treatment")
-     
-      # Split headbill and wing into separate dataframes for each year     
-          hbw2_18 <- subset(long_hbw, long_hbw$year == "2018")
-          hbw2_19 <- subset(long_hbw, long_hbw$year == "2019")
-          
-          shbw2_18 <- subset(sum_hbw, sum_hbw$year == "2018")
-          shbw2_19 <- subset(sum_hbw, sum_hbw$year == "2019")
-          
-          
-      # Initiate the plot for 2018 nestling mass
-          par(mfrow = c(1, 1))
-          plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-               main = "Dulling then Challenge", xlim = c(0.5, 3.5), ylim = c(-0.1, 25),
-               xlab = "", ylab = "Average Nestling Mass (g)")
-          axis(1, c(-1, 1, 2, 3, 10), c("", "Day 6", "Day 12", "Day 15", ""))
-          axis(2, seq(-30, 30, 5), las = 2)
-          
-          points(nm2_18$xpos + nm2_18$p_dodge, nm2_18$mass, pch = 16, col = alpha("black", 0.3))
-          #abline(h = 0)
-          
-          for(i in 1:nrow(snm2_18)){
-            lines(rep(snm2_18$xpos[i] + snm2_18$p_dodge[i], 2), 
-                  c(snm2_18$mu[i] - snm2_18$se[i], snm2_18$mu[i] + snm2_18$se[i]), lwd = 2)
-          }
-          points(snm2_18$xpos + snm2_18$p_dodge, snm2_18$mu, pch = snm2_18$p_shape, cex = 1.4,
-                 bg = as.character(snm2_18$p_col))
-          
-          abline(v = 1.5, lty = 2)
-          abline(v = 2.5, lty = 2)
-          
-          legend("bottomright", c("No Color", "Dull Color", "Control", "Predator", "Handicap"),
-                 pch = c(21, 21, 21, 24, 22), pt.bg = c(col_sham, col_dull, rep("white", 3)), cex =0.9, bty = "n")
-          
-      # Plot for 2018 nestling headbill 
-          par(mfrow = c(1, 2))
-          plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-               main = "Dulling then Challenge", xlim = c(1.5, 2.5), ylim = c(15, 60),
-               xlab = "", ylab = "Length on Day 12 (mm)")
-          axis(1, c(-1, 1, 2, 10), c("", "Head + Bill", "Wing", ""))
-          axis(2, seq(-30, 200, 5), las = 2)
-          
-          points(hbw2_18$xpos + hbw2_18$p_dodge, hbw2_18$length, pch = 16, col = alpha("black", 0.3))
-          #abline(h = 0)
-          
-          for(i in 1:nrow(shbw2_18)){
-            lines(rep(shbw2_18$xpos[i] + shbw2_18$p_dodge[i], 2), 
-                  c(shbw2_18$mu[i] - shbw2_18$se[i], shbw2_18$mu[i] + shbw2_18$se[i]), lwd = 2)
-          }
-          points(shbw2_18$xpos + shbw2_18$p_dodge, shbw2_18$mu, pch = shbw2_18$p_shape, cex = 1.4,
-                 bg = as.character(shbw2_18$p_col))
-          
-      # Plot for 2018 wing
-          plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-               main = "Dulling then Challenge", xlim = c(0.5, 1.5), ylim = c(19, 29),
-               xlab = "", ylab = "Length on Day 12 (mm)")
-          axis(1, c(-1, 1, 2, 10), c("", "Head + Bill", "Wing", ""))
-          axis(2, seq(-30, 200, 2), las = 2)
-          
-          points(hbw2_18$xpos + hbw2_18$p_dodge, hbw2_18$length, pch = 16, col = alpha("black", 0.3))
-          #abline(h = 0)
-          
-          for(i in 1:nrow(shbw2_18)){
-            lines(rep(shbw2_18$xpos[i] + shbw2_18$p_dodge[i], 2), 
-                  c(shbw2_18$mu[i] - shbw2_18$se[i], shbw2_18$mu[i] + shbw2_18$se[i]), lwd = 2)
-          }
-          points(shbw2_18$xpos + shbw2_18$p_dodge, shbw2_18$mu, pch = shbw2_18$p_shape, cex = 1.4,
-                 bg = as.character(shbw2_18$p_col))
-          
-          legend("bottomright", c("No Color", "Dull Color", "Control", "Predator", "Handicap"),
-                 pch = c(21, 21, 21, 24, 22), pt.bg = c(col_sham, col_dull, rep("white", 3)), cex =0.9, bty = "n")
-      
-      #2019 nestling mass plot
-          par(mfrow = c(1, 1))
-          
-          plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-               main = "Challenge then Dulling", xlim = c(0.5, 3.5), ylim = c(-0.1, 25),
-               xlab = "", ylab = "Average Nestling Mass (g)")
-          axis(1, c(-1, 1, 2, 3, 10), c("", "Day 6", "Day 12", "Day 15", ""))
-          axis(2, seq(-30, 30, 5), las = 2)
-          
-          points(nm2_19$xpos + nm2_19$p_dodge, nm2_19$mass, pch = 16, col = alpha("black", 0.3))
-          #abline(h = 0)
-          
-          for(i in 1:nrow(snm2_19)){
-            lines(rep(snm2_19$xpos[i] + snm2_19$p_dodge[i], 2), 
-                  c(snm2_19$mu[i] - snm2_19$se[i], snm2_19$mu[i] + snm2_19$se[i]), lwd = 2)
-          }
-          points(snm2_19$xpos + snm2_19$p_dodge, snm2_19$mu, pch = snm2_19$p_shape, cex = 1.4,
-                 bg = as.character(snm2_19$p_col))
-          
-          abline(v = 1.5, lty = 2)
-          abline(v = 2.5, lty = 2)
-          
-          
-          legend("bottomright", c("No Color", "Dull Color", "Control", "Predator", "Handicap"),
-                 pch = c(21, 21, 21, 24, 22), pt.bg = c(col_sham, col_dull, rep("white", 3)), cex =0.9, bty = "n")
-          
-      ## 2019 nestling headbill plot
-          par(mfrow = c(1, 2))
-          plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-               main = "Challenge then Dulling", xlim = c(1.5, 2.5), ylim = c(15, 60),
-               xlab = "", ylab = "Length on Day 12 (mm)")
-          axis(1, c(-1, 1, 2, 10), c("", "Head + Bill", "Wing", ""))
-          axis(2, seq(-30, 200, 5), las = 2)
-          
-          points(hbw2_19$xpos + hbw2_19$p_dodge, hbw2_19$length, pch = 16, col = alpha("black", 0.3))
-          #abline(h = 0)
-          
-          for(i in 1:nrow(shbw2_19)){
-            lines(rep(shbw2_19$xpos[i] + shbw2_19$p_dodge[i], 2), 
-                  c(shbw2_19$mu[i] - shbw2_19$se[i], shbw2_19$mu[i] + shbw2_19$se[i]), lwd = 2)
-          }
-          points(shbw2_19$xpos + shbw2_19$p_dodge, shbw2_19$mu, pch = shbw2_19$p_shape, cex = 1.4,
-                 bg = as.character(shbw2_19$p_col))
-          
-      # 2019 nestling wing plot    
-          plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-               main = "Challenge then Dulling", xlim = c(0.5, 1.5), ylim = c(19, 29),
-               xlab = "", ylab = "Length on Day 12 (mm)")
-          axis(1, c(-1, 1, 2, 10), c("", "Head + Bill", "Wing", ""))
-          axis(2, seq(-30, 200, 2), las = 2)
-          
-          points(hbw2_19$xpos + hbw2_19$p_dodge, hbw2_19$length, pch = 16, col = alpha("black", 0.3))
-          #abline(h = 0)
-          
-          for(i in 1:nrow(shbw2_19)){
-            lines(rep(shbw2_19$xpos[i] + shbw2_19$p_dodge[i], 2), 
-                  c(shbw2_19$mu[i] - shbw2_19$se[i], shbw2_19$mu[i] + shbw2_19$se[i]), lwd = 2)
-          }
-          points(shbw2_19$xpos + shbw2_19$p_dodge, shbw2_19$mu, pch = shbw2_19$p_shape, cex = 1.4,
-                 bg = as.character(shbw2_19$p_col))
-          
-          legend("bottomright", c("No Color", "Dull Color", "Control", "Predator"),
-                 pch = c(21, 21, 21, 24), pt.bg = c(col_sham, col_dull, rep("white", 2)), cex =0.9, bty = "n")
-    
-## Nestling Corticosterone Models ----
-    # Join nestlings to adult table to get treatment info
-      d_fem2 <- d_fem[, c("soc_uby", "color", "challenge")]
-      d_nestling2 <- plyr::join(d_nestling, d_fem2, "soc_uby", "left", "first")
-      d_nestling2 <- subset(d_nestling2, d_nestling2$raised_nest == "home" | 
-                              d_nestling2$raised_nest == "cross")
-      d_nestling2$raised_nest = relevel(d_nestling2$raised_nest, ref = "home")
-    
-    # Make separate dataframes for each year
-      d_nestling18 <- subset(d_nestling2, d_nestling2$year == "2018")
-      d_nestling19 <- subset(d_nestling2, d_nestling2$year == "2019")  
-      
-    # Fit models for mass at day 12 & 15 plus headbill & wing at day 12 for 2018
-      m_bcort_18 <- lmer(d12_base ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling18)
-      m_scort_18 <- lmer(d12_stress ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling18)
-      m_dex_18 <- lmer(d12_dex ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling18)
-      m_acth_18 <- lmer(d15_acth ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling18)
-      
-    # Make a table of the models
-      m18_nest_cort_t <- tab_model(m_bcort_18, m_scort_18, m_dex_18, m_acth_18,
-                                    pred.labels = c("Intercept", "Signal Dulled", "Predator", "Flight Reduction",
-                                                    "Cross-Fostered",
-                                                    "Dulled * Predator", "Dulled * Challenge"),
-                                    dv.labels = c("Base Cort Day 12", "Stress-Induced Cort Day 12", "Post-Dex Cort Day 12",
-                                                  "Post-Cortrosyn Cort Day 15"))
-      
-    # Save table
-      saveRDS(m18_nest_cort_t, here::here("5_other_outputs/m18_nest_cort_t.RDS"))
-      
-    # Fit models for mass at day 12 & 15 plus headbill & wing at day 12 for 2019
-      m_bcort_19 <- lmer(d12_base ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling19)
-      m_scort_19 <- lmer(d12_stress ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling19)
-      m_dex_19 <- lmer(d12_dex ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling19)
-      m_acth_19 <- lmer(d15_acth ~ color*challenge + raised_nest + (1|soc_uby), data = d_nestling19)
-      
-    # Make a table of the models
-      m19_nest_cort_t <- tab_model(m_bcort_19, m_scort_19, m_dex_19, m_acth_19,
-                                   pred.labels = c("Intercept", "Predator", "Signal Dulled",
-                                                   "Cross-Fostered", "Predator * Dulled"),
-                                   dv.labels = c("Base Cort Day 12", "Stress-Induced Cort Day 12", "Post-Dex Cort Day 12",
-                                                 "Post-Cortrosyn Cort Day 15"))
-      
-    # Save table
-      saveRDS(m19_nest_cort_t, here::here("5_other_outputs/m19_nest_cort_t.RDS"))
-    
-## Nestling Corticosterone Plots ----
-    # no nestling corticosterone plots made at present
+
 ## Provisioning Models ----   
       # Joining female data to provisioning 
         d_fem$uby <- paste(d_fem$unitbox, d_fem$year, sep = "_")
@@ -945,31 +702,86 @@
   # Figure showing nestling provisioning
       # These plots are not in the style of the other plots above but this was faster to make
         # and I'm not sure that any of them will actually end up staying in the paper anyway.
+        
+        dp3 <- d_prov3 %>%
+          dplyr::group_by(full_treatment, year, offset, color, challenge) %>%
+          dplyr::summarise(n = n(), f_feed2 = mean(f_feed, na.rm = TRUE), sd = sd(f_feed, na.rm = TRUE))
+        dp3$se <- dp3$sd / sqrt(dp3$n)
+        dp3_18 <- subset(dp3, dp3$year == 2018)
+        dp3_18$f_feed <- dp3_18$f_feed2
+        
+        dp3_18$challenge <- gsub("Stress", "Handicap", dp3_18$challenge)
+        dp3_18$color <- gsub("Control", "Sham", dp3_18$color)
+        dp3_18$color <- gsub("Dull", "Dulled", dp3_18$color)
+        
+        d_prov3_18$challenge <- gsub("Stress", "Handicap", d_prov3_18$challenge)
+        d_prov3_18$color <- gsub("Control", "Sham", d_prov3_18$color)
+        d_prov3_18$color <- gsub("Dull", "Dulled", d_prov3_18$color)
     
       # Plot female provisioning from 2018 experiment
-        ggplot(d_prov3_18, aes(x = offset, y = f_feed, col = full_treatment)) +
-          geom_point() + geom_smooth() + xlim(0, 15) + xlab("Days after hatching") +
-          ylab("Daily female provisioning trips") + ggtitle("Dulling then Challenge") +
-          theme_bw()
+       p1 <- ggplot(d_prov3_18, aes(x = offset, y = f_feed, shape = challenge,
+                                    fill = color)) +
+          geom_jitter(alpha = 0.3, width = 0.1, mapping = aes(color = color)) + 
+          #geom_smooth(se = FALSE) + 
+          xlim(0, 15) + xlab("Days after hatching") +
+          ylab("Daily female provisioning trips") + ggtitle("Experiment One") +
+          theme_bw() + theme(legend.position = c(0.15, 0.8)) +
+          scale_color_manual(values = c("slateblue", "orange")) +
+          scale_fill_manual(values = c("slateblue", "orange")) +
+          geom_line(data = dp3_18, mapping = aes(color = color)) +
+          geom_point(data = dp3_18, size = 2) +
+          guides(fill = "none") +
+          scale_shape_manual(values = c(21, 22, 24)) +
+         theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+               axis.text = element_text(size = 12), axis.title = element_text(size = 14),
+               legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0)))
         
       # Plot male provisioning from 2018 experiment  
-        ggplot(d_prov3_18, aes(x = offset, y = m_feed, col = full_treatment)) +
-          geom_point() + geom_smooth() + xlim(0, 15) + xlab("Days after hatching") +
-          ylab("Daily male provisioning trips") + ggtitle("Dulling then Challenge") +
-          theme_bw()
-        
+        # ggplot(d_prov3_18, aes(x = offset, y = m_feed, col = full_treatment)) +
+        #   geom_point() + geom_smooth() + xlim(0, 15) + xlab("Days after hatching") +
+        #   ylab("Daily male provisioning trips") + ggtitle("Dulling then Challenge") +
+        #   theme_bw()
+       
+       # same for 2019
+       # note that 'challenge' and 'color' columns are reversed in this dataset to allow merging with 2018
+       
+       dp3_19 <- subset(dp3, dp3$year == 2019)
+       dp3_19$f_feed <- dp3_19$f_feed2
+       
+       dp3_19$challenge <- gsub("Control", "Sham", dp3_19$challenge)
+       dp3_19$challenge <- gsub("Dull", "Dulled", dp3_19$challenge)
+       dp3_19 <- subset(dp3_19, dp3_19$offset < 15)
+       
+       d_prov3_19$challenge <- gsub("Control", "Sham", d_prov3_19$challenge)
+       d_prov3_19$challenge <- gsub("Dull", "Dulled", d_prov3_19$challenge)
+       d_prov3_19 <- subset(d_prov3_19, d_prov3_19$offset < 15) 
+       
       # Plot female provisioning from 2019 experiment  
-        ggplot(d_prov3_19, aes(x = offset, y = f_feed, col = full_treatment)) +
-          geom_point() + geom_smooth() + xlim(0.6, 14.5) + xlab("Days after hatching") +
-          ylab("Daily female provisioning trips") + ggtitle("Challenge then Dulling") +
-          theme_bw()
+       p2 <- ggplot(d_prov3_19, aes(x = offset, y = f_feed, shape = color,
+                                    fill = challenge)) +
+         geom_jitter(alpha = 0.3, width = 0.1, mapping = aes(color = challenge)) + 
+         #geom_smooth(se = FALSE) + 
+         xlim(0, 15) + xlab("Days after hatching") +
+         ylab("Daily female provisioning trips") + ggtitle("Experiment Two") +
+         theme_bw() + theme(legend.position = c(0.16, 0.75)) +
+         scale_color_manual(values = c("slateblue", "orange")) +
+         scale_fill_manual(values = c("slateblue", "orange")) +
+         geom_line(data = dp3_19, mapping = aes(color = challenge)) +
+         geom_point(data = dp3_19, size = 2) +
+         guides(fill = "none", shape = "none", color = "none") +
+         scale_shape_manual(values = c(21, 24)) +
+         theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+               axis.text = element_text(size = 12), axis.title = element_text(size = 14),
+               legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0)))
       
       # Plot male provisioning from 2019 experiment  
-        ggplot(d_prov3_19, aes(x = offset, y = m_feed, col = full_treatment)) +
-          geom_point() + geom_smooth() + xlim(0.6, 14.5) + xlab("Days after hatching") +
-          ylab("Daily male provisioning trips") + ggtitle("Challenge then Dulling") +
-          theme_bw()
-  
+        # ggplot(d_prov3_19, aes(x = offset, y = m_feed, col = full_treatment)) +
+        #   geom_point() + geom_smooth() + xlim(0.6, 14.5) + xlab("Days after hatching") +
+        #   ylab("Daily male provisioning trips") + ggtitle("Challenge then Dulling") +
+        #   theme_bw()
+       
+       prov_plot <- ggpubr::ggarrange(p1, p2)
+        saveRDS(prov_plot, here::here("5_other_outputs/prov_plot.rds"))
     
 ## Old Approach to Nest Visits Models [Not Included] ----
     
@@ -1812,73 +1624,6 @@
     text(0.9, 22.25, "Challenge", pos = 4)
     
     lines(c(1.5, 1.5), c(-5, 23.5), lty = 2)
-
-## ACTH Validation Models ----
-    
-    # Nestlings
-      nest_l <- d_acth_nest %>%
-        pivot_longer(cols = c("cort1", "cort2", "cort3"), names_to = "timepoint",
-                     values_to = "cort", values_drop_na = TRUE)
-      nest_l <- as.data.frame(nest_l)
-      nest_l$treatment <- as.factor(nest_l$treatment)
-      nest_l$treatment <- relevel(nest_l$treatment, ref = "Saline")
-      m_n_acth <- lmer(cort ~ timepoint*treatment + (1|band) + (1|unit_box), data = nest_l)
-      
-    # Adults
-      fem_l <- d_acth_fem %>%
-        pivot_longer(cols = c("cort1", "cort2", "cort3"), names_to = "timepoint",
-                     values_to = "cort", values_drop_na = TRUE)
-      fem_l <- as.data.frame(fem_l)
-      fem_l$treatment <- gsub("BCC", "Saline", fem_l$treatment)
-      fem_l$treatment <- gsub("BCA", "ACTH", fem_l$treatment)
-      fem_l$treatment <- as.factor(fem_l$treatment)
-      fem_l$treatment <- relevel(fem_l$treatment, ref = "Saline")
-      m_a_acth <- lmer(cort ~ timepoint*treatment + (1|band), data = fem_l)
-      
-    # Make a table
-      tab_model(m_n_acth, m_a_acth, 
-                pred.labels = c("Intercept (Baseline)", "Timepoint 2", "Timepoint 3",
-                                "Cortrosyn at Baseline", "Cortrosyn at Timepoint 2", "Cortrosyn at Timepoint 3"),
-                dv.labels = c("Nestling Corticosterone", "Adult Corticosterone"))
-      
-      # Note that I want to put this table in the pdf output supplementary materials, but there is no direct way to 
-      # use sjplot to put html tables into a markdown pdf. I manually saved the html as a pdf to put it in. That
-      # means if this code is modified the saved pdf file needs to be overwritten with a new version.
-    
-## ACTH Validation Plots ----
-    # These are plotted and saved to file here then pasted into the rmarkdown file for the supplemental materials
-    
-    # Nestlings
-      nest_a <- d_acth_nest %>%
-        pivot_longer(cols = c("cort1", "cort2", "cort3"), names_to = "timepoint",
-                     values_to = "cort", values_drop_na = TRUE) %>%
-        ggplot(aes(x = timepoint, y = cort, fill = treatment)) + 
-            geom_line(mapping = aes(x = timepoint, y = cort, group = band, color = treatment), alpha = 0.45) +
-            geom_boxplot(width = 0.25) + theme_classic() + xlab("Minutes After Capture") + ylab(expression(paste("Corticosterone ng/", mu, "l"))) +
-            scale_x_discrete(labels = c("<3", "15", "30")) + geom_vline(xintercept = 1.15, lty = 2, col = "gray40") + 
-            annotate("text", x = 1.1, y = 40, label = "Cortrosyn or Saline Injection", angle = 90) + labs(fill = "Treatment") + 
-            ggtitle("15 Day Old Nestlings") +
-            scale_fill_discrete(name = "Treatment", labels = c("Cortrosyn", "Saline")) + guides(color = FALSE) + 
-            theme(legend.position = c(0.12, 0.9))
-      ggsave(here::here("3_r_scripts/cortrosyn_nestlings.pdf"), plot = nest_a, width = 6, height = 5, units = "in", device = "pdf")
-    
-    # Adults
-      fem_a <- d_acth_fem %>%
-        pivot_longer(cols = c("cort1", "cort2", "cort3"), names_to = "timepoint",
-                     values_to = "cort", values_drop_na = TRUE) %>%
-        ggplot(aes(x = timepoint, y = cort, fill = treatment)) + 
-        geom_line(mapping = aes(x = timepoint, y = cort, group = band, color = treatment), alpha = 0.45) +
-        geom_boxplot(width = 0.25, outlier.size = 0, outlier.stroke = 0) + theme_classic() + xlab("Minutes After Capture") + 
-        ylab(expression(paste("Corticosterone ng/", mu, "l"))) +
-        scale_x_discrete(labels = c("<3", "30", "60")) + geom_vline(xintercept = 1.15, lty = 2, col = "gray40") + 
-        annotate("text", x = 1.1, y = 45, label = "Saline Injection", angle = 90) + 
-        geom_vline(xintercept = 2.15, lty = 2, col = "gray40") +
-        annotate("text", x = 2.1, y = 50, label = "Cortrosyn or Saline Injection", angle = 90) +
-        labs(fill = "Treatment") + ggtitle("Adult Females") +
-        scale_fill_discrete(name = "Treatment", labels = c("Cortrosyn", "Saline")) + guides(color = FALSE) + 
-        theme(legend.position = c(0.12, 0.9))
-      ggsave(here::here("3_r_scripts/cortrosyn_adults.pdf"), plot = fem_a, width = 6, height = 5, units = "in", device = "pdf")
-      
 
     
 

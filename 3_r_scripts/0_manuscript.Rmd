@@ -5,6 +5,7 @@ author:
   - Sabrina M. McNew
   - Cedric Zimmer
   - Jennifer J. Uehling
+  - Jennifer L. Houtz
   - Thomas A. Ryan
   - David Chang van Oordt
   - Allison S. Injaian
@@ -33,7 +34,7 @@ csl: animal-behaviour.csl
 
 ```{r setup-main, include=FALSE, echo = FALSE}
   knitr::opts_chunk$set(echo = TRUE)
-  pacman::p_load(ggplot, tidyverse, here)
+  pacman::p_load(ggplot, tidyverse, here, kableExtra, ggpubr)
   #source(knitr::purl(here::here("3_r_scripts", "Full_analysis_supplement.Rmd"), quiet=TRUE)) #runs full analysis script
 ```
 
@@ -137,23 +138,7 @@ All analyses and figures were produced in R version 4.0.2 [@r]. Mixed models wer
 
 # RESULTS
 
-*Female Mass and Physiology*
-
-In both years, female mass declined across the three captures and females that were initially heavier retained more weight throughout the experiment (Tables A1 & A2; experiment one effect of breeding stage $\beta$ = -1.53, CI = -2.49 to -0.57, effect of initial mass $\beta$ = 0.6, CI = 0.36 to 0.85; experiment two effect of breeding stage $\beta$ = -2.02, CI = -2.72 to -1.32, effect of initial mass $\beta$ = 0.7, CI = 0.46 to 0.95). However, there was no evidence that any treatment or combination of treatments altered this seasonal decline in mass in either year (Figure XXX).  
-	
-Female corticosterone measurements were unrelated to treatment (Tables XXXX). In experiment one, 3rd capture stress-induced corticosterone and post-dexamethasone corticosterone were related to initial, pre-treatment measures (Table A3, pre-treatment measure as a predictor of 3rd capture stress-induced: $\beta$ = 7.58, CI = 3.64 to 11.52; pre-treatment measure as a predictor of 3rd capture post-dexamethasone: $\beta$ = 3.42, CI = 1.85 to 4.98). The same relationship was seen with stress-induced corticosterone in experiment two (Table XXX, pre-treatment measure as a predictor of 3rd capture stress-induced: $\beta$ = 4.5, CI = 0.17 to 8.84). Pre-treatment baseline corticosterone was related to 2nd capture baseline in experiment two (Table A4; $\beta$ = 1.13, CI = 0.4 to 1.85), but was not related to 2nd capture baseline in experiment one or to 3rd capture baseline corticosterone in either experiment. Baseline and stress induced glucose measurements were unrelated to either pre-treatment glucose or treatments in eater year (Table XXXX).
-
-*Female Microbiota*
-
-Overall, the most common phyla detected in the cloacal microbiome were Actinobacteria (39 % of total amplicon reads), Proteobacteria (33.1 %), Firmicutes (9.9 %), and Tenericutes (9.6 %; Figure XXX). In experiment one, there was some evidence that alpha diversity differed by treatment groups, but these effects were sensitive to the choice of alpha metric. At the 3rd capture, females in the flight reduction treatment had higher Shannon diversity (Table XX; effect of flight reduction = $\beta$ 0.82, CI = 0.07 to 1.57). At this capture, treatment was also related to Inverse Simpson diversity; females in the signal dulling treatment had higher Inverse Simpson diversity, but this relationship was strongest among dulled females that did not also receive the predation treatment (Table XXX; main effect of signal dulling $\beta$ = 4.89, CI = 0.85 to 8.94, interaction between dulling and predator treatment $\beta$ = -5.33, CI = -11.16 to 0.51). There was no difference in Faith’s Phylogenetic Diversity between the groups. In experiment two, there was no evidence that treatment group was related to alpha diversity at either the 2nd or 3rd capture, regardless of the metric used (Table XX).  
-
-Visual inspection of ordination plots showed little evidence for separation of microbial communities between treatment groups (Figure XX). We tested for differences in the centroid or dispersion of communities using the ‘adonis2’ function from package ‘vegan’ in R using the default settings [@oksanen2013]. In experiment one, there was no evidence for a difference between groups (all effects P > 0.2). In experiment two, there was no difference between groups at the 1st or 2nd capture (all effects P > 0.25), but at the third capture there was a significant interaction between signal dulling and predator treatments (PERMANOVA: dulling F1, 35 = 1.54, P = 0.10; predator F1, 35 = 0.66, P = 0.84; dulling*predator F1,35 = 2.13, P = 0.03). A subsequent test of differential dispersion using the ‘betadisper’ function indicated that this difference was likely driven by a difference in dispersion between the predator treatment groups that did or did not receive signal dulling (betadisper effect of treatments F3,35 = 3.26, P = 0.04). Inspecting the ordination plot (Figure XXX) suggests that the small within group dispersion in the control plus predator treatment group drove this difference rather than any difference in the multivariate centroid of microbial communities between treatments. 
-
-*Daily Provisioning Rates*  
-
-In experiment one, the total daily number of female provisioning trips increased as nestlings aged before declining late in the nestling period (Table XXX; main effect of nestling age $\beta$ = 11.01, CI = 6.83 to 15.2; quadratic effect $\beta$ = -0.29, CI = -0.56 to -0.03). However, there was no evidence that this pattern differed between the treatment groups. In a smaller subset of nests where males were also PIT tagged, male provisioning rate was strongly positively associated with female provisioning, but other predictors were qualitatively similar (main effect of male provisioning trips $\beta$ = 12.11, CI = 4.49 to 19.74).  
-
-In experiment two, daily female provisioning showed a similar relationship with nestling age and was also higher in nests with larger broods (Table XXX; main effect of brood size $\beta$ = 46.17, CI = 10.61 to 81.74; nestling age $\beta$ = 21.3, CI = 15.81 to 26.79; quadratic effect of nestling age $\beta$ = -0.94, CI = -1.3 to -0.59). There was also some evidence that females in the plumage dulling treatment provisioned nestlings at a higher rate, but predator treatment and the interaction between the two treatments were not related to provisioning rate (signal dulling treatment $\beta$ = 24.16, CI = 0.95 to 47.37). As in experiment one, a smaller subset of the data that included male provisioning rate showed a positive association between male and female provisioning (male provisioning trips $\beta$ = 43.39, CI = 34.24 to 52.55). However, in this model controlling for male provisioning rate, there was no longer evidence for an association between dulling treatment and female provisioning (dulling treatment after including male provisioning $\beta$ = 8.91, CI = -24.8 to 42.62).  
+In experiment one (2018) we sampled a total of 57 female breeding attempts (sample size by treatment group: control = 10; control + predator = 11; control + handicap = 9; dulled + control = 8; dulled + predator = 10; dulled + handicap = 9). In experiment two (2019) we sampled a total of 54 breeding attempts (sample size by treatment group: control = 15; control + dulled = 15; predator + control = 12; predator + dulled = 12). The exact sample sizes used in each comparison below differed depending on data availability for each measurement.
 
 *Daily Social Interaction Rates*  
 
@@ -161,27 +146,65 @@ In experiment one, the first stage of treatments occurred from day six of incuba
 
 Overall, more females visited nest boxes when the focal female was initially bright (Table XXX; incidence rate ratio = 2.16, CI = 1.03 to 4.53) and fewer visited when the focal female received a predation treatment (incidence rate ratio = 0.32, CI = 0.11 to 0.92). There was also strong evidence that the effect of treatments on female visitation depended on the initial brightness of the focal female. Females that were initially bright received fewer visitors if they were in the sham coloring plus predator or flight reduction treatments (Table XXX; incidence rate ratio for predator by initial brightness = 0.31, CI = 0.12 to 0.81; flight reduction by initial brightness = 0.29, CI = 0.09 to 0.96), but more visitors if they were in the signal dulling plus predator treatment (incidence rate ratio = 5.42, CI = 1.18 to 24.88).  
 
-Females that were in the signal dulling plus predator or flight reduction groups also made more trips to other boxes in the study site (Table XXX; incidence rate ratio for dulled + predator = 3.49, CI = 1.05 to 11.59; dulled + flight reduction = 3.83, CI = 1.12 to 13.07). Females in the sham coloring group that received predator or flight reduction treatments tended to make fewer trips to other boxes, but the confidence intervals for these incidence ratio estimates both crossed one (sham + predator incidence ratio = 0.48, CI 0.21 to 1.09; sham + flight reduction = 0.45, CI = 0.19 to 1.06).  
+Females that were in the signal dulling plus predator or flight reduction groups also made more trips to other boxes in the study site (Table XXX; incidence rate ratio for dulled + predator = 3.49, CI = 1.05 to 11.59; dulled + flight reduction = 3.83, CI = 1.12 to 13.07). Females in the sham coloring group that received predator or flight reduction treatments tended to make fewer trips to other boxes, but the confidence intervals for these incidence ratio estimates both crossed one (sham + predator incidence ratio = 0.48, CI 0.21 to 1.09; sham + flight reduction = 0.45, CI = 0.19 to 1.06).
 
 In experiment two, the first stage of treatments occurred from day six to twelve of incubation. There was no evidence that the number of unique male and female visitors or trips to other boxes differed between predator or control treatment groups during this period (Table XXX). The second stage of treatments occurred from day twelve of incubation to day fifteen after hatching. During this period, the number of unique male and female visitors to the focal box was still unrelated to treatments (Table XXX). However, females in the sham coloring plus predator treatment made fewer trips to other boxes (incidence rate ratio = 0.28, CI = 0.03 to 0.71), while females in the signal dulling plus predator group made more trips to other boxes (incidence rate ratio = 11.5, CI = 1.37 to 96.59). 
 
+```{r social-fig, echo = FALSE, message = FALSE, warning = FALSE}
+
+```
+
+
+*Female Mass and Physiology*
+
+In both years, female mass declined across the three captures and pre-treatment mass predicted mass later in the season (Table \@ref(tab:tab-mass); experiment one effect of breeding stage $\beta$ = -1.53, 95% CI = -2.49 to -0.57, effect of initial mass $\beta$ = 0.6, CI = 0.36 to 0.85; experiment two effect of breeding stage $\beta$ = -2.02, CI = -2.72 to -1.32, effect of initial mass $\beta$ = 0.7, CI = 0.46 to 0.95). However, there was no evidence that any treatment or combination of treatments altered this seasonal decline in mass in either year (Figure \@ref(fig:mass-fig); Table \@ref(tab:tab-mass)).  
+
+```{r mass-fig, echo = FALSE, message = FALSE, warning = FALSE, out.width = "99%", fig.cap = "Female mass by treatment group and capture number in each experiment. Filled shapes and vertical lines show the group mean and standard errors while faded gray circles show raw data."}
+knitr::include_graphics("mass_figure.png")
+```
+	
+Although there were some correlations between different corticosterone measurements within females, no corticosterone measurements were related to treatment in either year (Table \@ref(tab:tab-cort)). Similarly, baseline and stress induced glucose measurements were unrelated to treatments in either year (Table \@ref(tab:tab-gluc)).
+
+*Female Microbiota*
+
+Overall, the most common phyla detected in the cloacal microbiome were Actinobacteria (39 % of total amplicon reads), Proteobacteria (33.1 %), Firmicutes (9.9 %), and Tenericutes (9.6 % Figures \@ref(fig:micro-bar1) & \@ref(fig:micro-bar2)). In experiment one, there was some evidence that alpha diversity differed by treatment groups, but these effects were weak and sensitive to the choice of alpha metric. At the 3rd capture, females in the flight reduction treatment had higher Shannon diversity (Table \@ref(tab:tab-alpha); effect of flight reduction = $\beta$ 0.82, CI = 0.07 to 1.57). At this capture, treatment was also related to Inverse Simpson diversity; females in the signal dulling treatment had higher Inverse Simpson diversity, but this relationship was strongest among dulled females that did not also receive the predation treatment (Table \@ref(tab:tab-alpha); main effect of signal dulling $\beta$ = 4.89, CI = 0.85 to 8.94, interaction between dulling and predator treatment $\beta$ = -5.33, CI = -11.16 to 0.51). In experiment two, there was no evidence that treatment group was related to alpha diversity at either the 2nd or 3rd capture, regardless of the metric used (Table \@ref(tab:tab-alpha)).  
+
+Visual inspection of ordination plots showed little evidence for separation of microbial communities between treatment groups in either experiment one (Figure \@ref(fig:micro-one)) or experiment two (Figure \@ref(fig:micro-two)). We tested for differences in the centroid or dispersion of communities using the ‘adonis2’ function from package ‘vegan’ in R using the default settings [@oksanen2013]. In experiment one, there was no evidence for a difference between groups (all effects P > 0.2). In experiment two, there was no difference between groups at the 1st or 2nd capture (all effects P > 0.25), but at the third capture there was a significant interaction between signal dulling and predator treatments (PERMANOVA: dulling F$_{1, 35}$ = 1.54, P = 0.10; predator F$_{1,35}$ = 0.66, P = 0.84; dulling*predator F$_{1, 35}$ = 2.13, P = 0.03). A subsequent test of differential dispersion using the ‘betadisper’ function indicated that this difference was likely driven by a difference in dispersion between the predator treatment groups that did or did not receive signal dulling (betadisper effect of treatments F$_{3, 35}$ = 3.26, P = 0.04). Inspecting the ordination plot (Figure \@ref(fig:micro-two)) suggests that the small within group dispersion in the control plus predator treatment group drove this difference rather than any difference in the multivariate centroid of microbial communities between treatments. 
+
+*Daily Provisioning Rates*  
+
+In experiment one, the total daily number of female provisioning trips increased as nestlings aged before declining late in the nestling period (main effect of nestling age $\beta$ = 11.01, CI = 6.83 to 15.2; quadratic effect $\beta$ = -0.29, CI = -0.56 to -0.03). However, there was no evidence that this pattern differed between the treatment groups (Table \@ref(tab:tab-provision); Figure \@ref(fig:feeding-fig)). 
+
+In experiment two, daily female provisioning showed a similar relationship with nestling age and was also higher in nests with larger broods (Table \@ref(tab:tab-provision); main effect of brood size $\beta$ = 46.17, CI = 10.61 to 81.74; nestling age $\beta$ = 21.3, CI = 15.81 to 26.79; quadratic effect of nestling age $\beta$ = -0.94, CI = -1.3 to -0.59). There was a trend for females in the plumage dulling treatment to provision nestlings at a higher rate (Table \@ref(tab:tab-provision); signal dulling treatment $\beta$ = 24.16, CI = 0.95 to 47.37). Neither predator treatment nor the interaction between the two treatments were related to provisioning rate (Figure \@ref(fig:feeding-fig)). 
+
+```{r feeding-fig, echo = FALSE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 4.7, fig.cap = "fill in"}
+prov_plot <- readRDS(here::here("5_other_outputs/prov_plot.rds"))
+prov_plot
+```
+
 *Reproductive Success*
 
-In experiment one, females that received a predation treatment fledged fewer nestlings, regardless of which coloring treatment they received (Figure XXX, Table XX; number of nestlings fledged predation $\beta$ = -1.64, CI = -3.22 to -0.05). In experiment two, females in predation treatments fledged fewer offspring than controls, regardless of the coloring treatment (total number fledged $\beta$ = -1.59, CI = -3.06 to -0.12). 
+In experiment one, females that received a predation treatment fledged fewer nestlings than controls, regardless of which signal manipulation treatment they received (Figure \@ref(fig:rs-fig); Table \@ref(tab:tab-rs); number of nestlings fledged predation $\beta$ = -1.64, CI = -3.22 to -0.05). In experiment two, females in predation treatments fledged fewer offspring than controls, regardless of the signal manipulation treatment (Figure \@ref(fig:rs-fig); Table \@ref(tab:tab-rs); total number fledged $\beta$ = -1.59, CI = -3.06 to -0.12). 
+
+```{r rs-fig, echo = FALSE, message = FALSE, warning = FALSE, fig.width = 7.3, fig.height = 4.8, fig.cap = "fill in"}
+#figure
+gt <- readRDS(here::here("5_other_outputs/rs_plot.rds"))
+grid::grid.draw(gt)
+```
 
 # DISCUSSION
 
-In this study, we found that experimental challenges and dulling of a social signal impacted breeding success and social interactions, respectively. While there was some evidence that experimental challenges and signal manipulations together altered the social environment that females experienced, there was no evidence for an interaction between the two categories of manipulation on physiological measurements or reproductive success. Females that were subjected to simulated predation events fledged fewer offspring, regardless of whether the manipulations occurred before, after, or separately from signal dulling. Females with experimentally dulled signals or facing experimental challenges experienced an altered social environment, but this had no apparent effect on resilience to subsequent challenges. Likewise, there was no evidence that the order of manipulations altered their effects, though both categories of manipulation appeared to have more noticeable effects when they were started earlier in the breeding period. Taken together, our results do not support our main hypothesis that alterations to the social environment modulate resilience to a subsequent challenge, at least for this combination of treatments and under the environmental conditions that we observed.  
+In this study, we found that experimental challenges and dulling of a social signal impacted breeding success and social interactions, respectively. While there was some evidence that experimental challenges and signal manipulations together altered the social environment that females experienced, there was no evidence for an interaction between the two categories of manipulation on physiological measurements or reproductive success. Females that were subjected to simulated predation events fledged fewer offspring, regardless of whether the manipulations occurred before, after, or separately from signal dulling. Females with experimentally dulled signals or facing experimental challenges experienced an altered social environment, but this had no apparent effect on resilience to subsequent challenges. Likewise, there was no evidence that the order of manipulations altered their effects, though both categories of manipulation appeared to have more noticeable effects when they were started earlier in the breeding period. Taken together, our results do not support our main hypothesis that alterations to the social environment modulate resilience to a subsequent challenge, at least for this combination of treatments and under the environmental conditions that we observed. 
 	
-The effects of our predator manipulations broadly align with previous work suggesting that non-consumptive effects of predation can result in differences in seasonal reproductive success (CITE). While several studies in other species have found that predator cues or encounters can alter parental provisioning rates (CITE) and nestling mass or physiology (CITE), we found no evidence here that provisioning rates or nestling measurements differed in predator treated nests. It is possible that mortality biased towards the smallest nestlings in predator treated nests could have obscured these effects, but we could not test for this possibility since nestlings were not banded until day 12 after hatching when some had already died. Thus, it is unclear exactly why fewer nestlings fledged from predator treated nests.  
+The effects of our predator manipulations broadly align with previous work suggesting that non-consumptive effects of predation can result in differences in seasonal reproductive success (CITE). While several studies in other species have found that predator cues or encounters can alter parental provisioning rates (CITE) and nestling mass or physiology (CITE), we found no evidence here that provisioning rates or nestling measurements differed in predator treated nests. It is possible that mortality biased towards the smallest nestlings in predator treated nests could have obscured these effects, but we could not test for this possibility since nestlings were not banded until day 12 after hatching when some had already died. Thus, it is unclear exactly why fewer nestlings fledged from predator treated nests, though it seems likely that mortality soon after hatching played a role [@mcnew2022].  
 	
-In [MARTIN OR ZANETTE LABS] bird species, predator cues during incubation can result in altered incubation behavior that might impact nestling development (CITE). However, we saw no differences among treatment groups in brood size at hatching and the reduction in number of nestlings fledged was apparent even when simulated predation only occurred after nestlings had hatched (i.e., in experiment two). One possibility that we could not assess with our data is that females may have spent less time brooding after experiencing simulated predation attempts. Thermal environment during development is known to be important for tree swallows and could have resulted in different overall energy expenditures for nestlings in predator treated nests [@shipley2020; @uehling2020]. While some studies have suggested that nestlings might directly respond to predator cues (CITE), this seems unlikely in our study since treatments in the first experiment—where the clearest effects were observed—occurred entirely before hatching and did not include any auditory component. Regardless of the mechanism, it is interesting to note that in both experiments, nestling mortalities apparently occurred days to weeks after the treatments were completed, indicating that non-consumptive effects of simulated predation were long lasting (as in CITE).   
+In [MARTIN OR ZANETTE LABS] bird species, predator cues during incubation can result in altered incubation behavior that might impact nestling development (CITE). However, we saw no differences among treatment groups in brood size at hatching and the reduction in number of nestlings fledged was apparent even when simulated predation only occurred after nestlings had hatched (i.e., in experiment two). One possibility that we could not assess with our data is that females may have spent less time brooding after experiencing simulated predation attempts. Thermal environment during development is known to be important for tree swallows and could have resulted in different overall energy expenditures for nestlings in predator treated nests [@shipley2022; @shipley2020; @uehling2020]. While some studies have suggested that nestlings might directly respond to predator cues (CITE), this seems unlikely in our study since treatments in the first experiment—where the clearest effects were observed—occurred entirely before hatching and did not include any auditory component. Regardless of the mechanism, it is interesting to note that in both experiments, nestling mortalities apparently occurred days to weeks after the treatments were completed, indicating that non-consumptive effects of simulated predation were long lasting (as in CITE).   
 
 Surprisingly, we saw little effect of the flight efficiency reduction treatment employed in experiment one. A similar treatment was previously found to result in increased nest failure, but females with strong negative feedback and bright plumage were more resilient to the challenge [@taff2019; @zimmer2019]. This study had two important differences that might explain the discrepancy in results. First, the previous studies were conducted during a breeding season that had an unusually harsh cold snap that resulted in extensive nestling mortality [@shipley2020], whereas the years of study for these experiments were relatively benign. Second, in an effort to moderate the challenge imposed by the treatment, we reduced the number of feathers bound in the surface area reduction. The combination of these two differences may have resulted in a treatment that was not sufficiently challenging to influence breeding performance. That being said, there was some evidence that social interactions and microbiome alpha diversity differed for birds in the flight reduction group, though the microbiome result depended on the metric chosen.  
 
-The social consequences of signal dulling were broadly similar to those observed in a previous study of this population that employed the same dulling technique without subsequent challenges [@taff2021]. In both experiments reported in this study, females did not differ in social interaction rates during the incubation period—when trips to other nest boxes are rare—but they did differ during the nestling provisioning period when these interactions are much more common. This was particularly pronounced in experiment one, which most closely paralleled the timing of the previous color manipulation study. In this study, females that were dulled early and continuously through the breeding period had altered visitation rates from other females and altered the frequency of their own trips to other boxes, but these effects depended on both pre-treatment plumage brightness and on the challenge treatment that the female received (Figure XX). Interestingly, in both experiments, females that received a combination of dulling and predation treatments made more trips to other nest boxes. In xx, predator cues are related to prospecting behavior, suggesting that a combination of predator encounters and altered social interactions might lead tree swallows to seek out more public information from conspecific breeding attempts.  
+The social consequences of signal dulling were broadly similar to those observed in a previous study of this population that employed the same dulling technique without subsequent challenges [@taff2021]. In both experiments reported in this study, females did not differ in social interaction rates during the incubation period—when trips to other nest boxes are rare—but they did differ during the nestling provisioning period when these interactions are much more common. This was particularly pronounced in experiment one, which most closely paralleled the timing of the previous color manipulation study. In this study, females that were dulled early and continuously through the breeding period had altered visitation rates from other females and altered the frequency of their own trips to other boxes, but these effects depended on both pre-treatment plumage brightness and on the challenge treatment that the female received. Interestingly, in both experiments, females that received a combination of dulling and predation treatments made more trips to other nest boxes. In xx, predator cues are related to prospecting behavior, suggesting that a combination of predator encounters and altered social interactions might lead tree swallows to seek out more public information from conspecific breeding attempts.  
 	
-In contrast with the similarities on social effects of dulling compared to our previous study, there was little evidence for downstream consequences of social interactions on reproductive performance, whereas the previous study found that dulled females provisioned more, had more diverse microbiomes, and fledged more offspring. In this study, females did have higher microbiome alpha diversity in experiment one and provisioned at a higher rate in experiment two, but in this case the relationships were relatively weak and sensitive to the exact metrics used. Moreover, there was no evidence that signal dulling was related to any other measures of physiology or to ultimate fledging success. There are several reasons why the results of this study might have differed from the previous experiment. First, the sample sizes for dulled females in these studies were smaller and it is possible that the additive effects of the other challenge treatments obscured the effects of dulling alone. Second, in experiment two the dulling treatment was applied much later and had less effect on social interactions; in accord with this explanation, we found that both the social effects of dulling and the microbiome diversity relationship in experiment one were more similar to the previous study. Finally, there is extensive evidence in tree swallows that the background conditions of breeding (e.g., weather and food availability) are important determinants of success and it is possible that different conditions experienced in each year influenced the effects of our treatments [@cox2019; @shipley2020; @vitousek2018fee].  
+In contrast with the similarities on social effects of dulling compared to our previous study, there was little evidence for downstream consequences of social interactions on reproductive performance, whereas the previous study found that dulled females provisioned more, had more diverse microbiomes, and fledged more offspring. In this study, (dulled?) females did have higher microbiome alpha diversity in experiment one and provisioned at a higher rate in experiment two, but in this case the relationships were relatively weak and sensitive to the exact metrics used. Moreover, there was no evidence that signal dulling was related to any other measures of physiology or to ultimate fledging success. There are several reasons why the results of this study might have differed from the previous experiment. First, the sample sizes for dulled females in these studies were smaller and it is possible that the additive effects of the other challenge treatments obscured the effects of dulling alone. Second, in experiment two the dulling treatment was applied much later and had less effect on social interactions; in accord with this explanation, we found that both the social effects of dulling and the microbiome diversity relationship in experiment one were more similar to the previous study. Finally, there is extensive evidence in tree swallows that the background conditions of breeding (e.g., weather and food availability) are important determinants of success and it is possible that different conditions experienced in each year influenced the effects of our treatments [@cox2019; @shipley2020; @vitousek2018fee].  
 
 While there is growing interest in understanding the effects of social interactions on resilience to challenges (cite Tung paper), relatively few studies have addressed these questions in natural populations and it is not yet clear how   
 	
@@ -201,7 +224,7 @@ All procedures were approved by the Cornell University Institutional Animal Care
 
 # ACKNOWLEDGMENTS
 
-We thank the field and lab technicians who helped collect data for this project, including Bashir Ali, Allison Anker, Paige Becker, Raquel Castromonte, Jeremy Collison, KaiXin Chen, Alex Dopkin, Zapporah Ellis, Audrey Fox, Brianna Johnson, Christine Kallenberg, Raisa Kochmaruk, Alex Lee-Papastravos, Jabril Mohammed, Yusol Park, Alyssa Rodriguez, Bella Somoza, and Kwame Tannis.
+We thank the field and lab technicians who helped collect data for this project, including Bashir Ali, Allison Anker, Paige Becker, Raquel Castromonte, Jeremy Collison, KaiXin Chen, Alex Dopkin, Zapporah Ellis, Audrey Fox, Brianna Johnson, Christine Kallenberg, Raisa Kochmaruk, Alex Lee-Papastravos, Jabril Mohammed, Yusol Park, Alyssa Rodriguez, Bella Somoza, and Kwame Tannis. We also thank Brittany Laslow and Benj Sterrett for support in the lab and field.
 
 # FUNDING
 
@@ -213,6 +236,153 @@ Funding was provided by the Cornell Lab of Ornithology, a National Science Found
 
 \newpage
 \beginsupplement
-# SUPPLEMENTARY MATERIAL
+# SUPPLEMENTARY MATERIAL FOR: 
 
-blah blah blah
+**Joint effects of social interactions and environmental challenges on physiology, internal microbiome, and reproductive performance in a wild bird.**
+
+## SUPPLEMENTAL METHODS
+
+### *Plumage Measurement*
+
+We measured the overall brightness of feathers collected from the center of the white breast of each female in this study exactly as described in previous work on this population [@taff2019; @taff2021]. Briefly, four feathers from the breast were stacked and taped onto black construction paper. Reflectance was then measured with an Ocean Optics FLAME-S-UV-VIS spectrophotometer with PX-2 pulsed Xenon light source and WS-1 white standard in OceanView version 1.5.2 (Ocean Optics, Dunedin, FL). Aquisition settings included a 20 nm boxcar width, 10 scan average, and 60 ms integration time. We used a holster on the fiber optic UV/VIS probe so that light was blocked while reading and the probe was held a constant 5 mm distance from the feathers. For each feather stack, we took four separate spectral readings with the probe removed between each reading. 
+
+We processed raw reflectance spectra using the `pavo` package in R [@pavo]. As in Taff et al. [-@taff2021], we focused on the overall brightness of the breast plumage given by the 'B2' measurement in `pavo`. This measurement represents the average reflectance across the range of 300-700 nm. Finally, the brightness measurements from the four separate spectra were averaged for each individual to arrive at a single brightness measure for each individual in the population before treatments were applied. In this study, we did not collect additional feathers at later time points after treatments, but Taff et al. [-@taff2021] includes extensive validation data with feathers measured at varying time points after treatments for control and dulled birds.
+  
+### *Corticosterone Measurement*
+
+We measured the concentration of corticosterone from plasma that was frozen in the field using commercially available enzyme immunoassay (EIA) kits (DetectX Corticosterone, Arbor Assays: K014-H5). Validation and lab testing data on these kits when applied to our population of tree swallows is available in Taff et al. [@taff2019]. We first extracted corticosterone from plasma by adding 5 $\mu$l of plasma to 45 $\mu$l of assay buffer and then proceeding with three rounds ethyl acetate extraction. The final extract was dried overnight in a fume hood and then reconstituted with 125 $\mu$l of assay buffer. Reconstituded samples were run in duplicate with a 9 point standard curve in 96 well EIA plates. Average extraction efficiency was determined by spiking some samples with a known amount of concentrated corticosterone and determining the percent recovery. 
+
+Using these starting volumes, the lower detection limit for corticosterone was 0.8 ng/$\mu$l and we substitude this value for any samples that were too low to detect. Overall, the extraction efficiency was 96.2%. When comparing replicates of each sample run on the same plate, the intra-plate CV was 11.5%. The inter-plate CV, based on plasma pools run across multiple plates, was 12.7%. 
+
+### *Microbiome Lab Procedures*
+
+Samples were collected in the field with flocked sterile swabs (Puritan® HydraFlock®; product number 25-3317-H) that were inserted ~1.5 cm into the cloaca and then gently removed while slowly rotating [as in @vo]. We stored samples in 1 mL of RNAlater at -80 C and then extracted DNA according to the manufacturer's protocol with DNeasy PowerSoil DNA Isolation Kits (Qiagen Incorporated). After extraction, we used the 515F and 806R primers with Illumina adapters to amplify the V4 region of the 16S gene following the standard Earth Microbiome Project protocol modified for 10 $\mu$l reactions [@caporaso2011; @caporaso2012]. In experiment one, we collected microbiome samples only at the first and third captures, while in the second experiment we collected samples from all three captures.
+
+We ran each PCR reaction in triplicate and succesfful amplification was confirmed by running each pooled reaction on a 1% agarose gel. Pooled samples were submitted to the Cornell Biotechnology Resource Center for quantifiaction, library preparation, and sequencing [all lab procedures as described in @taff2021]. Each sequencing run also included negative control extractions that went through the full procedure from extraction to sequencing with only a sterile swab and RNAlater. Extracted samples from adults were sequenced in two lanes (one each for the 2018 experiment and the 2019 experiment) on an Illumina MiSeq PE 2 x 250 run.
+
+### *Microbiome Bioinformatic Pipeline*
+
+We processed sequences with the exact same workflow described in Taff et al. [-@taff2021], which was based on a published workflow for processing microbiome sequences by Callahan et al. [-@callahan2017]. All forward and reverse reads were truncated to 180 bp using the 'filterAndTrim' function in the `dada2` package in R [@callahan2016]. After trimming, we proceeded through dereplication, modeling sequencing errors, determining amplified sequence variants (ASVs), merging reads, and removing chimeras all using the default settings in `dada2` in order to create a final set of ASVs for each sample. 
+
+We used the Silva 132 database to make taxonomic assignments [@quast13; @yilmaz14] and built a generalized time-reversible maximum likelihood tree from the ASVs using the `phangorn` package in R [@schliep10]. Subsequent analyses were carried out using the `phyloseq`  and `vegan` package in R to combine the ASV table with sample data, ASV taxonomy, and the phylogenetic tree [@mcmurdie2013; @dixon2003vegan]. After removing singletons and non-bacterial ASVs, we processed reads with the `decontam` package to identify and remove likely contaminants [@davis18].
+
+We used the final ASV file to determine the relative abundance of taxa in each sample. For our main analysis, we calculated alpha diversity metrics for each sample after agglomerating taxa at the genus level (Shannon Index, Faith's Phylogenetic Diversity [PD], and Inverse Simpson's Index) using the `phyloseq` and `picante` packages in R [@kembel2010; @mcmurdie2013]. When calculating alpha diversity metrics, we rarefied all samples to 1000 reads using the 'prune_samples' function in `phyloseq`. 
+
+We tested for differences in alpha diversity across treatment groups using linear models that included alpha diversity at the second or third capture as the response along with first capture diveristy and an interaction between the two treatment levels as predictors. In addition to comparing alpha diversity metrics, we also tested for dissimilarity in the microbiota community composition between teh treatment groups using the `vegan` package in R [@dixon2003vegan]. For these analyses, we calculated Bray-Curtis dissimilarity matrices using principal coordinate analyses (PCoA). Differences between treatment groups were assessed by PERMANOVA tests as implemented by the `adonis2` function in `vegan`. When significant effects were detected with PERMANOVA, we moved on to dispersion tests with the `betadisper` function to determine whether differences were driven by within-group dispersion.
+
+## SUPPLEMENTAL FIGURES AND TABLES
+
+```{r micro-bar1, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "fill"}
+knitr::include_graphics("stack_2018.pdf")
+```
+
+
+```{r micro-bar2, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "fill"}
+knitr::include_graphics("stack_2019.pdf")
+```
+
+
+```{r micro-one, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "fill"}
+knitr::include_graphics("ordinate_2018.pdf")
+```
+
+```{r micro-two, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "fill"}
+knitr::include_graphics("ordinate_2019.pdf")
+```
+
+
+
+```{r tab-social}
+
+```
+
+
+```{r tab-mass, echo = FALSE, message = FALSE, warning = FALSE}
+tab1 <- read.delim(here::here("5_other_outputs/table_mass.txt"), header = FALSE)
+
+# kableExtra::kable(tab1,
+#                   caption = "table one fill in",
+#                   col.names = c("Predictor", "Estimate", "CI", "P", "Estimate", "CI", "P"))
+kbl(tab1, caption = "table mass fill in", col.names = c("Predictor", "Estimate", "CI", "P"),
+    booktabs = T) %>%
+  kable_styling(latex_options = "striped") %>%
+  pack_rows("Experiment One: n = 57 birds; 110 measures", 1, 13) %>%
+  pack_rows("Experiment Two: n = 54 birds; 99 measures", 14, 22)
+  
+
+```
+
+\newpage
+
+```{r tab-cort, echo = FALSE, message = FALSE, warning = FALSE}
+tabc <- read.delim(here::here("5_other_outputs/tab_cort.txt"), header = FALSE)
+
+kbl(tabc, caption = "table cort fill in", longtable = T,
+    col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "repeat_header")) %>%
+  pack_rows("Experiment One: 2nd Capture Base Cort", 1, 3) %>%
+  pack_rows("Experiment One: 3rd Capture Base Cort", 4, 10) %>%
+  pack_rows("Experiment One: 3rd Capture Induced Cort", 11, 17) %>%
+  pack_rows("Experiment One: 3rd Capture Post-Dex Cort", 18, 24) %>%
+  pack_rows("Experiment Two: 2nd Capture Base Cort", 25, 27) %>%
+  pack_rows("Experiment Two: 3rd Capture Base Cort", 28, 32) %>%
+  pack_rows("Experiment Two: 3rd Capture Induced Cort", 33, 36) %>%
+  pack_rows("Experiment Two: 3rd Capture Post-ACTH Cort", 37, 40)
+```
+
+```{r tab-gluc, echo = FALSE, message = FALSE, warning = FALSE}
+
+tabg <- read.delim(here::here("5_other_outputs/tab_glucose.txt"), header = FALSE)
+
+kbl(tabg, caption = "table glucose fill in", longtable = T,
+    col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "repeat_header")) %>%
+  pack_rows("Experiment One: 2nd Capture Base Glucose", 1, 7) %>%
+  pack_rows("Experiment One: 3rd Capture Base Glucose", 8, 14) %>%
+  pack_rows("Experiment One: 3rd Capture Induced Glucose", 15, 21) %>%
+  pack_rows("Experiment Two: 2nd Capture Base Glucose", 22, 26) %>%
+  pack_rows("Experiment Two: 3rd Capture Base Glucose", 27, 31) %>%
+  pack_rows("Experiment Two: 3rd Capture Induced Glucose", 32, 36)
+
+```
+
+
+```{r tab-alpha, echo = FALSE, message = FALSE, warning = FALSE}
+taba <- read.delim(here::here("5_other_outputs/alpha_table.txt"), header = FALSE)
+
+kbl(taba, caption = "alpha fill", longtable = T,
+    col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "repeat_header")) %>%
+  pack_rows("Experiment One: 3rd Capture PD", 1, 7) %>%
+  pack_rows("Experiment One: 3rd Capture Shannon", 8, 14) %>%
+  pack_rows("Experiment One: 3rd Capture Inverse Simpson", 15, 21) %>%
+  pack_rows("Experiment Two: 2nd Capture PD", 22, 26) %>%
+  pack_rows("Experiment Two: 2nd Capture Shannon", 27, 31) %>%
+  pack_rows("Experiment Two: 2nd Capture Inverse Simpson", 32, 36) %>%
+  pack_rows("Experiment Two: 3rd Capture PD", 37, 41) %>%
+  pack_rows("Experiment Two: 3rd Capture Shannon", 42, 46) %>%
+  pack_rows("Experiment Two: 3rd Capture Inverse Simpson", 47, 51)
+```
+
+
+```{r tab-provision, echo = FALSE, message = FALSE, warning = FALSE}
+tabp <- read.delim(here::here("5_other_outputs/tab_provision.txt"), header = FALSE)
+
+kbl(tabp, caption = "provision fill", longtable = T,
+    col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "repeat_header")) %>%
+  pack_rows("Experiment One: Daily Female Provisioning Trips", 1, 10) %>%
+  pack_rows("Experiment Two: Daily Female Provisioning Trips", 11, 18)
+
+```
+
+```{r tab-rs, echo = FALSE, message = FALSE, warning = FALSE}
+tabrs <- read.delim(here::here("5_other_outputs/tab_rs.txt"), header = FALSE)
+
+kbl(tabrs, caption = "rs fill", 
+    col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "repeat_header")) %>%
+  pack_rows("Experiment One: Number Fledged", 1, 6) %>%
+  pack_rows("Experiment Two: Number Fledged", 7, 10)
+```
+
