@@ -1,5 +1,5 @@
 ---
-title: "Joint effects of social interactions and environmental challenges on physiology, internal microbiome, and reproductive performance in a wild bird."
+title: "Joint effects of social interactions and environmental challenges on physiology, internal microbiome, and reproductive performance in tree swallows (*Tachycineta bicolor*)."
 author: 
   - Conor C. Taff
   - Sabrina M. McNew
@@ -51,7 +51,7 @@ CZ: Laboratoire d'Ethologie Expérimentale et Comparée, University Sorbonne Par
 
 # ABSTRACT
 
-Animals in wild populations often face multiple challenges that occur in sequence or simultaneously and an appropriate response to one challenge might either hinder or enhance the response to subsequent challenges. The social environment that individuals experience appears to be a particularly salient mediator of stress resilience, as the nature and valence of social interactions are often related to subsequent health, physiology, microbiota, and overall stress resilience. Relatively few studies have simultaneously manipulated the social environment and ecological challenges under natural conditions. Here, we report the results of experiments in wild tree swallows (*Tachycineta bicolor*) in which we manipulated both ecological challenges (predator encounters and flight efficiency reduction) and social interactions (by experimental dulling of a social signal). In two experiments conducted in separate years, we reversed the order of these treatments so that females experienced either an altered social environment followed by a challenge or vice-versa. Before, during, and after treatments were applied, we tracked breeding success, adult and nestling morphology and physiology (corticosterone and glucose), social interactions via an RFID sensor network, and female microbiome diversity. Overall, we found that predator exposure reduced the number of offspring fledged and that signal manipulation altered social interactions, but little evidence that the order of exposure mattered or that the two categories of treatment interacted with each other. We discuss the implications of our results for understanding what types of challenges and what conditions are most likely to result in interactions between social and ecological challenges.
+Animals in wild populations often face multiple challenges that occur in sequence or simultaneously and an appropriate response to one challenge might either hinder or enhance the response to subsequent challenges. The social environment that individuals experience appears to be a particularly salient mediator of stress resilience, as the nature and valence of social interactions are often related to subsequent health, physiology, microbiota, and overall stress resilience. Relatively few studies have simultaneously manipulated the social environment and ecological challenges under natural conditions. Here, we report the results of experiments in wild tree swallows (*Tachycineta bicolor*) in which we manipulated both ecological challenges (predator encounters and flight efficiency reduction) and social interactions (by experimental dulling of a social signal). In two experiments conducted in separate years, we reversed the order of these treatments so that females experienced either an altered social environment followed by a challenge or vice-versa. Before, during, and after treatments were applied, we tracked breeding success, adult and nestling morphology and physiology (corticosterone and glucose), social interactions via an RFID sensor network, and female microbiome diversity. Overall, we found that predator exposure reduced the number of offspring fledged and that signal manipulation sometimes altered social interactions, but little evidence that the two categories of treatment interacted with each other. We discuss the implications of our results for understanding what types of challenges and what conditions are most likely to result in interactions between social and ecological challenges.
 
 *Keywords: multiple stressors, social feedback, social signaling*
 
@@ -112,9 +112,11 @@ knitr::include_graphics("experiment_schematic.png")
 
 We equipped every active nest box in our population with an RFID reader mounted under the box and connected to an antenna that circled the nest box entrance [described in @vitousek2018fee]. The reader was programmed to check for a PIT tag in the antenna every second and recorded activity from 5 am until 10 pm each day. Readers were installed on day 4 after clutch completion and maintained throughout the breeding season. Some boxes, however, are missing RFID records in cases where a battery failed early or a board malfunctioned. Therefore, the total number of days of RFID observation differs between boxes and we account for these differences in observation effort by modeling behavior on a daily basis using only days with full records (see details below).  
 
-We used data from the RFID sensor network to calculate both adult provisioning behavior and patterns of interaction between owners of different boxes in the population. From the raw RFID records, we determined provisioning behavior using a previously developed algorithm [@vitousek2018prsb]. Records were counted as unique provisioning trips if they occurred sufficiently far apart, with the time threshold depending on the age of nestlings based on a videotaped validation dataset from this population [@vitousek2018prsb]. After identifying unique provisioning trips, we summarized provisioning effort into the number of unique trips per hour or per day for each adult. While we calculated provisioning data for both males and females, we primarily focus on female provisioning because treatments were targeted at females and because not all males were captured. In this study, we included provisioning data from the day after hatching until nestlings were 15 days old. After day 15, parental provisioning declines quickly, nestling PIT tags can start to interfere with reading parental provisioning behavior, and the dulling treatment was expected to fade. Therefore, we considered day 15 the end of adult RFID data for all nests.  
+We used data from the RFID sensor network to calculate both adult provisioning behavior and patterns of interaction between owners of different boxes in the population. From the raw RFID records, we determined provisioning behavior using a previously developed algorithm [@vitousek2018prsb]. Records were counted as unique provisioning trips if they occurred sufficiently far apart, with the time threshold depending on the age of nestlings based on a videotaped validation dataset from this population [@vitousek2018prsb]. 
 
-We also used raw RFID records to determine the number of times each day that focal birds were visited by other individuals in the population and the number of times that focal birds made trips to other boxes in the population. This procedure is described in detail in Taff et al. [-@taff2021]. For these analyses, we focused on the total number of unique PIT signatures each day, so there was no need to distinguish between distinct social interactions based on a time threshold [see discussion in @taff2021].  
+After identifying unique provisioning trips, we summarized provisioning effort into the number of unique trips per hour or per day for each adult. While we calculated provisioning data for both males and females, we primarily focus on female provisioning because treatments were targeted at females, because not all males were captured, and because males that were newly captured did not receive PIT tags until about 6 days after hatching. In this study, we included provisioning data from the day after hatching until nestlings were 15 days old. After day 15, parental provisioning declines quickly, nestling PIT tags can start to interfere with reading parental provisioning behavior, and the dulling treatment was expected to fade. Therefore, we considered day 15 the end of adult RFID data for all nests.  
+
+We also used raw RFID records to determine the number of times each day that focal birds were visited by other individuals in the population and the number of times that focal birds made trips to other boxes in the population. This procedure is described in detail in Taff et al. [-@taff2021]. Because male and female visitation patterns differ (@taff2021) and because not all males had PIT tags for the entire breeding season, we focused only on visits to the focal box made by other females and on trips to other boxes made by the focal female. We considered visits or trips that occurred more than two minutes apart to be distinct records [see discussion in @taff2021].  
 
 *Microbiome Sample Processing and Bioinformatics*  
 
@@ -130,7 +132,7 @@ The exact form of our models differed depending on the response variable in ques
 
 Data extracted from the RFID network on provisioning and visitation patterns included multiple days of observation for each nest. For provisioning data, we fit linear mixed models with the total number of provisioning trips in a day made by the focal female as the response variable. Predictors included the two treatments and their interaction with pre-treatment female brightness (dropped if not supported) along with quadratic effects for nestling age and brood size [as in @vitousek2018prsb]. Random effects were included for female identity to account for repeated observations and for the day of year to capture variation in provisioning associated with weather or overall food availability not related to our treatments [see @vitousek2018prsb for further discussion].  
 
-For social interactions, we focused on the number of unique visitors to the focal nest box (separately for male or female visitors) and trips made to other nest boxes in the population on each day of observation. Often individuals made multiple visits or trips to the same boxes in a day, but focusing on unique encounters eliminates the need to set subjective criteria for what counts as an identifiable interaction [see @taff2021 for extensive discussion and justification of this approach]. For each of these three metrics, we fit separate models for stage one (mainly during incubation) and stage two (mainly during nestling provisioning) periods. We split the stages in our models because they differ both in which stage of treatment had been applied already and—importantly—in the overall frequency of social interactions; interactions are much more common during the nestling provisioning stage. Each model included the one (stage one) or two (stage two) treatments that had been applied along with initial brightness (dropped if not supported) as fixed effects. Random effects included individual identity and day of year as above for provisioning. These social interaction models were fit as generalized linear mixed models with a Poisson distribution. 
+For social interactions, we focused on the number of unique visits to the focal nest box by other females in the population and trips made to other nest boxes in the population on each day of observation. For each of these two metrics, we fit separate models for stage one (mainly during incubation) and stage two (mainly during nestling provisioning) periods. We split the stages in our models because they differ both in which stage of treatment had been applied already and—importantly—in the overall frequency of social interactions; visits to other nest boxes are much more common during the nestling provisioning stage [@taff2022]. Each model included the one (stage one) or two (stage two) treatments that had been applied along with initial brightness (dropped if not supported) as fixed effects. Models also included the day in the breeding cycle (0 = hatching day) as a linear predictor. Random effects included individual identity and day of year as above for provisioning. These social interaction models were fit as generalized linear mixed models with a Poisson distribution. 
 
 Finally, we fit linear models to look for differences in the number of offspring fledged for each treatment group. These models included only the main effects of the two treatments, since all response variables were after treatments had been applied and no random effects were necessary. Note that more detailed analyses of the effect of treatments and cross fostering on nestling development and physiology are included in separate studies [@taff2022; @mcnew2022].
 
@@ -159,7 +161,7 @@ In experiment two, the first stage of treatments occurred from day six to twelve
 
 In both years, female mass declined across the three captures and pre-treatment mass predicted mass later in the season (Table \@ref(tab:tab-mass); experiment one effect of breeding stage $\beta$ = -1.53, 95% CI = -2.49 to -0.57, effect of initial mass $\beta$ = 0.6, CI = 0.36 to 0.85; experiment two effect of breeding stage $\beta$ = -2.02, CI = -2.72 to -1.32, effect of initial mass $\beta$ = 0.7, CI = 0.46 to 0.95). However, there was no evidence that any treatment or combination of treatments altered this seasonal decline in mass in either year (Figure \@ref(fig:mass-fig); Table \@ref(tab:tab-mass)).  
 
-```{r mass-fig, echo = FALSE, message = FALSE, warning = FALSE, out.width = "99%", fig.cap = "Female mass by treatment group and capture number in each experiment. Filled shapes and vertical lines show the group mean and standard errors while faded gray circles show raw data."}
+```{r mass-fig, echo = FALSE, message = FALSE, warning = FALSE, out.width = "99%", fig.cap = "Female mass by treatment group and capture number in each experiment. Filled shapes and vertical lines show the group mean and standard errors. Faded gray circles show raw data."}
 knitr::include_graphics("mass_figure.png")
 ```
 	
@@ -177,7 +179,7 @@ In experiment one, the total daily number of female provisioning trips increased
 
 In experiment two, daily female provisioning showed a similar relationship with nestling age and was also higher in nests with larger broods (Table \@ref(tab:tab-provision); main effect of brood size $\beta$ = 46.17, CI = 10.61 to 81.74; nestling age $\beta$ = 21.3, CI = 15.81 to 26.79; quadratic effect of nestling age $\beta$ = -0.94, CI = -1.3 to -0.59). There was a trend for females in the plumage dulling treatment to provision nestlings at a higher rate (Table \@ref(tab:tab-provision); signal dulling treatment $\beta$ = 24.16, CI = 0.95 to 47.37). Neither predator treatment nor the interaction between the two treatments were related to provisioning rate (Figure \@ref(fig:feeding-fig)). 
 
-```{r feeding-fig, echo = FALSE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 4.7, fig.cap = "fill in"}
+```{r feeding-fig, echo = FALSE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 4.7, fig.cap = "Raw data for total female provisioning in each experiment. Lines and solid shapes connect the group means of each treatment group. Faded points are the raw data points for each individual female on each day. See text for full model controlling for other variables."}
 prov_plot <- readRDS(here::here("5_other_outputs/prov_plot.rds"))
 prov_plot
 ```
@@ -186,7 +188,7 @@ prov_plot
 
 In experiment one, females that received a predation treatment fledged fewer nestlings than controls, regardless of which signal manipulation treatment they received (Figure \@ref(fig:rs-fig); Table \@ref(tab:tab-rs); number of nestlings fledged predation $\beta$ = -1.64, CI = -3.22 to -0.05). In experiment two, females in predation treatments fledged fewer offspring than controls, regardless of the signal manipulation treatment (Figure \@ref(fig:rs-fig); Table \@ref(tab:tab-rs); total number fledged $\beta$ = -1.59, CI = -3.06 to -0.12). 
 
-```{r rs-fig, echo = FALSE, message = FALSE, warning = FALSE, fig.width = 7.3, fig.height = 4.8, fig.cap = "fill in"}
+```{r rs-fig, echo = FALSE, message = FALSE, warning = FALSE, fig.width = 7.3, fig.height = 4.8, fig.cap = "Number of offspring fledged by treatment group and experiment. Boxes show the median, interquartile range, and 1.5 times the interquartile range for each group. Faded points show the observations for each nest."}
 #figure
 gt <- readRDS(here::here("5_other_outputs/rs_plot.rds"))
 grid::grid.draw(gt)
@@ -272,21 +274,21 @@ We tested for differences in alpha diversity across treatment groups using linea
 
 ## SUPPLEMENTAL FIGURES AND TABLES
 
-```{r micro-bar1, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "fill"}
+```{r micro-bar1, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Relative abundance based on number of reads for bacterial phyla in samples from the first (pre-treatment) and third (post-treatment) capture in experiment one."}
 knitr::include_graphics("stack_2018.pdf")
 ```
 
 
-```{r micro-bar2, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "fill"}
+```{r micro-bar2, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Relative abundance based on number of reads for bacterial phyla in samples from the first (pre-treatment), second, and third (post-treatment) captures in experiment two."}
 knitr::include_graphics("stack_2019.pdf")
 ```
 
 
-```{r micro-one, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "fill"}
+```{r micro-one, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Bray-Curtis PCoA ordination plots by treatment group and capture number for experiment one."}
 knitr::include_graphics("ordinate_2018.pdf")
 ```
 
-```{r micro-two, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "fill"}
+```{r micro-two, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Bray-Curtis PCoA ordination plots by treatment group and capture number for experiment two."}
 knitr::include_graphics("ordinate_2019.pdf")
 ```
 
@@ -303,7 +305,7 @@ tab1 <- read.delim(here::here("5_other_outputs/table_mass.txt"), header = FALSE)
 # kableExtra::kable(tab1,
 #                   caption = "table one fill in",
 #                   col.names = c("Predictor", "Estimate", "CI", "P", "Estimate", "CI", "P"))
-kbl(tab1, caption = "table mass fill in", col.names = c("Predictor", "Estimate", "CI", "P"),
+kbl(tab1, caption = "General linear model results for post-treatment mass in experiment one and experiment two. Both models also include female identity as a random effect.", col.names = c("Predictor", "Estimate", "CI", "P"),
     booktabs = T) %>%
   kable_styling(latex_options = "striped") %>%
   pack_rows("Experiment One: n = 57 birds; 110 measures", 1, 13) %>%
@@ -317,7 +319,7 @@ kbl(tab1, caption = "table mass fill in", col.names = c("Predictor", "Estimate",
 ```{r tab-cort, echo = FALSE, message = FALSE, warning = FALSE}
 tabc <- read.delim(here::here("5_other_outputs/tab_cort.txt"), header = FALSE)
 
-kbl(tabc, caption = "table cort fill in", longtable = T,
+kbl(tabc, caption = "Results of linear models for each corticosterone measurement recorded in experiment one and experiment two. ", longtable = T,
     col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
   kable_styling(latex_options = c("striped", "repeat_header")) %>%
   pack_rows("Experiment One: 2nd Capture Base Cort", 1, 3) %>%
@@ -334,7 +336,7 @@ kbl(tabc, caption = "table cort fill in", longtable = T,
 
 tabg <- read.delim(here::here("5_other_outputs/tab_glucose.txt"), header = FALSE)
 
-kbl(tabg, caption = "table glucose fill in", longtable = T,
+kbl(tabg, caption = "Results of linear models for each glucose measurement recorded in experiment one and experiment two.", longtable = T,
     col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
   kable_styling(latex_options = c("striped", "repeat_header")) %>%
   pack_rows("Experiment One: 2nd Capture Base Glucose", 1, 7) %>%
@@ -350,7 +352,7 @@ kbl(tabg, caption = "table glucose fill in", longtable = T,
 ```{r tab-alpha, echo = FALSE, message = FALSE, warning = FALSE}
 taba <- read.delim(here::here("5_other_outputs/alpha_table.txt"), header = FALSE)
 
-kbl(taba, caption = "alpha fill", longtable = T,
+kbl(taba, caption = "Results of linear models for alpha diversity at each capture measured as Faith's phylogenetic diversity (PD), Shannon Index, or Inverse Simpson in each experiment.", longtable = T,
     col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
   kable_styling(latex_options = c("striped", "repeat_header")) %>%
   pack_rows("Experiment One: 3rd Capture PD", 1, 7) %>%
@@ -368,7 +370,7 @@ kbl(taba, caption = "alpha fill", longtable = T,
 ```{r tab-provision, echo = FALSE, message = FALSE, warning = FALSE}
 tabp <- read.delim(here::here("5_other_outputs/tab_provision.txt"), header = FALSE)
 
-kbl(tabp, caption = "provision fill", longtable = T,
+kbl(tabp, caption = "Results of GLMMs with total daily provisioing by females as the response variable for each experiment. Models include female identity and day of year as random effects with a Poisson distribution.", longtable = T,
     col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
   kable_styling(latex_options = c("striped", "repeat_header")) %>%
   pack_rows("Experiment One: Daily Female Provisioning Trips", 1, 10) %>%
@@ -379,7 +381,7 @@ kbl(tabp, caption = "provision fill", longtable = T,
 ```{r tab-rs, echo = FALSE, message = FALSE, warning = FALSE}
 tabrs <- read.delim(here::here("5_other_outputs/tab_rs.txt"), header = FALSE)
 
-kbl(tabrs, caption = "rs fill", 
+kbl(tabrs, caption = "Results of linear models for the total number of offspring fledged per nest in each experiment.", 
     col.names = c("Predictor", "Estimate", "CI", "P"), booktabs = T) %>%
   kable_styling(latex_options = c("striped", "repeat_header")) %>%
   pack_rows("Experiment One: Number Fledged", 1, 6) %>%

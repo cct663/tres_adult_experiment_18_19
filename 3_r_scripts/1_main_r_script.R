@@ -864,7 +864,7 @@
         soc_models$offset <- soc_models$doy - soc_models$hatch_date
         soc_models <- subset(soc_models, soc_models$offset > -6 & soc_models$offset < 15)
         
-    ggplot(data = soc_models, mapping = aes(x = offset, y = uni_m_vis, col = full_treatment)) + 
+    ggplot(data = soc_models, mapping = aes(x = offset, y = uni_f_vis, col = full_treatment)) + 
       geom_jitter(width = 0.1, col = "slateblue", size = 0.7, alpha = 0.6, height = 0) +
       geom_smooth(method = "loess") + facet_wrap(~ year)
         
@@ -902,16 +902,16 @@
           m_trip_18_s1 <- glmer(uni_trips ~ color*bbright_s + (1|uby), family = "poisson", data = soc_mod18s1)
           m_trip_18_s1b <- glmer(uni_trips ~ color + (1|uby), family = "poisson", data = soc_mod18s1)
         #STAGE 2
-          m_mvis_18_s2 <- glmer(uni_m_vis ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod18s2,
+          m_mvis_18_s2 <- glmer(tot_m_vis ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod18s2,
                                 control = glmerControl(optimizer = "bobyqa"))
-          m_mvis_18_s2b <- glmer(uni_m_vis ~ color*challenge + (1|uby), family = "poisson", data = soc_mod18s2)
-          m_fvis_18_s2 <- glmer(uni_f_vis ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod18s2,
+          m_mvis_18_s2b <- glmer(tot_m_vis ~ color*challenge + (1|uby), family = "poisson", data = soc_mod18s2)
+          m_fvis_18_s2 <- glmer(uni_f_vis ~ color*challenge*bbright_s + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s2,
                                 control = glmerControl(optimizer = "bobyqa"))
-          m_fvis_18_s2b <- glmer(uni_f_vis ~ color*challenge + (1|uby), family = "poisson", data = soc_mod18s2,
+          m_fvis_18_s2b <- glmer(uni_f_vis + uni_m_vis ~ color*challenge + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s2,
                                  control = glmerControl(optimizer = "bobyqa"))
-          m_trip_18_s2 <- glmer(uni_trips ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod18s2,
+          m_trip_18_s2 <- glmer(tot_trips ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod18s2,
                                 control = glmerControl(optimizer = "bobyqa"))
-          m_trip_18_s2b <- glmer(uni_trips ~ color*challenge + (1|uby), family = "poisson", data = soc_mod18s2)
+          m_trip_18_s2b <- glmer(tot_trips ~ color*challenge + (1|uby), family = "poisson", data = soc_mod18s2)
           
         #STAGE 1 Table
           m_soc18_st1_t <- tab_model(m_mvis_18_s1b, m_fvis_18_s1b, m_trip_18_s1b, 
@@ -937,15 +937,15 @@
           m_trip_19_s1 <- glmer(uni_trips ~ color*bbright_s + (1|uby), family = "poisson", data = soc_mod19s1)
           m_trip_19_s1b <- glmer(uni_trips ~ color + (1|uby), family = "poisson", data = soc_mod19s1)
         #STAGE 2
-          #m_mvis_19_s2 <- glmer(uni_m_vis ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod19s2)
-          m_mvis_19_s2b <- glmer(uni_m_vis ~ color*challenge + (1|uby), family = "poisson", data = soc_mod19s2,
+          m_mvis_19_s2 <- glmer(tot_m_vis ~ color*challenge*bbright_s + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2)
+          m_mvis_19_s2b <- glmer(tot_m_vis ~ color*challenge + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
                                  control = glmerControl(optimizer = "bobyqa"))
-          m_fvis_19_s2 <- glmer(uni_f_vis ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod19s2,
+          m_fvis_19_s2 <- glmer(tot_f_vis ~ color*challenge*bbright_s + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
                                 control = glmerControl(optimizer = "bobyqa"))
-          m_fvis_19_s2b <- glmer(uni_f_vis ~ color*challenge + (1|uby), family = "poisson", data = soc_mod19s2,
+          m_fvis_19_s2b <- glmer(tot_f_vis ~ color*challenge + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
                                  control = glmerControl(optimizer = "bobyqa"))
-          m_trip_19_s2 <- glmer(uni_trips ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod19s2)
-          m_trip_19_s2b <- glmer(uni_trips ~ color*challenge + (1|uby), family = "poisson", data = soc_mod19s2)
+          m_trip_19_s2 <- glmer(tot_trips ~ color*challenge*bbright_s + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2)
+          m_trip_19_s2b <- glmer(tot_trips ~ color*challenge + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2)
           
         #STAGE 1 Table
           m_soc19_st1_t <- tab_model(m_mvis_19_s1, m_fvis_19_s1b, m_trip_19_s1b, 

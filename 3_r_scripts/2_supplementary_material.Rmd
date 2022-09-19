@@ -7,6 +7,7 @@ author:
   - Sabrina M. McNew
   - Cedric Zimmer
   - Jenny Uehling
+  - Jennifer Houtz
   - Thomas Ryan
   - David Chang van Oordt
   - Allison Injaian
@@ -37,16 +38,6 @@ We measured the concentration of corticosterone from plasma that was frozen in t
 
 Using these starting volumes, the lower detection limit for corticosterone was 0.8 ng/$\mu$l and we substitude this value for any samples that were too low to detect. Overall, the extraction efficiency was 96.2%. When comparing replicates of each sample run on the same plate, the intra-plate CV was 11.5%. The inter-plate CV, based on plasma pools run across multiple plates, was 12.7%. 
 
-### *Cortrosyn Validation Experiments*
-
-To ensure that Cortrosyn® had the desired effect in stimulating a maximal corticosterone response, we conducted two validation studies on a separate set of nestlings and adults that were not part of the main study presented here. Once reconstituted, Cortrosyn is not stable at room temperature. Therefore, rather than delivering exact doses based on individual mass, we reconstituted vials of lyophilized Cortrosyn (Amphastar Pharmaceutical Incorporated, Item #054881) and prepared aliquots pre-measured into syringes based on the average mass in our population (on day 15 nestlings weigh approximately the same amount as full grown adults and the same dose was used for both adults and nestlings). Aliquotted Cortrosyn doses were stored frozen for < 2 weeks and thawed immediately before injection.
-
-In 2018, we carried out a validation experiment on 15 day old nestlings from 9 nests. At each nest, individual nestlings were alternately assigned to a Cortrosyn injection group (n = 23 nestlings) or a control group that received a saline injection (n = 20 nestlings). For all nestlings, a baseline blood sample (< 30 $\mu$l) was collected within 3 minutes of disturbance and then nestlings were immediately injected with either 50 $\mu$l of saline or 50 $\mu$l of 0.1 microgram per $\mu$l freshly thawed Cortrosyn. Following injection, two additional blood samples (< 30 $\mu$l) were collected 15 and 30 minutes after injection. 
-
-In 2020, we carried out a separate validation experiment on adult females captured during incubation that were not part of the main study presented here. For each female, we collected a baseline blood sample (< 70 $\mu$l) within 3 minutes of disturbance. All females received a saline injection 50 $\mu$l immediately after this baseline sample was collected and then had a second blood sample (< 30 $\mu$l) taken 30 minutes later. Immediately after this second sample, females were injected with either an additional saline dose of the same volume (n = 9) or a dose of Cortrosyn (n = 9; 50 $\mu$l at 0.1 microgram per $\mu$l). Thirty minutes after this second injection, a final blood sample (< 30 $\mu$l) was collected. For both adults and nestlings in these validation experiments, blood samples were processed and corticosterone measured exactly as described above.
-
-To compare corticosterone between treatment groups, we fit a single model for each dataset (adults and nestlings). For nestlings, we fit a linear mixed model with corticosterone measurement as the response, an interaction between treatment and sampling time point (fit as a factor) as predictors, and individual identity as a random effect. Because multiple nestlings were sampled from the same nest, this model included a random effect for nest of origin. For adults, we fit a similar model, except that there was no need for a random effect for nest since only one female was sampled at each nest. We used the full models to compare circulating corticosterone in saline versus Cortrosyn injected birds at each of the three timepoints. Significance in these mixed models was assessed with p-values based on the Satterthwaite's Method implemented by the `lmerTest` package in R [@lmertest].
-
 ### *Microbiome Lab Procedures*
 
 Samples were collected in the field with flocked sterile swabs (Puritan® HydraFlock®; product number 25-3317-H) that were inserted ~1.5 cm into the cloaca and then gently removed while slowly rotating [as in @vo]. We stored samples in 1 mL of RNAlater at -80 C and then extracted DNA according to the manufacturer's protocol with DNeasy PowerSoil DNA Isolation Kits (Qiagen Incorporated). After extraction, we used the 515F and 806R primers with Illumina adapters to amplify the V4 region of the 16S gene following the standard Earth Microbiome Project protocol modified for 10 $\mu$l reactions [@caporaso1; @caporaso2]. In experiment one, we collected microbiome samples only at the first and third captures, while in the second experiment we collected samples from all three captures.
@@ -63,13 +54,8 @@ We used the final ASV file to determine the relative abundance of taxa in each s
 
 We tested for differences in alpha diversity across treatment groups using linear models that included alpha diversity at the second or third capture as the response along with first capture diveristy and an interaction between the two treatment levels as predictors. In addition to comparing alpha diversity metrics, we also tested for dissimilarity in the microbiota community composition between teh treatment groups using the `vegan` package in R [@dixon2003vegan]. For these analyses, we calculated Bray-Curtis dissimilarity matrices using principal coordinate analyses (PCoA). Differences between treatment groups were assessed by PERMANOVA tests as implemented by the `adonis2` function in `vegan`. When significant effects were detected with PERMANOVA, we moved on to dispersion tests with the `betadisper` function to determine whether differences were driven by within-group dispersion.
 
-## **Supplementary Results**
 
-### *Cortrosyn Validation Results*
 
-Injection with Cortrosyn led to a clear increase in circulating corticosterone in both nestlings (Figure S2) and adults (Figure S3). For nestlings, corticosteone increased in both groups from baseline to 15 minutes, but increased significantly more in the Cortrosyn injected group when compared to saline injection. From 15 to 30 minutes, saline injected nestlings declined in circulating corticosterone, but Cotrosyn injected nestlings continued to rise, resulting in an even larger difference in circulating corticosterone between the two groups at 30 minutes (Table S2, P < 0.003). 
-
-Adult females similarly increased circulating corticosterone from baseline to 30 minutes. The two treatment groups did not differ at the first or second timepoint (before Cortrosyn was injected). However, by the final timepoint (30 minutes after injection), the Cortrosyn injected group had significantly higher circulating corticosterone. This difference was driven by a continued increase in corticosterone from 30 to 60 minutes in the Cortrosyn group coupled with a stable circulating level from 30 to 60 minutes in the saline injected group (Table S2, P < 0.001). 
 
 
 

@@ -153,8 +153,8 @@
     ps.no.sing <- prune_taxa(taxa_sums(ps.nc) > 1,ps.nc)
 
 ## Save this phyloseq object to disk ----
-    saveRDS(ps.no.sing, here("2_modified_data/tres_ps_no_sings.rds"))
-    tres_ps <- readRDS(here("2_modified_data/tres_ps_no_sings.rds"))
+    #saveRDS(ps.no.sing, here("2_modified_data/tres_ps_no_sings.rds"))
+    tres_ps <- readRDS(here::here("2_modified_data/tres_ps_no_sings.rds"))
     
 ## Plot reads ----
     ## Plot distribution of sample read depths
@@ -214,6 +214,7 @@
                   dv.labels = c("Faith's D 3rd Capture", "Shannon 3rd Capture", "Inverse Simpson 3rd Capture"))
         
         saveRDS(m_micro_18_t, here::here("5_other_outputs/m_micro_18_t.RDS"))
+        m_micro_18_t <- readRDS(here::here("5_other_outputs/m_micro_18_t.RDS"))
         
      # Fit models for 2019 and make an html output table to add to appendix
         rwdf_19$initial <- rwdf_19$PD_1
@@ -232,6 +233,7 @@
                                 "Faith's D 3rd Capture", "Shannon 3rd Capture", "Inverse Simpson 3rd Capture"))
         
         saveRDS(m_micro_19_t, here::here("5_other_outputs/m_micro_19_t.RDS"))
+        m_micro_19_t <- readRDS(here::here("5_other_outputs/m_micro_19_t.RDS"))
       
 ## Group to phylum ----
   ## Create relative abundance table at phylum level
