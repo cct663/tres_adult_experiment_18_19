@@ -32,7 +32,7 @@
         d_fem19$fmass1_s <- scale(d_fem19$fmass1)
     
   # data by nestling: one row per nestling with some more individual level nestling info
-    d_nestling <- read.delim(here::here("1_raw_data", "data_by_nestling.txt"))
+    d_nestling <- read.delim(here::here("1_raw_data", "data_by_nestling.txt"), header = TRUE)
     
   # provisioning data: one row per nest per day with provisiong info from rfid sensors
     d_provision <- read.delim(here::here("1_raw_data", "daily_provision_data.txt"))
@@ -387,6 +387,7 @@
                  pch = c(21, 21, 21, 24), pt.bg = c(col_sham, col_dull, rep("white", 2)), cex =0.9, bty = "n")
 
 ## Reproductive Success Models ----
+          d_fem18$numdied <- d_fem18$clutch - d_fem18$numfled 
       #Models for 2018
           m_clutch_18 <- lm(clutch ~ color*challenge, data = d_fem18)
           m_brood_18 <- lm(maxbrood ~ color*challenge, data = d_fem18)
@@ -394,6 +395,12 @@
           m_numband_18 <- lm(numband ~ color*challenge, data = d_fem18)
           m_num_d15_18 <- lm(num_d15 ~ color*challenge, data = d_fem18)
           m_numfled_18 <- lm(numfled ~ color*challenge, data = d_fem18)
+          
+          # model to report
+            m_fled18 <- glmer(cbind(numfled, numdied) ~ color*challenge + bbright_s + (1|soc_uby),
+                              data = d_fem18, family = "binomial")
+            m_fled18b <- glmer(cbind(numfled, numdied) ~ color*challenge + (1|soc_uby),
+                               data = d_fem18, family = "binomial")
       
       # Overall effects reported from ANOVA. Group estimates from model summary tables.
           
@@ -405,12 +412,22 @@
           saveRDS(m_RS_18_t, here::here("5_other_outputs/m_RS_18_t.RDS"))
           
       #Models for 2019
+          d_fem19$numdied <- d_fem19$clutch - d_fem19$numfled
           m_clutch_19 <- lm(clutch ~ color*challenge, data = d_fem19)
           m_brood_19 <- lm(maxbrood ~ color*challenge, data = d_fem19)
           m_numd6_19 <- lm(numd6 ~ color*challenge, data = d_fem19)
           m_numband_19 <- lm(numband ~ color*challenge, data = d_fem19)
           m_num_d15_19 <- lm(num_d15 ~ color*challenge, data = d_fem19)
           m_numfled_19 <- lm(numfled ~ color*challenge, data = d_fem19)
+          
+      # make a table
+          fled19_tab <- d_fem %>%
+            group_by(year, full_treatment) %>%
+            summarise(n = n(), fled_mu = mean(numfled), fled_sd = sd(numfled))
+          
+          # model to report
+            m_fled19 <- glmer(cbind(numdied, numfled) ~ color*challenge + bbright_s + (1|soc_uby),
+                              data = d_fem19, family = "binomial")
           
        # Overall p-values from anova. Estimates from model summary table  
           
@@ -673,9 +690,57 @@
         d_prov3_19 <- plyr::join(d_prov3_19, df19, "uby", "left", "first")
         
       # Fit models for 2018
-        m_feed18 <- lmer(f_feed ~ maxbrood + I(maxbrood^2) + offset + I(offset^2) + color*challenge*bbright_s + (1|doy) + (1|uby), data = d_prov3_18)
-        m_feed18b <- lmer(f_feed ~ maxbrood + I(maxbrood^2) + offset + I(offset^2) + color*challenge + (1|doy) + (1|uby), data = d_prov3_18)
+        m_feed18 <- lmer(f_feed ~ maxbrood + offset*color*challenge + color*challenge*bbright_s + (1|doy) + (1|uby), data = d_prov3_18)
+        m_feed18b <- lmer(f_feed ~ maxbrood + offset*color*challenge + 
+                          color*challenge + (1|doy) + (1|uby), data = d_prov3_18)
         m_feed18c <- lmer(f_feed ~ maxbrood + I(maxbrood^2) + offset + I(offset^2) + color*challenge + scale(m_feed) + (1|doy) + (1|uby), data = d_prov3_18)
+        
+      # get model predicted values for plotting  
+        post18 <- mvrnorm(n = 1e5, mu = fixef(m_feed18b), Sigma = vcov(m_feed18b))
+        mu_brd <- mean(d_prov3_18$maxbrood)
+        mu_brd2 <- mu_brd*mu_brd
+        r <- seq(1, 14, 1)
+        mu_cd18 <- sapply(r, function(z)mean(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 4] + post18[, 7]*z))
+        mu_cs18 <- sapply(r, function(z)mean(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z))
+        mu_hd18 <- sapply(r, function(z)mean(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 4] + post18[, 6] +
+                                               post18[, 7]*z + post18[, 9]*z + post18[, 11] + post18[, 13]*z))
+        mu_hs18 <- sapply(r, function(z)mean(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 6] +
+                                               post18[, 9]*z))
+        mu_pd18 <- sapply(r, function(z)mean(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 4] + post18[, 5] +
+                                               post18[, 7]*z + post18[, 8]*z + post18[, 10] + post18[, 12]*z))
+        mu_ps18 <- sapply(r, function(z)mean(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 4] + post18[, 5] +
+                                               post18[, 8]*z))
+        
+        ci_cd18 <- sapply(r, function(z)rethinking::HPDI(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 4] + post18[, 7]*z))
+        ci_cs18 <- sapply(r, function(z)rethinking::HPDI(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z))
+        ci_hd18 <- sapply(r, function(z)rethinking::HPDI(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 4] + post18[, 6] +
+                                               post18[, 7]*z + post18[, 9]*z + post18[, 11] + post18[, 13]*z))
+        ci_hs18 <- sapply(r, function(z)rethinking::HPDI(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 6] +
+                                               post18[, 9]*z))
+        ci_pd18 <- sapply(r, function(z)rethinking::HPDI(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 4] + post18[, 5] +
+                                               post18[, 7]*z + post18[, 8]*z + post18[, 10] + post18[, 12]*z))
+        ci_ps18 <- sapply(r, function(z)rethinking::HPDI(post18[, 1] + post18[, 2]*mu_brd + post18[, 3]*z +
+                                               post18[, 4] + post18[, 5] +
+                                               post18[, 8]*z))
+        
+        prov18 <- data.frame(feed = c(mu_cs18, mu_cd18, mu_hs18, mu_hd18, mu_ps18, mu_pd18),
+                             lo = c(ci_cs18[1, ], ci_cd18[1, ], ci_hs18[1, ], ci_hd18[1, ], ci_ps18[1, ], ci_pd18[1, ]),
+                             hi = c(ci_cs18[2, ], ci_cd18[2, ], ci_hs18[2, ], ci_hd18[2, ], ci_ps18[2, ], ci_pd18[2, ]),
+                             age = rep(r, 6),
+                             color = rep(c(rep("Sham", length(r)), rep("Dulled", length(r))), 3), 
+                             challenge = c(rep("Control", length(r)*2), rep("Handicap", length(r)*2), rep("Predator", length(r)*2)))
+        prov18$shape <- prov18$challenge
+        
+
         
         
       # Make 2018 table
@@ -687,8 +752,10 @@
         saveRDS(m_feed18_t, here::here("5_other_outputs/m_feed18_t.RDS"))
         
       # Fit models for 2019
-        m_feed19 <- lmer(f_feed ~ maxbrood + I(maxbrood^2) + offset + I(offset^2) + color*challenge*bbright_s + (1|doy) + (1|uby), data = d_prov3_19)
-        m_feed19b <- lmer(f_feed ~ maxbrood + I(maxbrood^2) + offset + I(offset^2) + color*challenge + (1|doy) + (1|uby), data = d_prov3_19)
+        m_feed19 <- lmer(f_feed ~ maxbrood + offset*color*challenge + color*challenge*bbright_s + (1|doy) + (1|uby), data = d_prov3_19)
+        m_feed19b <- lmer(f_feed ~ maxbrood + offset*color*challenge + color*challenge + (1|doy) + (1|uby), data = d_prov3_19)
+        m_feed19b2 <- lmer(f_feed ~ maxbrood + offset*color*challenge + color*challenge +
+                             (1|doy) + (1|uby), data = d_prov3_19)
         m_feed19c <- lmer(f_feed ~ maxbrood + I(maxbrood^2) + offset + I(offset^2) + color*challenge + scale(m_feed) + (1|doy) + (1|uby), data = d_prov3_19)
         
       # Make 2019 table
@@ -697,6 +764,36 @@
                                   "Predator * Dulled", "Predator * Brightness", "Dulled * Brightness", "Predator * Dulled * Brightness", "Male Daily Provisioning"),
                   dv.labels = rep("Daily Female Provisioning Trips", 3))
         saveRDS(m_feed19_t, here::here("5_other_outputs/m_feed19_t.RDS"))
+        
+      # get posterior estimates from 2019 table
+        post19 <- mvrnorm(n = 1e5, mu = fixef(m_feed19b), Sigma = vcov(m_feed19b))
+        mu_brood19 <- mean(d_prov3_19$maxbrood)
+        r2 <- seq(1, 14, 1)
+        mu_sc19 <- sapply(r2, function(z) mean(post19[, 1] + post19[, 2]*mu_brood19 + post19[, 3]*z))
+        mu_dc19 <- sapply(r2, function(z) mean(post19[, 1] + post19[, 2]*mu_brood19 + post19[, 3]*z +
+                                                 post19[, 5] + post19[, 7]*z))
+        mu_sp19 <- sapply(r2, function(z) mean(post19[, 1] + post19[, 2]*mu_brood19 + post19[, 3]*z +
+                                                 post19[, 4] + post19[, 6]*z))
+        mu_dp19 <- sapply(r2, function(z) mean(post19[, 1] + post19[, 2]*mu_brood19 + post19[, 3]*z +
+                                                 post19[, 4] + post19[, 5] + post19[, 6]*z + post19[, 7]*z + post19[, 8] +
+                                                 post19[, 9]*z))
+        
+        ci_sc19 <- sapply(r2, function(z) rethinking::HPDI(post19[, 1] + post19[, 2]*mu_brood19 + post19[, 3]*z))
+        ci_dc19 <- sapply(r2, function(z) rethinking::HPDI(post19[, 1] + post19[, 2]*mu_brood19 + post19[, 3]*z +
+                                                 post19[, 5] + post19[, 7]*z))
+        ci_sp19 <- sapply(r2, function(z) rethinking::HPDI(post19[, 1] + post19[, 2]*mu_brood19 + post19[, 3]*z +
+                                                 post19[, 4] + post19[, 6]*z))
+        ci_dp19 <- sapply(r2, function(z) rethinking::HPDI(post19[, 1] + post19[, 2]*mu_brood19 + post19[, 3]*z +
+                                                 post19[, 4] + post19[, 5] + post19[, 6]*z + post19[, 7]*z + post19[, 8] +
+                                                 post19[, 9]*z))
+        
+        prov19 <- data.frame(feed = c(mu_sc19, mu_dc19, mu_sp19, mu_dp19),
+                             lo = c(ci_sc19[1, ], ci_dc19[1, ], ci_sp19[1, ], ci_dp19[1, ]),
+                             hi = c(ci_sc19[2, ], ci_dc19[2, ], ci_sp19[2, ], ci_dp19[2, ]),
+                             age = rep(r2, 4),
+                             challenge = rep(c(rep("Sham", length(r)), rep("Dulled", length(r))), 2),
+                             color = c(rep("Control", length(r)*2), rep("Predator", length(r)*2)))
+        prov19$shape <- prov19$color
     
 ## Provisioning Plots ----
   # Figure showing nestling provisioning
@@ -717,6 +814,7 @@
         d_prov3_18$challenge <- gsub("Stress", "Handicap", d_prov3_18$challenge)
         d_prov3_18$color <- gsub("Control", "Sham", d_prov3_18$color)
         d_prov3_18$color <- gsub("Dull", "Dulled", d_prov3_18$color)
+        d_prov3_18$shape <- d_prov3_18$challenge
     
       # Plot female provisioning from 2018 experiment
        p1 <- ggplot(d_prov3_18, aes(x = offset, y = f_feed, shape = challenge,
@@ -735,6 +833,27 @@
          theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
                axis.text = element_text(size = 12), axis.title = element_text(size = 14),
                legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0)))
+       
+      # plot the data from the model rather than just raw
+       p18prov <- ggplot(data = prov18, mapping = aes(x = age, y = feed, color = color, linetype = challenge)) +
+         geom_jitter(data = d_prov3_18, mapping = aes(x = offset, y = f_feed, shape = shape, fill = color), alpha = 0.2) +
+         #geom_ribbon(mapping = aes(ymin = lo, ymax = hi, fill = color), alpha = 0.2, color = NA) +
+         geom_line(size = 1.1) +
+         xlim(0, 15) + xlab("Days after hatching") +
+         ylab("Daily female provisioning trips") + ggtitle("Experiment One") +
+         theme_bw() + #theme(legend.position = c(0.15, 0.8)) +
+         annotate(geom = "text", x = -Inf, y = Inf, hjust = -.5, vjust = 1.5, label = "A", size = 6) +
+         scale_color_manual(values = c("slateblue", "orange")) +
+         scale_fill_manual(values = c("slateblue", "orange")) +
+         #guides(fill = "none", color = "none", linetype = "none", shape = "none") +
+         theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+               axis.text = element_text(size = 12), axis.title = element_text(size = 14),
+               legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0))) +
+         scale_shape_manual(values = c(21, 22, 24)) +
+         guides(shape = guide_legend(override.aes = list(fill = "black", alpha = 1)),
+                color = guide_legend(override.aes = list(alpha = 1)),
+                linetype = guide_legend(override.aes = list(size = 0.9))) +
+         scale_linetype_manual(values = c("solid", "dotted", "dashed"))
         
       # Plot male provisioning from 2018 experiment  
         # ggplot(d_prov3_18, aes(x = offset, y = m_feed, col = full_treatment)) +
@@ -773,6 +892,24 @@
          theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
                axis.text = element_text(size = 12), axis.title = element_text(size = 14),
                legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0)))
+       
+      # plot the data from the model rather than just raw for 2019
+       p19prov <- ggplot(data = prov19, mapping = aes(x = age, y = feed, color = challenge, linetype = color)) +
+         geom_jitter(data = d_prov3_19, mapping = aes(x = offset, y = f_feed, shape = color, fill = challenge), alpha = 0.2) +
+         #geom_ribbon(mapping = aes(ymin = lo, ymax = hi, fill = challenge), alpha = 0.2, color = NA) +
+         geom_line(size = 1.1) +
+         xlim(0, 15) + xlab("Days after hatching") +
+         ylab("Daily female provisioning trips") + ggtitle("Experiment Two") +
+         theme_bw() + #theme(legend.position = c(0.15, 0.8)) +
+         annotate(geom = "text", x = -Inf, y = Inf, hjust = -.5, vjust = 1.5, label = "B", size = 6) +
+         scale_color_manual(values = c("slateblue", "orange")) +
+         scale_fill_manual(values = c("slateblue", "orange")) +
+         guides(color = "none", fill = "none", shape = "none", linetype = "none") +
+         theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+               axis.text = element_text(size = 12), axis.title = element_text(size = 14),
+               legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0))) +
+         scale_shape_manual(values = c(21, 22)) +
+         scale_linetype_manual(values = c("solid", "dashed"))
       
       # Plot male provisioning from 2019 experiment  
         # ggplot(d_prov3_19, aes(x = offset, y = m_feed, col = full_treatment)) +
@@ -780,10 +917,12 @@
         #   ylab("Daily male provisioning trips") + ggtitle("Challenge then Dulling") +
         #   theme_bw()
        
-       prov_plot <- ggpubr::ggarrange(p1, p2)
+       
+       prov_plot <- ggpubr::ggarrange(p18prov, p19prov, widths = c(1, 0.75))
+       #prov_plot <- ggpubr::ggarrange(p1, p2)
         saveRDS(prov_plot, here::here("5_other_outputs/prov_plot.rds"))
     
-## Old Approach to Nest Visits Models [Not Included] ----
+## Social Interaction Models ----
     
     ## Make a new data frame that has one row for each day of potential observation between the first capture and 'end_soc_date' for each bird
           # make an object with one row for each unique unit box year combination
@@ -864,9 +1003,9 @@
         soc_models$offset <- soc_models$doy - soc_models$hatch_date
         soc_models <- subset(soc_models, soc_models$offset > -6 & soc_models$offset < 15)
         
-    ggplot(data = soc_models, mapping = aes(x = offset, y = uni_f_vis, col = full_treatment)) + 
-      geom_jitter(width = 0.1, col = "slateblue", size = 0.7, alpha = 0.6, height = 0) +
-      geom_smooth(method = "loess") + facet_wrap(~ year)
+    # ggplot(data = soc_models, mapping = aes(x = offset, y = uni_f_vis, col = full_treatment)) + 
+    #   geom_jitter(width = 0.1, col = "slateblue", size = 0.7, alpha = 0.6, height = 0) +
+    #   geom_smooth(method = "loess") + facet_wrap(~ year)
         
     ## Split into separate frames for each year
         soc_mod18 <- subset(soc_models, soc_models$year == "2018")
@@ -887,745 +1026,239 @@
         
     ## Make separate frames for stage 1 and stage 2 to allow simpler models. The reasoning for this is that the second treatment
         # isn't applied until after stage 1, so it doesn't make any sense to include it as a predictor of stage 1 behavior.
-        soc_mod18s1 <- subset(soc_mod18, soc_mod18$stage == "stage1")
-        soc_mod18s2 <- subset(soc_mod18, soc_mod18$stage == "stage2")
-        soc_mod19s1 <- subset(soc_mod19, soc_mod19$stage == "stage1")
-        soc_mod19s2 <- subset(soc_mod19, soc_mod19$stage == "stage2")
+        soc_mod18s1 <- subset(soc_mod18, soc_mod18$stage == "stage1" & soc_mod18$offset < 2)
+        soc_mod18s2 <- subset(soc_mod18, soc_mod18$stage == "stage2" & soc_mod18$offset > 1)
+        soc_mod19s1 <- subset(soc_mod19, soc_mod19$stage == "stage1" & soc_mod19$offset < 0)
+        soc_mod19s2 <- subset(soc_mod19, soc_mod19$stage == "stage2" & soc_mod19$offset > -1)
         
     ## Fit models for each response variable 2018   
         #STAGE 1
-          m_mvis_18_s1 <- glmer(uni_m_vis ~ color*bbright_s + (1|uby), family = "poisson", data = soc_mod18s1)
-          m_mvis_18_s1b <- glmer(uni_m_vis ~ color + (1|uby), family = "poisson", data = soc_mod18s1)
-          m_fvis_18_s1 <- glmer(uni_f_vis ~ color*bbright_s + (1|uby), family = "poisson", data = soc_mod18s1)
-          m_fvis_18_s1b <- glmer(uni_f_vis ~ color + (1|uby), family = "poisson", data = soc_mod18s1,
-                                 control = glmerControl(optimizer = "bobyqa"))
-          m_trip_18_s1 <- glmer(uni_trips ~ color*bbright_s + (1|uby), family = "poisson", data = soc_mod18s1)
-          m_trip_18_s1b <- glmer(uni_trips ~ color + (1|uby), family = "poisson", data = soc_mod18s1)
+          m_fvis_18_s1 <- glmer(tot_f_vis ~ color*bbright_s + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s1)
+          m_fvis_18_s1b <- glmer(tot_f_vis ~ color + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s1)
+          m_trip_18_s1 <- glmer(tot_trips ~ color*bbright_s + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s1)
+          m_trip_18_s1b <- glmer(tot_trips ~ color + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s1)
         #STAGE 2
-          m_mvis_18_s2 <- glmer(tot_m_vis ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod18s2,
+          m_fvis_18_s2 <- glmer(tot_f_vis ~ color*challenge*bbright_s + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s2,
                                 control = glmerControl(optimizer = "bobyqa"))
-          m_mvis_18_s2b <- glmer(tot_m_vis ~ color*challenge + (1|uby), family = "poisson", data = soc_mod18s2)
-          m_fvis_18_s2 <- glmer(uni_f_vis ~ color*challenge*bbright_s + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s2,
+          m_trip_18_s2 <- glmer(tot_trips ~ color*challenge*bbright_s + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s2,
                                 control = glmerControl(optimizer = "bobyqa"))
-          m_fvis_18_s2b <- glmer(uni_f_vis + uni_m_vis ~ color*challenge + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s2,
+          m_trip_18_s2b <- glmer(tot_trips ~ color*challenge + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod18s2,
                                  control = glmerControl(optimizer = "bobyqa"))
-          m_trip_18_s2 <- glmer(tot_trips ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod18s2,
-                                control = glmerControl(optimizer = "bobyqa"))
-          m_trip_18_s2b <- glmer(tot_trips ~ color*challenge + (1|uby), family = "poisson", data = soc_mod18s2)
           
         #STAGE 1 Table
-          m_soc18_st1_t <- tab_model(m_mvis_18_s1b, m_fvis_18_s1b, m_trip_18_s1b, 
-                    pred.labels = c("Intercept", "Signal Dulled"),
-                    dv.labels = c("Daily Unique Male Visitors", "Daily Unique Female Visitors", "Daily Unique Trips to Other Boxes"))
-          saveRDS(m_soc18_st1_t, here::here("5_other_outputs/m_soc_18_st1_t.RDS"))
+          # m_soc18_st1_t <- tab_model(m_mvis_18_s1b, m_fvis_18_s1b, m_trip_18_s1b, 
+          #           pred.labels = c("Intercept", "Signal Dulled"),
+          #           dv.labels = c("Daily Unique Male Visitors", "Daily Unique Female Visitors", "Daily Unique Trips to Other Boxes"))
+          # saveRDS(m_soc18_st1_t, here::here("5_other_outputs/m_soc_18_st1_t.RDS"))
           
         #STAGE 2 Table
-          m_soc18_st2_t <- tab_model(m_mvis_18_s2b, m_fvis_18_s2, m_trip_18_s2b,
-                    pred.labels = c("Intercept", "Signal Dulled", "Predator", "Flight Reduction",
-                                    "Dulled * Predator", "Dulled * Flight", "Initial Brightness", "Dulled * Initial Bright", 
-                                    "Predator * Initial Bright", "Flight * Initial Bright", "Dulled * Predator * Bright",
-                                    "Dulled * Flight * Bright"),
-                    dv.labels = c("Daily Unique Male Visitors", "Daily Unique Female Visitors", "Daily Unique Trips to Other Boxes"))
-          saveRDS(m_soc18_st2_t, here::here("5_other_outputs/m_soc_18_st2_t.RDS"))
+          # m_soc18_st2_t <- tab_model(m_mvis_18_s2b, m_fvis_18_s2, m_trip_18_s2b,
+          #           pred.labels = c("Intercept", "Signal Dulled", "Predator", "Flight Reduction",
+          #                           "Dulled * Predator", "Dulled * Flight", "Initial Brightness", "Dulled * Initial Bright", 
+          #                           "Predator * Initial Bright", "Flight * Initial Bright", "Dulled * Predator * Bright",
+          #                           "Dulled * Flight * Bright"),
+          #           dv.labels = c("Daily Unique Male Visitors", "Daily Unique Female Visitors", "Daily Unique Trips to Other Boxes"))
+          # saveRDS(m_soc18_st2_t, here::here("5_other_outputs/m_soc_18_st2_t.RDS"))
         
     ## Fit models for each response variable 2018   
         #STAGE 1
-          m_mvis_19_s1 <- glmer(uni_m_vis ~ color*bbright_s + (1|uby), family = "poisson", data = soc_mod19s1)
-          m_mvis_19_s1b <- glmer(uni_m_vis ~ color + (1|uby), family = "poisson", data = soc_mod19s1)
-          m_fvis_19_s1 <- glmer(uni_f_vis ~ color*bbright_s + (1|uby), family = "poisson", data = soc_mod19s1)
-          m_fvis_19_s1b <- glmer(uni_f_vis ~ color + (1|uby), family = "poisson", data = soc_mod19s1)
-          m_trip_19_s1 <- glmer(uni_trips ~ color*bbright_s + (1|uby), family = "poisson", data = soc_mod19s1)
-          m_trip_19_s1b <- glmer(uni_trips ~ color + (1|uby), family = "poisson", data = soc_mod19s1)
+          m_fvis_19_s1 <- glmer(tot_f_vis ~ color*bbright_s + scale(offset) + (1|uby), family = "poisson", data = soc_mod19s1)
+          m_fvis_19_s1b <- glmer(tot_f_vis ~ color + scale(offset) + (1|uby), family = "poisson", data = soc_mod19s1)
+          m_trip_19_s1 <- glmer(tot_trips ~ color*bbright_s + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s1)
+          m_trip_19_s1b <- glmer(tot_trips ~ color + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s1)
         #STAGE 2
-          m_mvis_19_s2 <- glmer(tot_m_vis ~ color*challenge*bbright_s + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2)
-          m_mvis_19_s2b <- glmer(tot_m_vis ~ color*challenge + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
-                                 control = glmerControl(optimizer = "bobyqa"))
-          m_fvis_19_s2 <- glmer(tot_f_vis ~ color*challenge*bbright_s + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
+          m_fvis_19_s2 <- glmer(tot_f_vis ~ color*challenge*bbright_s + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
                                 control = glmerControl(optimizer = "bobyqa"))
-          m_fvis_19_s2b <- glmer(tot_f_vis ~ color*challenge + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
+          m_fvis_19_s2b <- glmer(tot_f_vis ~ color*challenge + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
                                  control = glmerControl(optimizer = "bobyqa"))
-          m_trip_19_s2 <- glmer(tot_trips ~ color*challenge*bbright_s + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2)
-          m_trip_19_s2b <- glmer(tot_trips ~ color*challenge + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2)
+          m_trip_19_s2 <- glmer(tot_trips ~ color*challenge*bbright_s + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
+                                control = glmerControl(optimizer = "bobyqa"))
+          m_trip_19_s2b <- glmer(tot_trips ~ color*challenge + scale(offset) + (1|uby) + (1|doy), family = "poisson", data = soc_mod19s2,
+                                 control = glmerControl(optimizer = "bobyqa"))
           
         #STAGE 1 Table
-          m_soc19_st1_t <- tab_model(m_mvis_19_s1, m_fvis_19_s1b, m_trip_19_s1b, 
-                    pred.labels = c("Intercept", "Predator", "Initial Brightness", "Predator * Brightness"),
-                    dv.labels = c("Daily Unique Male Visitors", "Daily Unique Female Visitors", "Daily Unique Trips to Other Boxes"))
-          saveRDS(m_soc19_st1_t, here::here("5_other_outputs/m_soc_19_st1_t.RDS"))
+          # m_soc19_st1_t <- tab_model(m_mvis_19_s1, m_fvis_19_s1b, m_trip_19_s1b, 
+          #           pred.labels = c("Intercept", "Predator", "Initial Brightness", "Predator * Brightness"),
+          #           dv.labels = c("Daily Unique Male Visitors", "Daily Unique Female Visitors", "Daily Unique Trips to Other Boxes"))
+          # saveRDS(m_soc19_st1_t, here::here("5_other_outputs/m_soc_19_st1_t.RDS"))
           
         #STAGE 2 Table
-          m_soc19_st2_t <- tab_model(m_mvis_19_s2b, m_fvis_19_s2b, m_trip_19_s2b,
-                    pred.labels = c("Intercept", "Predator", "Signal Dulled", "Predator * Dulled"),
-                    dv.labels = c("Daily Unique Male Visitors", "Daily Unique Female Visitors", "Daily Unique Trips to Other Boxes"))
-          saveRDS(m_soc19_st2_t, here::here("5_other_outputs/m_soc_19_st2_t.RDS"))
+          # m_soc19_st2_t <- tab_model(m_mvis_19_s2b, m_fvis_19_s2b, m_trip_19_s2b,
+          #           pred.labels = c("Intercept", "Predator", "Signal Dulled", "Predator * Dulled"),
+          #           dv.labels = c("Daily Unique Male Visitors", "Daily Unique Female Visitors", "Daily Unique Trips to Other Boxes"))
+          # saveRDS(m_soc19_st2_t, here::here("5_other_outputs/m_soc_19_st2_t.RDS"))
+        
+## Social Interaction plots ----        
+    # Making a plot for visits for experiment 1
+        post1 <- as.data.frame(mvrnorm(n = 1e5, mu = fixef(m_fvis_18_s2), Sigma = vcov(m_fvis_18_s2))) 
+        colnames(post1)[1] <- "Intercept"
+          
+        r <- seq(-2.5, 2.5, 0.1)
+       
+      # get maximum likelihood estimate for each group   
+        mu_cc <- sapply(r, function(z)mean(post1$Intercept + post1$bbright_s*z))
+        mu_cp <- sapply(r, function(z)mean(post1$Intercept + post1$bbright_s*z + post1$challengePredator +
+                                             post1$`challengePredator:bbright_s`*z))
+        mu_ch <- sapply(r, function(z)mean(post1$Intercept + post1$bbright_s*z + post1$challengeStress +
+                                             post1$`challengeStress:bbright_s`*z))
+        mu_dc <- sapply(r, function(z)mean(post1$Intercept + post1$bbright_s*z + post1$colorDull +
+                                             post1$`colorDull:bbright_s`*z))
+        mu_dp <- sapply(r, function(z)mean(post1$Intercept + post1$bbright_s*z + post1$colorDull +
+                                             post1$`colorDull:bbright_s`*z +
+                                             post1$`colorDull:challengePredator` +
+                                             post1$`colorDull:challengePredator:bbright_s`*z))
+        mu_dh <- sapply(r, function(z)mean(post1$Intercept + post1$bbright_s*z + post1$colorDull +
+                                             post1$`colorDull:bbright_s`*z +
+                                             post1$`colorDull:challengeStress` +
+                                             post1$`colorDull:challengeStress:bbright_s`*z))
+      
+      # get confidence interval for each group across range of brightness 
+        ci_cc <- sapply(r, function(z)rethinking::HPDI(post1$Intercept + post1$bbright_s*z))
+        ci_cp <- sapply(r, function(z)rethinking::HPDI(post1$Intercept + post1$bbright_s*z + post1$challengePredator +
+                                             post1$`challengePredator:bbright_s`*z))
+        ci_ch <- sapply(r, function(z)rethinking::HPDI(post1$Intercept + post1$bbright_s*z + post1$challengeStress +
+                                             post1$`challengeStress:bbright_s`*z))
+        ci_dc <- sapply(r, function(z)rethinking::HPDI(post1$Intercept + post1$bbright_s*z + post1$colorDull +
+                                             post1$`colorDull:bbright_s`*z))
+        ci_dp <- sapply(r, function(z)rethinking::HPDI(post1$Intercept + post1$bbright_s*z + post1$colorDull +
+                                             post1$`colorDull:bbright_s`*z +
+                                             post1$`colorDull:challengePredator` +
+                                             post1$`colorDull:challengePredator:bbright_s`*z))
+        ci_dh <- sapply(r, function(z)rethinking::HPDI(post1$Intercept + post1$bbright_s*z + post1$colorDull +
+                                             post1$`colorDull:bbright_s`*z +
+                                             post1$`colorDull:challengeStress` +
+                                             post1$`colorDull:challengeStress:bbright_s`*z))
+        
+      # get 95% ci for slope for each group to tell which ones have 'significant' slopes
+        z <- c(0, 1)
+        sl_cc <- HPDI((post1$Intercept + post1$bbright_s*z[2]) - (post1$Intercept + post1$bbright_s*z[1]))
+        sl_cp <- HPDI((post1$Intercept + post1$bbright_s*z[2] + post1$challengePredator +
+                                                         post1$`challengePredator:bbright_s`*z[2]) -
+                        (post1$Intercept + post1$bbright_s*z[1] + post1$challengePredator +
+                           post1$`challengePredator:bbright_s`*z[1]))
+        sl_ch <- HPDI((post1$Intercept + post1$bbright_s*z[2] + post1$challengeStress +
+                                                         post1$`challengeStress:bbright_s`*z[2]) -
+                        (post1$Intercept + post1$bbright_s*z[1] + post1$challengeStress +
+                           post1$`challengeStress:bbright_s`*z[1]))
+        sl_dc <- HPDI((post1$Intercept + post1$bbright_s*z[2] + post1$colorDull +
+                                                         post1$`colorDull:bbright_s`*z[2]) -
+                        (post1$Intercept + post1$bbright_s*z[1] + post1$colorDull +
+                           post1$`colorDull:bbright_s`*z[1]))
+        sl_dp <- HPDI((post1$Intercept + post1$bbright_s*z[2] + post1$colorDull +
+                                                         post1$`colorDull:bbright_s`*z[2] +
+                                                         post1$`colorDull:challengePredator` +
+                                                         post1$`colorDull:challengePredator:bbright_s`*z[2]) -
+                        (post1$Intercept + post1$bbright_s*z[1] + post1$colorDull +
+                           post1$`colorDull:bbright_s`*z[1] +
+                           post1$`colorDull:challengePredator` +
+                           post1$`colorDull:challengePredator:bbright_s`*z[1]))
+        sl_dh <- HPDI((post1$Intercept + post1$bbright_s*z[2] + post1$colorDull +
+                                                         post1$`colorDull:bbright_s`*z[2] +
+                                                         post1$`colorDull:challengeStress` +
+                                                         post1$`colorDull:challengeStress:bbright_s`*z[2]) -
+                        (post1$Intercept + post1$bbright_s*z[1] + post1$colorDull +
+                           post1$`colorDull:bbright_s`*z[1] +
+                           post1$`colorDull:challengeStress` +
+                           post1$`colorDull:challengeStress:bbright_s`*z[1]))
         
         
-    
-## Nest Visit Models ----
-        ## Note: may depend on some objects created in old nest visits model section above
+        p1d <- data.frame(color = c(rep("Control", length(r)*3), rep("Dulled", length(r)*3)),
+                          challenge = rep(c(rep("Control", length(r)), rep("Predator", length(r)), rep("Handicap", length(r))), 2),
+                          lo = c(ci_cc[1,], ci_cp[1,], ci_ch[1,], ci_dc[1,], ci_dp[1,], ci_dh[1,]),
+                          hi = c(ci_cc[2,], ci_cp[2,], ci_ch[2,], ci_dc[2,], ci_dp[2,], ci_dh[2,]),
+                          mu = c(mu_cc, mu_cp, mu_ch, mu_dc, mu_dp, mu_dh),
+                          r = rep(r, 6))
+        p1d$full <- paste(p1d$color, p1d$challenge, sep = "_")
+        
+        p1d_plot <- ggplot(p1d, mapping = aes(x = r, y = mu, color = color, linetype = full, fill = color)) +
+          geom_ribbon(aes(ymin = lo, ymax = hi), alpha = 0.3) +
+          geom_line() +
+          facet_grid(challenge ~ color) +
+          guides(color = "none", fill = "none", linetype = "none") +
+          scale_color_manual(values = c("orange", "slateblue")) +
+          scale_fill_manual(values = c("orange", "slateblue")) +
+          xlab("Initial Brightness (SD)") +
+          ylab("Visitors to Nest \n (Model Predicted)") +
+          theme_bw() +
+          theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+                  axis.title = element_text(size = 14), axis.text = element_text(size = 12)) +
+          ggtitle("Experiment One") +
+          scale_linetype_manual(values = c(1, 2, 2, 2, 2, 1))
           
-          ## Determine how many days of rfid records there are for each female between 1-2 capture and from 2 until end date
-            for(i in 1:nrow(d_fem)){
-              d_fem$days_in_1to2[i] <- d_fem$cap2[i] - d_fem$cap1[i]
-              d_fem$days_in_2plus[i] <- d_fem$end_soc_date[i] + 1 - d_fem$cap2[i]
-              if(is.na(d_fem$days_in_1to2[i]) == TRUE){d_fem$days_in_1to2[i] <- 0}
-              if(is.na(d_fem$days_in_2plus[i]) == TRUE){d_fem$days_in_2plus[i] <- 0}
-              if(d_fem$days_in_2plus[i] < 0){d_fem$days_in_2plus[i] <- 1}
-              if(d_fem$days_in_2plus[i] > 17){d_fem$days_in_2plus[i] <- 17}
-            }
+        saveRDS(p1d_plot, here::here("5_other_outputs/social1_plot.rds"))
+                                            
+        
           
-          ## Calculate number of visitors or trips of different types in each stage for each female
-          for(i in 1:nrow(d_fem)){
-            sub <- subset(d_social, as.character(d_social$ubox) == as.character(d_fem$unitbox[i]))
-            subf <- subset(sub, sub$sex == "Female")
-            subm <- subset(sub, sub$sex == "Male")
-            
-            subf1 <- subset(subf, subf$doy >= d_fem$cap1[i] & subf$doy < d_fem$cap2[i])
-            subf2 <- subset(subf, subf$doy >= d_fem$cap2[i] & subf$doy <= d_fem$cap2[i] + 17)
-            
-            subm1 <- subset(subm, subm$doy >= d_fem$cap1[i] & subm$doy < d_fem$cap2[i])
-            subm2 <- subset(subm, subm$doy >= d_fem$cap2[i] & subm$doy <= d_fem$cap2[i] + 17)
-            
-            d_fem$tot_f_vis[i] <- nrow(subf)
-            d_fem$tot_m_vis[i] <- nrow(subm)
-            d_fem$uni_f_vis[i] <- length(unique(subf$rfid))
-            d_fem$uni_m_vis[i] <- length(unique(subm$rfid))
-            
-            d_fem$tot_f_vis1[i] <- nrow(subf1)
-            d_fem$tot_m_vis1[i] <- nrow(subm1)
-            d_fem$uni_f_vis1[i] <- length(unique(subf1$rfid))
-            d_fem$uni_m_vis1[i] <- length(unique(subm1$rfid))
-            
-            d_fem$tot_f_vis2[i] <- nrow(subf2)
-            d_fem$tot_m_vis2[i] <- nrow(subm2)
-            d_fem$uni_f_vis2[i] <- length(unique(subf2$rfid))
-            d_fem$uni_m_vis2[i] <- length(unique(subm2$rfid))
-            
-            d_fem$uni_f_vis1s[i] <- length(unique(subf1$rfid)) / d_fem$days_in_1to2[i]
-            d_fem$uni_m_vis1s[i] <- length(unique(subm1$rfid)) / d_fem$days_in_1to2[i]
-            d_fem$uni_f_vis2s[i] <- length(unique(subf2$rfid)) / d_fem$days_in_2plus[i]
-            d_fem$uni_m_vis2s[i] <- length(unique(subm2$rfid)) / d_fem$days_in_2plus[i]
-            
-            subt <- subset(d_social, as.character(d_social$rfid) == as.character(d_fem$fRFID[i]))
-            subt1 <- subset(subt, subt$doy >= d_fem$cap1[i] & subt$doy < d_fem$cap2[i])
-            subt2 <- subset(subt, subt$doy >= d_fem$cap2[i] & subt$doy <= d_fem$cap2[i] + 17)
-            
-            d_fem$uni_trip1[i] <- length(unique(subt1$ubox))
-            d_fem$tot_trip1[i] <- nrow(subt1)
-            d_fem$uni_trip2[i] <- length(unique(subt2$ubox))
-            d_fem$tot_trip2[i] <- nrow(subt2)
-            
-          }
-          
-      ## Make subsets for each year and standardize plumage brightnesss
-          fem18 <- subset(d_fem, d_fem$year == 2018)
-          fem18$bbright_s <- scale(fem18$fbbright)
-          fem19 <- subset(d_fem, d_fem$year == 2019)
-          fem19$bbright_s <- scale(fem19$fbbright)
-          
-      ## Models for 2018
-          # Fit models for each response variable 2018   
-          # STAGE 1
-            m_mvisu_18_s1 <- glm(uni_m_vis1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_mvisu_18_s1b <- glm(uni_m_vis1 ~ color + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_mvist_18_s1 <- glm(tot_m_vis1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_mvist_18_s1b <- glm(tot_m_vis1 ~ color + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_fvisu_18_s1 <- glm(uni_f_vis1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_fvisu_18_s1b <- glm(uni_f_vis1 ~ color + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_fvist_18_s1 <- glm(tot_f_vis1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_fvist_18_s1b <- glm(tot_f_vis1 ~ color + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_tripu_18_s1 <- glm(uni_trip1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_tripu_18_s1b <- glm(uni_trip1 ~ color + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_tript_18_s1 <- glm(tot_trip1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem18)
-            m_tript_18_s1b <- glm(tot_trip1 ~ color + days_in_1to2, family = "quasipoisson", data = fem18)
-          
-          # STAGE 2
-            m_mvisu_18_s2 <- glm(uni_m_vis2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_mvisu_18_s2b <- glm(uni_m_vis2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_mvist_18_s2 <- glm(tot_m_vis2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_mvist_18_s2b <- glm(tot_m_vis2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_fvisu_18_s2 <- glm(uni_f_vis2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_fvisu_18_s2b <- glm(uni_f_vis2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_fvist_18_s2 <- glm(tot_f_vis2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_fvist_18_s2b <- glm(tot_f_vis2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_tripu_18_s2 <- glm(uni_trip2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_tripu_18_s2b <- glm(uni_trip2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_tript_18_s2 <- glm(tot_trip2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem18)
-            m_tript_18_s2b <- glm(tot_trip2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem18)
-          
-          # STAGE 1 Table
-            m_soc18_st1_t <- tab_model(m_mvisu_18_s1b, m_fvisu_18_s1, m_tripu_18_s1b,
-                         pred.labels = c("Intercept", "Signal Dulled", "Observation Effort", "Initial Brightness", "Dulled * Initial"),
-                         dv.labels = c("Unique Male Visitors",
-                                       "Unique Female Visitors", "Unique Trips"),
-                         title = "Experiment One: Stage 1")
-            saveRDS(m_soc18_st1_t, here::here("5_other_outputs/m_soc_18_st1_t.RDS"))
-            
-          # STAGE 2 Table
-            m_soc18_st2_t <- tab_model(m_mvisu_18_s2b, m_fvisu_18_s2, m_tripu_18_s2b,
-                         pred.labels = c("Intercept", "Signal Dulled", "Predator", "Flight Reduction", "Observation Effort",
-                                         "Dulled * Predator", "Dulled * Flight", "Initial Brightness",
-                                         "Dulled * Initial", "Predator * Initial", "Flight * Initial",
-                                         "Dulled * Flight * Initial", "Dulled * Flight * Initial"),
-                         dv.labels = c("Unique Male Visitors", "Unique Female Visitors", "Unique Trips"),
-                         title = "Experiment One: Stage 2")
-            saveRDS(m_soc18_st2_t, here::here("5_other_outputs/m_soc_18_st2_t.RDS"))
+    # Making a plot for trips for experiment 2
+        post2 <- as.data.frame(mvrnorm(n = 1e5, mu = fixef(m_trip_19_s2), Sigma = vcov(m_trip_19_s2))) 
+        colnames(post2)[1] <- "Intercept"
+        
+        r <- seq(-2.5, 2.5, 0.1)
+        
+      # calculate maximum likelihood estimates  
+        mu_cc2 <- sapply(r, function(z)mean(post2$Intercept + post2$bbright_s*z))
+        mu_cp2 <- sapply(r, function(z)mean(post2$Intercept + post2$bbright_s*z + post2$colorPredator +
+                                             post2$`colorPredator:bbright_s`*z))
+        mu_dc2 <- sapply(r, function(z)mean(post2$Intercept + post2$bbright_s*z + post2$challengeDull +
+                                             post2$`challengeDull:bbright_s`*z))
+        mu_dp2 <- sapply(r, function(z)mean(post2$Intercept + post2$bbright_s*z + post2$challengeDull +
+                                             post2$`challengeDull:bbright_s`*z +
+                                             post2$`colorPredator:challengeDull` +
+                                             post2$`colorPredator:challengeDull:bbright_s`*z))
+       
+      # calculate confidence intervals   
+        ci_cc2 <- sapply(r, function(z)rethinking::HPDI(post2$Intercept + post2$bbright_s*z))
+        ci_cp2 <- sapply(r, function(z)rethinking::HPDI(post2$Intercept + post2$bbright_s*z + post2$colorPredator +
+                                             post2$`colorPredator:bbright_s`*z))
+        ci_dc2 <- sapply(r, function(z)rethinking::HPDI(post2$Intercept + post2$bbright_s*z + post2$challengeDull +
+                                             post2$`challengeDull:bbright_s`*z))
+        ci_dp2 <- sapply(r, function(z)rethinking::HPDI(post2$Intercept + post2$bbright_s*z + post2$challengeDull +
+                                             post2$`challengeDull:bbright_s`*z +
+                                             post2$`colorPredator:challengeDull` +
+                                             post2$`colorPredator:challengeDull:bbright_s`*z))
+        
+      # calculate cis of slopes
+        sl_cc2 <- HPDI((post2$Intercept + post2$bbright_s*z[2]) -
+                         (post2$Intercept + post2$bbright_s*z[1]))
+        sl_cp2 <- HPDI((post2$Intercept + post2$bbright_s*z[2] + post2$colorPredator +
+                                                          post2$`colorPredator:bbright_s`*z[2]) -
+                         (post2$Intercept + post2$bbright_s*z[1] + post2$colorPredator +
+                            post2$`colorPredator:bbright_s`*z[1]))
+        sl_dc2 <- HPDI((post2$Intercept + post2$bbright_s*z[2] + post2$challengeDull +
+                                                          post2$`challengeDull:bbright_s`*z[2]) -
+                         (post2$Intercept + post2$bbright_s*z[1] + post2$challengeDull +
+                            post2$`challengeDull:bbright_s`*z[1]))
+        sl_dp2 <- HPDI((post2$Intercept + post2$bbright_s*z[2] + post2$challengeDull +
+                                                          post2$`challengeDull:bbright_s`*z[2] +
+                                                          post2$`colorPredator:challengeDull` +
+                                                          post2$`colorPredator:challengeDull:bbright_s`*z[2]) -
+                         (post2$Intercept + post2$bbright_s*z[1] + post2$challengeDull +
+                            post2$`challengeDull:bbright_s`*z[1] +
+                            post2$`colorPredator:challengeDull` +
+                            post2$`colorPredator:challengeDull:bbright_s`*z[1]))
 
-          
-      ## Models for 2019
-          # Fit models for each response variable 2019 
-          # STAGE 1
-            m_mvisu_19_s1 <- glm(uni_m_vis1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_mvisu_19_s1b <- glm(uni_m_vis1 ~ color + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_mvist_19_s1 <- glm(tot_m_vis1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_mvist_19_s1b <- glm(tot_m_vis1 ~ color + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_fvisu_19_s1 <- glm(uni_f_vis1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_fvisu_19_s1b <- glm(uni_f_vis1 ~ color + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_fvist_19_s1 <- glm(tot_f_vis1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_fvist_19_s1b <- glm(tot_f_vis1 ~ color + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_tripu_19_s1 <- glm(uni_trip1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_tripu_19_s1b <- glm(uni_trip1 ~ color + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_tript_19_s1 <- glm(tot_trip1 ~ color*bbright_s + days_in_1to2, family = "quasipoisson", data = fem19)
-            m_tript_19_s1b <- glm(tot_trip1 ~ color + days_in_1to2, family = "quasipoisson", data = fem19)
-            
-          # STAGE 2
-            m_mvisu_19_s2 <- glm(uni_m_vis2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_mvisu_19_s2b <- glm(uni_m_vis2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_mvist_19_s2 <- glm(tot_m_vis2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_mvist_19_s2b <- glm(tot_m_vis2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_fvisu_19_s2 <- glm(uni_f_vis2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_fvisu_19_s2b <- glm(uni_f_vis2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_fvist_19_s2 <- glm(tot_f_vis2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_fvist_19_s2b <- glm(tot_f_vis2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_tripu_19_s2 <- glm(uni_trip2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_tripu_19_s2b <- glm(uni_trip2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_tript_19_s2 <- glm(tot_trip2 ~ color*challenge*bbright_s + days_in_2plus, family = "quasipoisson", data = fem19)
-            m_tript_19_s2b <- glm(tot_trip2 ~ color*challenge + days_in_2plus, family = "quasipoisson", data = fem19)
-            
-          # STAGE 1 Table
-            m_soc19_st1_t <- tab_model(m_mvisu_19_s1, m_fvisu_19_s1, m_tripu_19_s1,
-                                       pred.labels = c("Intercept", "Predator", "Initial Brightness", "Observation Effort", "Predator * Initial"),
-                                       dv.labels = c("Unique Male Visitors",
-                                                     "Unique Female Visitors", "Unique Trips"),
-                                       title = "Experiment Two: Stage 1")
-            saveRDS(m_soc19_st1_t, here::here("5_other_outputs/m_soc_19_st1_t.RDS"))
-            
-          # STAGE 2 Table
-            m_soc19_st2_t <- tab_model(m_mvisu_19_s2b, m_fvisu_19_s2b, m_tripu_19_s2b,
-                                       pred.labels = c("Intercept", "Predator", "Signal Dulled", "Observation Effort", "Dulled * Predator"),
-                                       dv.labels = c("Unique Male Visitors", "Unique Female Visitors", "Unique Trips"),
-                                       title = "Experiment Two: Stage 2")
-            saveRDS(m_soc19_st2_t, here::here("5_other_outputs/m_soc_19_st2_t.RDS"))  
-            
-          
-          
-## Nest Visits Plots ----
-    ##visitors to the box
-        # Pivot the table longer so that unique male, female visitors by stage are each in their own row
-          long_vis <- d_fem %>%
-            pivot_longer(cols = c("uni_f_vis1", "uni_m_vis1", "uni_f_vis2", "uni_m_vis2"), names_to = "type", 
-                         names_transform = list(
-                           type = ~ readr::parse_factor(.x, levels = c("uni_f_vis1", "uni_m_vis1", "uni_f_vis2", "uni_m_vis2"),
-                                                           ordered = TRUE)),
-                         values_to = "count", values_drop_na = TRUE)  
-          long_vis <- as.data.frame(long_vis)
-          vis_pos <- data.frame(type = c("uni_f_vis1", "uni_m_vis1", "uni_f_vis2", "uni_m_vis2"),
-                                xpos = seq(1, 4, 1))
-          long_vis <- plyr::join(long_vis, vis_pos, "type", "left", "first")
-          
-        # Summarize the long table by group to get means and standard errors  
-          sum_vis <- d_fem %>%
-            pivot_longer(cols = c("uni_f_vis1", "uni_m_vis1", "uni_f_vis2", "uni_m_vis2"), names_to = "type", 
-                         names_transform = list(
-                           type = ~ readr::parse_factor(.x, levels = c("uni_f_vis1", "uni_m_vis1", "uni_f_vis2", "uni_m_vis2"),
-                                                           ordered = TRUE)),
-                         values_to = "count", values_drop_na = TRUE) %>% 
-            group_by(as.factor(year), full_treatment, type) %>%
-            summarise(n = n(), mu = mean(count, na.rm = TRUE), se = sd(count, na.rm = TRUE) / sqrt(n()))
-          sum_vis <- as.data.frame(sum_vis)
-          sum_vis <- plyr::join(sum_vis, vis_pos, "type", "left", "first")
-          colnames(sum_vis)[2] <- "year"
+        p2d <- data.frame(color = c(rep("Control", length(r)*2), rep("Dulled", length(r)*2)),
+                          challenge = rep(c(rep("Control", length(r)), rep("Predator", length(r))), 2),
+                          lo = c(ci_cc2[1,], ci_cp2[1,], ci_dc2[1,], ci_dp2[1,]),
+                          hi = c(ci_cc2[2,], ci_cp2[2,], ci_dc2[2,], ci_dp2[2,]),
+                          mu = c(mu_cc2, mu_cp2, mu_dc2, mu_dp2),
+                          r = rep(r, 4))
+        p2d$full <- paste(p2d$color, p2d$challenge, sep = "_")
         
-        # Make plotting parameters for each group  
-          for_plot <- data.frame(full_treatment = unique(sum_vis$full_treatment),
-                                 p_shape = c(21, 24, 22, 21, 24, 22, 21, 24, 24),
-                                 p_col = c(rep(col_sham, 3), rep(col_dull, 3), col_dull, col_sham, col_dull),
-                                 p_dodge = c(-.25, -.15, -.05, .05, .15, .25, .0833, -.0833, .25))
-         
-        # Join plotting parameters back to long dataframe and make subsets for each year 
-          sum_vis <- plyr::join(sum_vis, for_plot, "full_treatment")
-          long_vis <- plyr::join(long_vis, for_plot, "full_treatment")
-          
-          vis2_18 <- subset(long_vis, long_vis$year == "2018")
-          vis2_19 <- subset(long_vis, long_vis$year == "2019")
-          
-          svis2_18 <- subset(sum_vis, sum_vis$year == "2018")
-          svis2_19 <- subset(sum_vis, sum_vis$year == "2019")
-    
-    ## Visitors
-    
-        # Plot visitors by stage for 2018
-            plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-                 main = "Dulling then Challenge", xlim = c(0.5, 4.5), ylim = c(-2, 25),
-                 xlab = "", ylab = "Number of Unique Visitors")
-            axis(1, c(-1, 1, 2, 3, 4, 10), c("", "Females 1", "Males 1", "Females 2", "Males 2", ""))
-            axis(2, seq(-30, 200, 5), las = 2)
-            abline(h = 0)
-            
-            points(vis2_18$xpos + vis2_18$p_dodge, vis2_18$count, pch = 16, col = alpha("black", 0.3))
-            #abline(h = 0)
-            
-            for(i in 1:nrow(svis2_18)){
-              lines(rep(svis2_18$xpos[i] + svis2_18$p_dodge[i], 2), 
-                    c(svis2_18$mu[i] - svis2_18$se[i], svis2_18$mu[i] + svis2_18$se[i]), lwd = 2)
-            }
-            points(svis2_18$xpos + svis2_18$p_dodge, svis2_18$mu, pch = svis2_18$p_shape, cex = 1.4,
-                   bg = as.character(svis2_18$p_col))
-            
-            legend(.5, 23, c("No Color", "Dull Color", "Control", "Predator", "Handicap"),
-                   pch = c(21, 21, 21, 24, 22), pt.bg = c(col_sham, col_dull, rep("white", 3)), cex =0.9, bty = "n")
-            rect(0.5, 23.5, 4.5, 25, col = alpha("chartreuse3", 0.3))
-            text(2.3, 24.25, "Dulling", pos = 4)
-            
-            rect(2.5, 21.5, 4.5, 23, col = alpha("coral3", 0.2))
-            text(3.2, 22.25, "Challenge", pos = 4)
-            
-            lines(c(2.5, 2.5), c(-5, 23.5), lty = 2)
-            
-            text(1.5, -1, "First to second capture")
-            text(3.5, -1, "After second capture")
+        p2d_plot <- ggplot(p2d, mapping = aes(x = r, y = mu, color = color, fill = color, linetype = full)) +
+          geom_ribbon(aes(ymin = lo, ymax = hi), alpha = 0.3) +
+          geom_line() +
+          facet_grid(challenge ~ color) +
+          guides(color = "none", fill = "none", linetype = "none") +
+          scale_color_manual(values = c("orange", "slateblue")) +
+          scale_fill_manual(values = c("orange", "slateblue")) +
+          xlab("Initial Brightness (SD)") +
+          ylab("Trips to Other Nests \n (Model Predicted)") +
+          theme_bw() +
+          theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+                axis.title = element_text(size = 14), axis.text = element_text(size = 12)) +
+          ggtitle("Experiment Two") +
+          scale_linetype_manual(values = c(2, 2, 2, 1))
         
-        # Plot visitors by stage for 2019    
-              plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-                   main = "Challenge then Dulling", xlim = c(0.5, 4.5), ylim = c(-2, 25),
-                   xlab = "", ylab = "Number of Unique Visitors")
-              axis(1, c(-1, 1, 2, 3, 4, 10), c("", "Females 1", "Males 1", "Females 2", "Males 2", ""))
-              axis(2, seq(-30, 200, 5), las = 2)
-              abline(h = 0)
-              
-              points(vis2_19$xpos + vis2_19$p_dodge, vis2_19$count, pch = 16, col = alpha("black", 0.3))
-              #abline(h = 0)
-              
-              for(i in 1:nrow(svis2_19)){
-                lines(rep(svis2_19$xpos[i] + svis2_19$p_dodge[i], 2), 
-                      c(svis2_19$mu[i] - svis2_19$se[i], svis2_19$mu[i] + svis2_19$se[i]), lwd = 2)
-              }
-              points(svis2_19$xpos + svis2_19$p_dodge, svis2_19$mu, pch = svis2_19$p_shape, cex = 1.4,
-                     bg = as.character(svis2_19$p_col))
-              
-              legend(.5, 22, c("No Color", "Dull Color", "Control", "Predator"),
-                     pch = c(21, 21, 21, 24), pt.bg = c(col_sham, col_dull, rep("white", 2)), cex =0.9, bty = "n")
-              rect(2.5, 23.5, 4.5, 25, col = alpha("chartreuse3", 0.3))
-              text(3.3, 24.25, "Dulling", pos = 4)
-              
-              rect(0.5, 21.5, 2.5, 23, col = alpha("coral3", 0.2))
-              text(1.2, 22.25, "Challenge", pos = 4)
-              
-              lines(c(2.5, 2.5), c(-5, 23.5), lty = 2)
-              
-              text(1.5, -1, "First to second capture")
-              text(3.5, -1, "After second capture")
-              
-    ## Plotting model for unique female visitors from 2018 per day models
-              
-            plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-                 main = "Dulling then Challenge", xlim = c(32, 72), ylim = c(0, 3),
-                 xlab = "Initial Plumage Brightness", ylab = "Unique Female Visitors Per Day")
-            axis(1, seq(-10, 110, 5))
-            axis(2, seq(-2, 50, 1), las = 2)
-            
-            r <- seq(min(na.omit(soc_mod18s2$bbright_s)), 
-                     max(na.omit(soc_mod18s2$bbright_s)),
-                     0.1)
-            
-            bb_mu18 <- mean(na.omit(d_fem18$fbbright))
-            bb_sd18 <- sd(na.omit(d_fem18$fbbright))
-            r2 <- (r * bb_sd18) + bb_mu18
-            
-            mu_con_con <- sapply(r, function(z)exp(fixef(m_fvis_18_s2)[1] +
-                                    fixef(m_fvis_18_s2)[5]*z))
-            mu_con_pred <- sapply(r, function(z)exp(fixef(m_fvis_18_s2)[1] +
-                                    fixef(m_fvis_18_s2)[3] +
-                                    fixef(m_fvis_18_s2)[5]*z +
-                                    fixef(m_fvis_18_s2)[9]*z))
-            mu_con_str <- sapply(r, function(z)exp(fixef(m_fvis_18_s2)[1] +
-                                    fixef(m_fvis_18_s2)[4] +
-                                    fixef(m_fvis_18_s2)[5]*z +
-                                    fixef(m_fvis_18_s2)[10]*z))
-            mu_dull_con <- sapply(r, function(z)exp(fixef(m_fvis_18_s2)[1] +
-                                    fixef(m_fvis_18_s2)[2] +
-                                    fixef(m_fvis_18_s2)[5]*z +
-                                    fixef(m_fvis_18_s2)[8]*z))
-            mu_dull_pred <- sapply(r, function(z)exp(fixef(m_fvis_18_s2)[1] +
-                                    fixef(m_fvis_18_s2)[2] +
-                                    fixef(m_fvis_18_s2)[3] +
-                                    fixef(m_fvis_18_s2)[5]*z +
-                                    fixef(m_fvis_18_s2)[6] +
-                                    fixef(m_fvis_18_s2)[8]*z +
-                                    fixef(m_fvis_18_s2)[9]*z +
-                                    fixef(m_fvis_18_s2)[11]*z))
-            mu_dull_str <- sapply(r, function(z)exp(fixef(m_fvis_18_s2)[1] +
-                                    fixef(m_fvis_18_s2)[2] +
-                                    fixef(m_fvis_18_s2)[4] +
-                                    fixef(m_fvis_18_s2)[5]*z +
-                                    fixef(m_fvis_18_s2)[7] +
-                                    fixef(m_fvis_18_s2)[8]*z +
-                                    fixef(m_fvis_18_s2)[10]*z +
-                                    fixef(m_fvis_18_s2)[12]*z))
-            
-            
-            m_fvis_18_s2 <- glmer(uni_f_vis ~ color*challenge*bbright_s + (1|uby), family = "poisson", data = soc_mod18s2,
-                                  control = glmerControl(optimizer = "bobyqa"))
-            
-            
-            lines(r2, mu_con_con, lwd = 2, col = col_sham)
-            lines(r2, mu_con_pred, lwd = 2, col = col_sham, lty = 2)
-            lines(r2, mu_con_str, lwd = 2, col = col_sham, lty = 3)
-            lines(r2, mu_dull_con, lwd = 2, col = col_dull)
-            lines(r2, mu_dull_pred, lwd = 2, col = col_dull, lty = 2)
-            lines(r2, mu_dull_str, lwd = 2, col = col_dull, lty = 3)
-            
-      
-            
-          ## Plotting model for unique female visitors from 2018 total by stage
-            
-            plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-                 main = "Dulling then Challenge", xlim = c(32, 72), ylim = c(0, 20),
-                 xlab = "Initial Plumage Brightness", ylab = "Unique Female Visitors Stage 1")
-            axis(1, seq(-10, 110, 5))
-            axis(2, seq(-5, 50, 5), las = 2)
-            
-            r <- seq(min(na.omit(soc_mod18s1$bbright_s)), 
-                     max(na.omit(soc_mod18s1$bbright_s)),
-                     0.1)
-            
-            bb_mu18 <- mean(na.omit(d_fem18$fbbright))
-            bb_sd18 <- sd(na.omit(d_fem18$fbbright))
-            r2 <- (r * bb_sd18) + bb_mu18
-            
-            mu_con <- sapply(r, function(z)exp(coef(m_fvisu_18_s1)[1] +
-                                                 coef(m_fvisu_18_s1)[3]*z + coef(m_fvisu_18_s1)[4]*8))
-            mu_dull <- sapply(r, function(z)exp(coef(m_fvisu_18_s1)[1] +
-                                                  coef(m_fvisu_18_s1)[2] +
-                                                  coef(m_fvisu_18_s1)[3]*z +
-                                                  coef(m_fvisu_18_s1)[4]*8 +
-                                                  coef(m_fvisu_18_s1)[5]*z))
-            
-            post <- mvrnorm(n = 1e5, mu = coef(m_fvisu_18_s1), Sigma = vcov(m_fvisu_18_s1))
-            
-            ci_con <- sapply(r, function(z)HPDI(exp(post[, 1] +
-                                                      post[, 3]*z + post[, 4]*8)))
-            ci_dull <- sapply(r, function(z)HPDI(exp(post[, 1] +
-                                                       post[, 2] +
-                                                       post[, 3]*z +
-                                                       post[, 4]*8 +
-                                                       post[, 5]*z)))
-            
-            
-            shade(ci_con, r2, col = alpha(col_sham, 0.4))
-            shade(ci_dull, r2, col = alpha(col_dull, 0.4))
-            
-            lines(r2, mu_con, lwd = 2, col = col_sham)
-            lines(r2, mu_dull, lwd = 2, col = col_dull)
-            
-        ## Plotting model for unique female visitors from 2018 total by stage
-            
-            plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-                 main = "Dulling then Challenge", xlim = c(32, 72), ylim = c(0, 40),
-                 xlab = "Initial Plumage Brightness", ylab = "Unique Female Visitors Stage 2")
-            axis(1, seq(-10, 110, 5))
-            axis(2, seq(-5, 50, 5), las = 2)
-            
-            r <- seq(min(na.omit(soc_mod18s2$bbright_s)), 
-                     max(na.omit(soc_mod18s2$bbright_s)),
-                     0.1)
-            
-            bb_mu18 <- mean(na.omit(d_fem18$fbbright))
-            bb_sd18 <- sd(na.omit(d_fem18$fbbright))
-            r2 <- (r * bb_sd18) + bb_mu18
-            
-            mu_con_con <- sapply(r, function(z)exp(coef(m_fvisu_18_s2)[1] +
-                                                     coef(m_fvisu_18_s2)[5]*z + coef(m_fvisu_18_s2)[6]*13))
-            mu_con_con <- sapply(r, function(z)exp(coef(m_fvisu_18_s2)[1] +
-                                                     coef(m_fvisu_18_s2)[3] +
-                                                     coef(m_fvisu_18_s2)[5]*z + 
-                                                     coef(m_fvisu_18_s2)[6]*13 +
-                                                      coef(m_fvisu_18_s2)[10]*z))
-            mu_con_con <- sapply(r, function(z)exp(coef(m_fvisu_18_s2)[1] +
-                                                     coef(m_fvisu_18_s2)[4] +
-                                                     coef(m_fvisu_18_s2)[5]*z + 
-                                                     coef(m_fvisu_18_s2)[6]*13 +
-                                                      coef(m_fvisu_18_s2)[11]*z))
-            mu_dul_con <- sapply(r, function(z)exp(coef(m_fvisu_18_s2)[1] +
-                                                     coef(m_fvisu_18_s2)[2] +
-                                                     coef(m_fvisu_18_s2)[5]*z +
-                                                     coef(m_fvisu_18_s2)[6]*13 +
-                                                     coef(m_fvisu_18_s2)[9]*z))
-            mu_dul_pred <- sapply(r, function(z)exp(coef(m_fvisu_18_s2)[1] +
-                                                      coef(m_fvisu_18_s2)[2] +
-                                                      coef(m_fvisu_18_s2)[3] +
-                                                      coef(m_fvisu_18_s2)[5]*z +
-                                                      coef(m_fvisu_18_s2)[6]*13 +
-                                                      coef(m_fvisu_18_s2)[7] +
-                                                      coef(m_fvisu_18_s2)[9]*z +
-                                                      coef(m_fvisu_18_s2)[10]*z +
-                                                      coef(m_fvisu_18_s2)[12]*z))
-            mu_dul_str <- sapply(r, function(z)exp(coef(m_fvisu_18_s2)[1] +
-                                                     coef(m_fvisu_18_s2)[2] +
-                                                     coef(m_fvisu_18_s2)[4] +
-                                                     coef(m_fvisu_18_s2)[5]*z +
-                                                     coef(m_fvisu_18_s2)[6]*13 +
-                                                     coef(m_fvisu_18_s2)[8] +
-                                                     coef(m_fvisu_18_s2)[9]*z +
-                                                     coef(m_fvisu_18_s2)[11]*z +
-                                                     coef(m_fvisu_18_s2)[13]*z))
-            
-            post <- mvrnorm(n = 1e5, mu = coef(m_fvisu_18_s2), Sigma = vcov(m_fvisu_18_s2))
-            
-            ci_con_con <- sapply(r, function(z)HPDI(exp(post[, 1] +
-                                                      post[, 5]*z + post[, 6]*13)))
-            ci_dul_con <- sapply(r, function(z)HPDI(exp(post[, 1] +
-                                                       post[, 2] +
-                                                       post[, 5]*z +
-                                                       post[, 6]*13 +
-                                                       post[, 9]*z)))
-            
-            
-            shade(ci_con_con, r2, col = alpha(col_sham, 0.2))
-            shade(ci_dul_con, r2, col = alpha(col_dull, 0.2))
-            
-            lines(r2, mu_con_con, lwd = 2, col = col_sham, lty = 1)
-            lines(r2, mu_con_pred, lwd = 2, col = col_sham, lty = 2)
-            lines(r2, mu_con_str, lwd = 2, col = col_sham, lty = 3)
-            lines(r2, mu_dul_con, lwd = 2, col = col_dull, lty = 1)
-            lines(r2, mu_dul_pred, lwd = 2, col = col_dull, lty = 2)
-            lines(r2, mu_dul_str, lwd = 2, col = col_dull, lty = 3)
-    
-    
-    #### Plotting same as above but per day
-    
-    ##visitors to the box
-    
-            long_vis <- d_fem %>%
-              pivot_longer(cols = c("uni_f_vis1s", "uni_m_vis1s", "uni_f_vis2s", "uni_m_vis2s"), names_to = "type", 
-                           names_transform = list(
-                             type = ~ readr::parse_factor(.x, levels = c("uni_f_vis1s", "uni_m_vis1s", "uni_f_vis2s", "uni_m_vis2s"),
-                                                          ordered = TRUE)),
-                           values_to = "count", values_drop_na = TRUE)  
-            long_vis <- as.data.frame(long_vis)
-            vis_pos <- data.frame(type = c("uni_f_vis1s", "uni_m_vis1s", "uni_f_vis2s", "uni_m_vis2s"),
-                                  xpos = seq(1, 4, 1))
-            long_vis <- plyr::join(long_vis, vis_pos, "type", "left", "first")
-            
-            
-            sum_vis <- d_fem %>%
-              pivot_longer(cols = c("uni_f_vis1s", "uni_m_vis1s", "uni_f_vis2s", "uni_m_vis2s"), names_to = "type", 
-                           names_transform = list(
-                             type = ~ readr::parse_factor(.x, levels = c("uni_f_vis1s", "uni_m_vis1s", "uni_f_vis2s", "uni_m_vis2s"),
-                                                          ordered = TRUE)),
-                           values_to = "count", values_drop_na = TRUE) %>% 
-              group_by(as.factor(year), full_treatment, type) %>%
-              summarise(n = n(), mu = mean(count, na.rm = TRUE), se = sd(count, na.rm = TRUE) / sqrt(n()))
-            sum_vis <- as.data.frame(sum_vis)
-            sum_vis <- plyr::join(sum_vis, vis_pos, "type", "left", "first")
-            colnames(sum_vis)[2] <- "year"
-            
-            for_plot <- data.frame(full_treatment = unique(sum_vis$full_treatment),
-                                   p_shape = c(21, 24, 22, 21, 24, 22, 21, 24, 24),
-                                   p_col = c(rep(col_sham, 3), rep(col_dull, 3), col_dull, col_sham, col_dull),
-                                   p_dodge = c(-.25, -.15, -.05, .05, .15, .25, .0833, -.0833, .25))
-            
-            sum_vis <- plyr::join(sum_vis, for_plot, "full_treatment")
-            long_vis <- plyr::join(long_vis, for_plot, "full_treatment")
-            
-            vis2_18 <- subset(long_vis, long_vis$year == "2018")
-            vis2_19 <- subset(long_vis, long_vis$year == "2019")
-            
-            svis2_18 <- subset(sum_vis, sum_vis$year == "2018")
-            svis2_19 <- subset(sum_vis, sum_vis$year == "2019")
-    
-    ## Visitors
-    
-    
-            plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-                 main = "Dulling then Challenge", xlim = c(0.5, 4.5), ylim = c(-0.5, 4),
-                 xlab = "", ylab = "Unique Visitors / Days Recorded")
-            axis(1, c(-1, 1, 2, 3, 4, 10), c("", "Females 1", "Males 1", "Females 2", "Males 2", ""))
-            axis(2, seq(-30, 200, 1), las = 2)
-            abline(h = 0)
-            
-            points(vis2_18$xpos + vis2_18$p_dodge, vis2_18$count, pch = 16, col = alpha("black", 0.3))
-            #abline(h = 0)
-            
-            for(i in 1:nrow(svis2_18)){
-              lines(rep(svis2_18$xpos[i] + svis2_18$p_dodge[i], 2), 
-                    c(svis2_18$mu[i] - svis2_18$se[i], svis2_18$mu[i] + svis2_18$se[i]), lwd = 2)
-            }
-            points(svis2_18$xpos + svis2_18$p_dodge, svis2_18$mu, pch = svis2_18$p_shape, cex = 1.4,
-                   bg = as.character(svis2_18$p_col))
-            
-            legend(.5, 3.7, c("No Color", "Dull Color", "Control", "Predator", "Handicap"),
-                   pch = c(21, 21, 21, 24, 22), pt.bg = c(col_sham, col_dull, rep("white", 3)), cex =0.9, bty = "n")
-            rect(0.5, 3.7, 4.5, 4, col = alpha("chartreuse3", 0.3))
-            text(2.3, 3.85, "Dulling", pos = 4)
-            
-            rect(2.5, 3.3, 4.5, 3.6, col = alpha("coral3", 0.2))
-            text(3.2, 3.45, "Challenge", pos = 4)
-            
-            lines(c(2.5, 2.5), c(-5, 3.7), lty = 2)
-            
-            text(1.5, -.3, "First to second capture")
-            text(3.5, -.3, "After second capture")
-            
-            plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-                 main = "Challenge then Dulling", xlim = c(0.5, 4.5), ylim = c(-0.5, 4),
-                 xlab = "", ylab = "Unique Visitors / Days Recorded")
-            axis(1, c(-1, 1, 2, 3, 4, 10), c("", "Females 1", "Males 1", "Females 2", "Males 2", ""))
-            axis(2, seq(-30, 200, 1), las = 2)
-            abline(h = 0)
-            
-            points(vis2_19$xpos + vis2_19$p_dodge, vis2_19$count, pch = 16, col = alpha("black", 0.3))
-            #abline(h = 0)
-            
-            for(i in 1:nrow(svis2_19)){
-              lines(rep(svis2_19$xpos[i] + svis2_19$p_dodge[i], 2), 
-                    c(svis2_19$mu[i] - svis2_19$se[i], svis2_19$mu[i] + svis2_19$se[i]), lwd = 2)
-            }
-            points(svis2_19$xpos + svis2_19$p_dodge, svis2_19$mu, pch = svis2_19$p_shape, cex = 1.4,
-                   bg = as.character(svis2_19$p_col))
-            
-            legend(.5, 22, c("No Color", "Dull Color", "Control", "Predator"),
-                   pch = c(21, 21, 21, 24), pt.bg = c(col_sham, col_dull, rep("white", 2)), cex =0.9, bty = "n")
-            rect(2.5, 23.5, 4.5, 25, col = alpha("chartreuse3", 0.3))
-            text(3.3, 24.25, "Dulling", pos = 4)
-            
-            rect(0.5, 21.5, 2.5, 23, col = alpha("coral3", 0.2))
-            text(1.2, 22.25, "Challenge", pos = 4)
-            
-            lines(c(2.5, 2.5), c(-5, 23.5), lty = 2)
-            
-            text(1.5, -1, "First to second capture")
-            text(3.5, -1, "After second capture")
-    
-  
-## Trips to other boxes Models ----
-    # Fit above in the visits tab since I put them into the same output table
-    
-## Trips to other boxes Plots ----    
-    ## trips to other boxes
-    
-    
-    for(i in 1:nrow(d_fem)){
-      sub <- subset(d_social, as.character(d_social$rfid) == as.character(d_fem$fRFID[i]))
-      
-      sub1 <- subset(sub, sub$doy >= d_fem$cap1[i] & sub$doy < d_fem$cap2[i])
-      sub2 <- subset(sub, sub$doy >= d_fem$cap2[i])
-      
-      d_fem$tot_trip1[i] <- nrow(sub1)
-      d_fem$tot_trip2[i] <- nrow(sub2)
-      d_fem$uni_trip1[i] <- length(unique(sub1$ubox))
-      d_fem$uni_trip2[i] <- length(unique(sub2$ubox))
-      
-    }
-    
-    ##trips to other boxes
-    
-    long_vis <- d_fem %>%
-      pivot_longer(cols = c("uni_trip1", "uni_trip2"), names_to = "type", 
-                   names_transform = list(
-                     type = ~ readr::parse_factor(.x, levels = c("uni_trip1", "uni_trip2"),
-                                                  ordered = TRUE)),
-                   values_to = "count", values_drop_na = TRUE)  
-    long_vis <- as.data.frame(long_vis)
-    vis_pos <- data.frame(type = c("uni_trip1", "uni_trip2"),
-                          xpos = seq(1, 4, 1))
-    long_vis <- plyr::join(long_vis, vis_pos, "type", "left", "first")
-    
-    
-    sum_vis <- d_fem %>%
-      pivot_longer(cols = c("uni_trip1", "uni_trip2"), names_to = "type", 
-                   names_transform = list(
-                     type = ~ readr::parse_factor(.x, levels = c("uni_trip1", "uni_trip2"),
-                                                  ordered = TRUE)),
-                   values_to = "count", values_drop_na = TRUE) %>% 
-      group_by(as.factor(year), full_treatment, type) %>%
-      summarise(n = n(), mu = mean(count, na.rm = TRUE), se = sd(count, na.rm = TRUE) / sqrt(n()))
-    sum_vis <- as.data.frame(sum_vis)
-    sum_vis <- plyr::join(sum_vis, vis_pos, "type", "left", "first")
-    colnames(sum_vis)[2] <- "year"
-    
-    for_plot <- data.frame(full_treatment = unique(sum_vis$full_treatment),
-                           p_shape = c(21, 24, 22, 21, 24, 22, 21, 24, 24),
-                           p_col = c(rep(col_sham, 3), rep(col_dull, 3), col_dull, col_sham, col_dull),
-                           p_dodge = c(-.25, -.15, -.05, .05, .15, .25, .0833, -.0833, .25))
-    
-    sum_vis <- plyr::join(sum_vis, for_plot, "full_treatment")
-    long_vis <- plyr::join(long_vis, for_plot, "full_treatment")
-    
-    vis2_18 <- subset(long_vis, long_vis$year == "2018")
-    vis2_19 <- subset(long_vis, long_vis$year == "2019")
-    
-    svis2_18 <- subset(sum_vis, sum_vis$year == "2018")
-    svis2_19 <- subset(sum_vis, sum_vis$year == "2019")
-    
-    ## Trips
-    
-    
-    plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-         main = "Dulling then Challenge", xlim = c(0.5, 2.5), ylim = c(-.1, 25),
-         xlab = "", ylab = "Trips to Unique Boxes")
-    axis(1, c(-1, 1, 2, 10), c("", "Capture 1-2", "After Capture 2", ""))
-    axis(2, seq(-30, 200, 5), las = 2)
-    
-    points(vis2_18$xpos + vis2_18$p_dodge, vis2_18$count, pch = 16, col = alpha("black", 0.3))
-    #abline(h = 0)
-    
-    for(i in 1:nrow(svis2_18)){
-      lines(rep(svis2_18$xpos[i] + svis2_18$p_dodge[i], 2), 
-            c(svis2_18$mu[i] - svis2_18$se[i], svis2_18$mu[i] + svis2_18$se[i]), lwd = 2)
-    }
-    points(svis2_18$xpos + svis2_18$p_dodge, svis2_18$mu, pch = svis2_18$p_shape, cex = 1.4,
-           bg = as.character(svis2_18$p_col))
-    
-    legend(.5, 23, c("No Color", "Dull Color", "Control", "Predator", "Handicap"),
-           pch = c(21, 21, 21, 24, 22), pt.bg = c(col_sham, col_dull, rep("white", 3)), cex =0.9, bty = "n")
-    rect(0.5, 23.5, 2.5, 25, col = alpha("chartreuse3", 0.3))
-    text(1.3, 24.25, "Dulling", pos = 4)
-    
-    rect(1.5, 21.5, 2.5, 23, col = alpha("coral3", 0.2))
-    text(1.9, 22.25, "Challenge", pos = 4)
-    
-    lines(c(1.5, 1.5), c(-5, 23.5), lty = 2)
-    
-  
-    
-    plot(1, 1, type = "n", xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n", bty = "n",
-         main = "Challenge then Dulling", xlim = c(0.5, 2.5), ylim = c(-.1, 25),
-         xlab = "", ylab = "Trips to Unique Boxes")
-    axis(1, c(-1, 1, 2, 10), c("", "Capture 1-2", "After Capture 2", ""))
-    axis(2, seq(-30, 200, 5), las = 2)
-    
-    points(vis2_19$xpos + vis2_19$p_dodge, vis2_19$count, pch = 16, col = alpha("black", 0.3))
-    #abline(h = 0)
-    
-    for(i in 1:nrow(svis2_19)){
-      lines(rep(svis2_19$xpos[i] + svis2_19$p_dodge[i], 2), 
-            c(svis2_19$mu[i] - svis2_19$se[i], svis2_19$mu[i] + svis2_19$se[i]), lwd = 2)
-    }
-    points(svis2_19$xpos + svis2_19$p_dodge, svis2_19$mu, pch = svis2_19$p_shape, cex = 1.4,
-           bg = as.character(svis2_19$p_col))
-    
-    legend(.5, 21.5, c("No Color", "Dull Color", "Control", "Predator"),
-           pch = c(21, 21, 21, 24), pt.bg = c(col_sham, col_dull, rep("white", 2)), cex =0.9, bty = "n")
-    rect(1.5, 23.5, 2.5, 25, col = alpha("chartreuse3", 0.3))
-    text(1.9, 24.25, "Dulling", pos = 4)
-    
-    rect(0.5, 21.5, 1.5, 23, col = alpha("coral3", 0.2))
-    text(0.9, 22.25, "Challenge", pos = 4)
-    
-    lines(c(1.5, 1.5), c(-5, 23.5), lty = 2)
-
-    
-
-    
-    
+        saveRDS(p2d_plot, here::here("5_other_outputs/social2_plot.rds"))
+        

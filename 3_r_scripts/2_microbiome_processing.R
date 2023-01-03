@@ -14,7 +14,7 @@
 
 ## Locate files ----
   ## Specify where fastq files are stored
-    # I'm not syncing these to github
+    # These files will have to be downloaded from NCBI SRA in order to run the code
         miseq_path <- here::here("/1_raw_data/16s_sequences/") ## Set path to downloaded sequences
         head(list.files(miseq_path))
 
@@ -93,6 +93,7 @@
 
 ## Assign taxonomy ----
     ## Assign taxonomy. The silva file is downloaded and placed in the folder ahead of time.
+      # Silva file should be downloaded and added to the Github files
       fastaRef <- here("/9_supporting_files/silva_nr_v132_train_set.fa.gz")
       taxTab <- assignTaxonomy(seqtab.nochim, refFasta = fastaRef, multithread = TRUE)          
       unname(head(taxTab))
