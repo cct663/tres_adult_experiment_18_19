@@ -4,7 +4,7 @@ This repository includes the full set of code and data required to reproduce the
 
 Descriptions of files are included below and code scripts also include extensive in line annotation. The repository is permanently archived at Zenodo.
 
-
+[![DOI](https://zenodo.org/badge/526660527.svg)](https://zenodo.org/badge/latestdoi/526660527)
 
 # CODE
 
