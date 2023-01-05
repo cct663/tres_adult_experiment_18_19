@@ -46,4 +46,4 @@ This folder includes all the tabled raw data used in the manuscript in six files
 
 # INTERMEDIATE DATA
 
-In addition to the raw data described above, the repository contains a variety of derived files that are produced by the main analysis script. These include intermediate cleaned data files and saved model or figure objects. For convenience, these files are saved in the repository in the folders '2_modified_data', '3_r_scripts', and '5_other_output'. They can also be reproduced and modified by running the microbiome processing script and main script again.
+In addition to the raw data described above, the repository contains a variety of derived files that are produced by the main analysis script. These include intermediate cleaned data files and saved model or figure objects. For convenience, these files are saved in the repository in the folders '2_modified_data' (data tables) and '3_r_scripts' (figures). They can also be reproduced and modified by running the microbiome processing script and main script again.
