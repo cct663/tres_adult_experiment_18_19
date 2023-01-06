@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  4 JAN 2023 21:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  5 JAN 2023 20:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -881,16 +881,17 @@ LaTeX Font Info:    Try loading font information for T1+lmtt on input line 204.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [8] [9] [10]
-<0_manuscript_files/figure-latex/social-fig1-1.pdf, id=104, 279.0425pt x 337.26
-pt>
+) [8] [9]
+<0_manuscript_files/figure-latex/social-fig1-1.pdf, id=94, 279.0425pt x 337.26p
+t>
 File: 0_manuscript_files/figure-latex/social-fig1-1.pdf Graphic file (type pdf)
 
 <use 0_manuscript_files/figure-latex/social-fig1-1.pdf>
 Package pdftex.def Info: 0_manuscript_files/figure-latex/social-fig1-1.pdf  use
 d on input line 231.
 (pdftex.def)             Requested size: 279.04607pt x 337.26431pt.
-<0_manuscript_files/figure-latex/social-fig2-1.pdf, id=108, 279.0425pt x 279.04
+[10]
+<0_manuscript_files/figure-latex/social-fig2-1.pdf, id=106, 279.0425pt x 279.04
 25pt>
 File: 0_manuscript_files/figure-latex/social-fig2-1.pdf Graphic file (type pdf)
 
@@ -900,7 +901,7 @@ d on input line 239.
 (pdftex.def)             Requested size: 279.05032pt x 279.05032pt.
 [11 <./0_manuscript_files/figure-latex/social-fig1-1.pdf>] [12 <./0_manuscript_
 files/figure-latex/social-fig2-1.pdf>]
-<0_manuscript_files/figure-latex/feeding-fig1-1.pdf, id=154, 356.33125pt x 242.
+<0_manuscript_files/figure-latex/feeding-fig1-1.pdf, id=152, 356.33125pt x 242.
 9075pt>
 File: 0_manuscript_files/figure-latex/feeding-fig1-1.pdf Graphic file (type pdf
 )
@@ -909,7 +910,7 @@ Package pdftex.def Info: 0_manuscript_files/figure-latex/feeding-fig1-1.pdf  us
 ed on input line 261.
 (pdftex.def)             Requested size: 356.33037pt x 242.90689pt.
 [13]
-<0_manuscript_files/figure-latex/feeding-fig2-1.pdf, id=175, 356.33125pt x 242.
+<0_manuscript_files/figure-latex/feeding-fig2-1.pdf, id=173, 356.33125pt x 242.
 9075pt>
 File: 0_manuscript_files/figure-latex/feeding-fig2-1.pdf Graphic file (type pdf
 )
@@ -920,22 +921,22 @@ ed on input line 269.
 [14 <./0_manuscript_files/figure-latex/feeding-fig1-1.pdf>] [15 <./0_manuscript
 _files/figure-latex/feeding-fig2-1.pdf>] [16] [17] [18] [19] [20] [21] [22] [23
 ] [24] [25]
-<stack_2018.pdf, id=347, 584.82663pt x 634.16115pt>
+<stack_2018.pdf, id=345, 584.82663pt x 634.16115pt>
 File: stack_2018.pdf Graphic file (type pdf)
 <use stack_2018.pdf>
 Package pdftex.def Info: stack_2018.pdf  used on input line 565.
 (pdftex.def)             Requested size: 469.76268pt x 509.3907pt.
-<stack_2019.pdf, id=348, 614.295pt x 794.97pt>
+<stack_2019.pdf, id=346, 614.295pt x 794.97pt>
 File: stack_2019.pdf Graphic file (type pdf)
 <use stack_2019.pdf>
 Package pdftex.def Info: stack_2019.pdf  used on input line 571.
 (pdftex.def)             Requested size: 469.75604pt x 607.9196pt.
-<ordinate_2018.pdf, id=349, 578.16pt x 289.08pt>
+<ordinate_2018.pdf, id=347, 578.16pt x 289.08pt>
 File: ordinate_2018.pdf Graphic file (type pdf)
 <use ordinate_2018.pdf>
 Package pdftex.def Info: ordinate_2018.pdf  used on input line 577.
 (pdftex.def)             Requested size: 469.75385pt x 234.8769pt.
-<ordinate_2019.pdf, id=350, 650.43pt x 289.08pt>
+<ordinate_2019.pdf, id=348, 650.43pt x 289.08pt>
 File: ordinate_2019.pdf Graphic file (type pdf)
 <use ordinate_2019.pdf>
 Package pdftex.def Info: ordinate_2019.pdf  used on input line 583.
@@ -954,11 +955,11 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1009.
  ) 
 Here is how much of TeX's memory you used:
- 16189 strings out of 492649
- 239541 string characters out of 6129622
- 383962 words of memory out of 5000000
- 19489 multiletter control sequences out of 15000+600000
- 87336 words of font info for 142 fonts, out of 8000000 for 9000
+ 16183 strings out of 492649
+ 239461 string characters out of 6129622
+ 382962 words of memory out of 5000000
+ 19485 multiletter control sequences out of 15000+600000
+ 81356 words of font info for 140 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,10n,53p,1845b,502s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
@@ -977,10 +978,10 @@ pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/
 local/texlive/2018/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texl
 ive/2018/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2018/te
 xmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on 0_manuscript.pdf (39 pages, 569152 bytes).
+Output written on 0_manuscript.pdf (39 pages, 568748 bytes).
 PDF statistics:
- 595 PDF objects out of 1000 (max. 8388607)
- 500 compressed objects within 5 object streams
+ 593 PDF objects out of 1000 (max. 8388607)
+ 498 compressed objects within 5 object streams
  150 named destinations out of 1000 (max. 500000)
  16558 words of extra memory for PDF output out of 17280 (max. 10000000)
 

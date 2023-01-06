@@ -874,10 +874,10 @@
          theme_bw() + #theme(legend.position = c(0.15, 0.8)) +
          #annotate(geom = "text", x = -Inf, y = Inf, hjust = -.5, vjust = 1.5, label = "A", size = 6) +
          scale_color_manual(values = c(rep("slateblue", 3), rep("orange", 3)),
-                            labels = c("Dull + Control", "Dull + Handicap", "Dull + Predator",
+                            labels = c("Dulled + Control", "Dulled + Handicap", "Dulled + Predator",
                                        "Sham + Control", "Sham + Handicap", "Sham + Predator")) +
          scale_fill_manual(values = c(rep("slateblue", 3), rep("orange", 3)),
-                           labels = c("Dull + Control", "Dull + Handicap", "Dull + Predator",
+                           labels = c("Dulled + Control", "Dulled + Handicap", "Dulled + Predator",
                                       "Sham + Control", "Sham + Handicap", "Sham + Predator")) +
          #guides(fill = "none", color = "none", linetype = "none", shape = "none") +
          theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
@@ -891,7 +891,7 @@
          #       color = guide_legend(override.aes = list(alpha = 1)),
          #       linetype = guide_legend(override.aes = list(size = 0.9))) +
          scale_linetype_manual(values = rep(c("solid", "dotted", "dashed"), 2),
-                               labels = c("Dull + Control", "Dull + Handicap", "Dull + Predator",
+                               labels = c("Dulled + Control", "Dulled + Handicap", "Dulled + Predator",
                                           "Sham + Control", "Sham + Handicap", "Sham + Predator"))
       
       p18provb2 <- ggplot(data = prov18b, mapping = aes(x = age, y = feed, color = full_treatment, linetype = full_treatment)) +
@@ -1003,18 +1003,18 @@
          theme_bw() + #theme(legend.position = c(0.15, 0.8)) +
          #annotate(geom = "text", x = -Inf, y = Inf, hjust = -.5, vjust = 1.5, label = "B", size = 6) +
          scale_color_manual(values = c(rep("slateblue", 2), rep("orange", 2)),
-                            labels = c("Control + Dull", "Predator + Dull", "Control + Sham", "Predator + Sham")) +
+                            labels = c("Control + Dulled", "Predator + Dulled", "Control + Sham", "Predator + Sham")) +
          scale_fill_manual(values = c(rep("slateblue", 2), rep("orange", 2)),
-                           labels = c("Control + Dull", "Predator + Dull", "Control + Sham", "Predator + Sham")) +
+                           labels = c("Control + Dulled", "Predator + Dulled", "Control + Sham", "Predator + Sham")) +
          #guides(color = "none", fill = "none", shape = "none", linetype = "none") +
          theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
                axis.text = element_text(size = 12), axis.title = element_text(size = 14),
                legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0))) +
          theme(legend.key.width = unit(1, "cm")) +
          scale_shape_manual(values = rep(c(21, 24), 2),
-                            labels = c("Control + Dull", "Predator + Dull", "Control + Sham", "Predator + Sham")) +
+                            labels = c("Control + Dulled", "Predator + Dulled", "Control + Sham", "Predator + Sham")) +
          scale_linetype_manual(values = rep(c("solid", "dashed"), 2),
-                               labels = c("Control + Dull", "Predator + Dull", "Control + Sham", "Predator + Sham"))
+                               labels = c("Control + Dulled", "Predator + Dulled", "Control + Sham", "Predator + Sham"))
        
        p19provb2 <- ggplot(data = prov19b, mapping = aes(x = age, y = feed, color = full_treatment, linetype = full_treatment)) +
          geom_jitter(data = d_prov3_19b, mapping = aes(x = offset, y = f_feed, shape = full_treatment, fill = full_treatment), alpha = 0.2) +
