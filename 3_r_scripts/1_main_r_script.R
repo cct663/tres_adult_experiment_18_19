@@ -885,7 +885,7 @@
                legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0))) +
          theme(legend.key.width = unit(1, "cm")) +
          scale_shape_manual(values = rep(c(21, 22, 24), 2),
-                            labels = c("Dull + Control", "Dull + Handicap", "Dull + Predator",
+                            labels = c("Dulled + Control", "Dulled + Handicap", "Dulled + Predator",
                                        "Sham + Control", "Sham + Handicap", "Sham + Predator")) +
          #guides(shape = guide_legend(override.aes = list(alpha = 1.5))) +
          #       color = guide_legend(override.aes = list(alpha = 1)),
@@ -894,12 +894,13 @@
                                labels = c("Dulled + Control", "Dulled + Handicap", "Dulled + Predator",
                                           "Sham + Control", "Sham + Handicap", "Sham + Predator"))
       
-      p18provb2 <- ggplot(data = prov18b, mapping = aes(x = age, y = feed, color = full_treatment, linetype = full_treatment)) +
-        geom_jitter(data = d_prov3_18b, mapping = aes(x = offset, y = f_feed, shape = full_treatment, fill = full_treatment), alpha = 0.2) +
+      p18provb2 <- ggplot(data = prov18b, mapping = aes(x = age, y = feed, color = full_treatment)) +
+        geom_jitter(data = d_prov3_18b, mapping = aes(x = offset, y = f_feed, fill = full_treatment), alpha = 0.3) +
+        #geom_jitter(data = xx, mapping = aes(x = offset, y = mu_feed, shape = full_treatment, fill = full_treatment), alpha = 0.4) +
         #geom_ribbon(mapping = aes(ymin = lo, ymax = hi, fill = full_treatment), alpha = 0.2, color = NA) +
         geom_line(size = 1.1) +
         xlim(0, 15) + xlab("Days after hatching") +
-        ylab("Daily female provisioning trips") + ggtitle("Experiment One") +
+        ylab("Daily provisioning \n trips by female") + ggtitle("Experiment One") +
         theme_bw() + #theme(legend.position = c(0.15, 0.8)) +
         #annotate(geom = "text", x = -Inf, y = Inf, hjust = -.5, vjust = 1.5, label = "A", size = 6) +
         scale_color_manual(values = c(rep("slateblue", 3), rep("orange", 3))) +
@@ -908,20 +909,32 @@
         theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
               axis.text = element_text(size = 12), axis.title = element_text(size = 14),
               legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0))) +
-        theme(legend.key.width = unit(1, "cm")) +
+        #theme(legend.key.width = unit(1, "cm")) +
+        guides(fill = "none", color = "none") +
         scale_shape_manual(values = rep(c(21, 22, 24), 2)) +
-        guides(shape = guide_legend(override.aes = list(alpha = 1.5))) +
+        #guides(shape = guide_legend(override.aes = list(alpha = 1.5))) +
         #       color = guide_legend(override.aes = list(alpha = 1)),
         #       linetype = guide_legend(override.aes = list(size = 0.9))) +
-        scale_linetype_manual(values = rep(c("solid", "dotted", "dashed"), 2))
+        scale_linetype_manual(values = rep(c("solid", "dotted", "dashed"), 2)) +
+        facet_wrap(~challenge, nrow = 1)
+      
+      p18provb3 <- ggplot(data = prov18b[prov18b$challenge == "Predator", ], mapping = aes(x = age, y = feed, color = color)) +
+        geom_point() +
+        geom_line() +
+        scale_color_manual(values = c("slateblue", "orange")) +
+        theme_bw() +
+        theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+              axis.text = element_text(size = 12), axis.title = element_text(size = 14),
+              legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0)))
       
       # In order to get ggplot to make the legend like I want I had to make the figure twice above and split the
       # legend off to combine here
       figleg <- cowplot::plot_grid(
         p18provb2 + theme(legend.position = "none"),
-        cowplot::get_legend(p18provb1),
-        ncol = 2, rel_widths = c(2, 0.8)
+        cowplot::get_legend(p18provb3),
+        ncol = 2, rel_widths = c(4, 0.8)
       )
+      
       
 
         
@@ -994,12 +1007,12 @@
        d_prov3_19b$full_treatment <- gsub("Predator_Control", "4Predator_Sham", d_prov3_19b$full_treatment)
        d_prov3_19b$full_treatment <- gsub("Control_Dull", "1Control_Dulled", d_prov3_19b$full_treatment)
        
-       p19provb1 <- ggplot(data = prov19b, mapping = aes(x = age, y = feed, color = full_treatment, linetype = full_treatment)) +
-         geom_jitter(data = d_prov3_19b, mapping = aes(x = offset, y = f_feed, shape = full_treatment, fill = full_treatment), alpha = 0.4, size = 2.5) +
+       p19provb1 <- ggplot(data = prov19b, mapping = aes(x = age, y = feed, color = full_treatment)) +
+         geom_jitter(data = d_prov3_19b, mapping = aes(x = offset, y = f_feed, fill = full_treatment), alpha = 0.3) +
          #geom_ribbon(mapping = aes(ymin = lo, ymax = hi, fill = challenge), alpha = 0.2, color = NA) +
          geom_line(size = .6) +
          xlim(0, 15) + xlab("Days after hatching") +
-         ylab("Daily female provisioning trips") + ggtitle("Experiment Two") +
+         ylab("Daily provisionng \n trips by female") + ggtitle("Experiment Two") +
          theme_bw() + #theme(legend.position = c(0.15, 0.8)) +
          #annotate(geom = "text", x = -Inf, y = Inf, hjust = -.5, vjust = 1.5, label = "B", size = 6) +
          scale_color_manual(values = c(rep("slateblue", 2), rep("orange", 2)),
@@ -1010,11 +1023,13 @@
          theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
                axis.text = element_text(size = 12), axis.title = element_text(size = 14),
                legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0))) +
-         theme(legend.key.width = unit(1, "cm")) +
+         #theme(legend.key.width = unit(1, "cm")) +
+         #guides(fill = "none", color = "none") +
          scale_shape_manual(values = rep(c(21, 24), 2),
                             labels = c("Control + Dulled", "Predator + Dulled", "Control + Sham", "Predator + Sham")) +
          scale_linetype_manual(values = rep(c("solid", "dashed"), 2),
-                               labels = c("Control + Dulled", "Predator + Dulled", "Control + Sham", "Predator + Sham"))
+                               labels = c("Control + Dulled", "Predator + Dulled", "Control + Sham", "Predator + Sham")) +
+         facet_wrap(~ color, nrow = 1)
        
        p19provb2 <- ggplot(data = prov19b, mapping = aes(x = age, y = feed, color = full_treatment, linetype = full_treatment)) +
          geom_jitter(data = d_prov3_19b, mapping = aes(x = offset, y = f_feed, shape = full_treatment, fill = full_treatment), alpha = 0.2) +
@@ -1033,10 +1048,19 @@
          scale_shape_manual(values = rep(c(21, 24), 2)) +
          scale_linetype_manual(values = rep(c("solid", "dashed"), 2))
        
+       p19provb3 <- ggplot(data = prov19b[prov19b$color == "Control", ], mapping = aes(x = age, y = feed, color = challenge)) +
+         geom_point() +
+         geom_line() +
+         scale_color_manual(values = c("slateblue", "orange")) +
+         theme_bw() +
+         theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+               axis.text = element_text(size = 12), axis.title = element_text(size = 14),
+               legend.title = element_blank(), legend.background = element_rect(fill = alpha("white", 0)))
+       
        figleg2 <- cowplot::plot_grid(
-         p19provb2 + theme(legend.position = "none"),
-         cowplot::get_legend(p19provb1),
-         ncol = 2, rel_widths = c(2, 0.8)
+         p19provb1 + theme(legend.position = "none"),
+         cowplot::get_legend(p19provb3),
+         ncol = 2, rel_widths = c(4, 0.8)
        )
       
       # Plot male provisioning from 2019 experiment  
@@ -1313,8 +1337,25 @@
                   axis.title = element_text(size = 14), axis.text = element_text(size = 12)) +
           ggtitle("Experiment One") +
           scale_linetype_manual(values = c(1, 2, 2, 2, 2, 1))
+        
+        p1d_plot_alt <- ggplot(p1d, mapping = aes(x = r, y = mu, color = color, linetype = full, fill = color)) +
+          geom_ribbon(aes(ymin = lo, ymax = hi), alpha = 0.3) +
+          geom_line() +
+          facet_grid(~ challenge) +
+          guides(fill = "none", linetype = "none") +
+          guides(fill = guide_legend(override.aes = list(fill = NA))) +
+          scale_color_manual(values = c("orange", "slateblue"), labels = c("Sham", "Dulled")) +
+          scale_fill_manual(values = c("orange", "slateblue"), labels = c("Sham", "Dulled")) +
+          xlab("Initial Brightness (SD)") +
+          ylab("Visitors to Nest \n (Model Predicted)") +
+          theme_bw() +
+          theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+                axis.title = element_text(size = 14), axis.text = element_text(size = 12),
+                legend.key = element_rect(fill = "white"), legend.title = element_blank()) +
+          ggtitle("Experiment One") +
+          scale_linetype_manual(values = c(1, 2, 2, 2, 2, 1))
           
-        saveRDS(p1d_plot, here::here("5_other_outputs/social1_plot.rds"))
+        saveRDS(p1d_plot_alt, here::here("5_other_outputs/social1_plot.rds"))
                                             
         
           
@@ -1389,5 +1430,22 @@
           ggtitle("Experiment Two") +
           scale_linetype_manual(values = c(2, 2, 2, 1))
         
-        saveRDS(p2d_plot, here::here("5_other_outputs/social2_plot.rds"))
+        p2d_plot_alt <- ggplot(p2d, mapping = aes(x = r, y = mu, color = color, fill = color, linetype = full)) +
+          geom_ribbon(aes(ymin = lo, ymax = hi), alpha = 0.3) +
+          geom_line() +
+          facet_grid(~ challenge) +
+          guides(fill = "none", linetype = "none") +
+          guides(fill = guide_legend(override.aes = list(fill = NA))) +
+          scale_color_manual(values = c("orange", "slateblue"), labels = c("Sham", "Dulled")) +
+          scale_fill_manual(values = c("orange", "slateblue"), labels = c("Sham", "Dulled")) +
+          xlab("Initial Brightness (SD)") +
+          ylab("Trips to Other Nests \n (Model Predicted)") +
+          theme_bw() +
+          theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(),
+                axis.title = element_text(size = 14), axis.text = element_text(size = 12),
+                legend.key = element_rect(fill = "white"), legend.title = element_blank()) +
+          ggtitle("Experiment Two") +
+          scale_linetype_manual(values = c(2, 2, 2, 1))
+        
+        saveRDS(p2d_plot_alt, here::here("5_other_outputs/social2_plot.rds"))
         
